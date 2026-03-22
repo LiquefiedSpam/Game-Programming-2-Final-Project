@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] MenuController _menuController;
 
     [Header("Always Active")]
-    [SerializeField] TextMeshProUGUI _timeText;
     [SerializeField] Slider _hungerSlider;
 
     [Header("Sign")]
@@ -47,7 +46,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        UpdateTimeUI();
         _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
         _hungerSlider.value = PlayerController.MAX_HUNGER;
     }
@@ -55,11 +53,6 @@ public class UIManager : MonoBehaviour
     public void Show(bool show)
     {
         _canvas.gameObject.SetActive(show);
-    }
-
-    public void UpdateTimeUI()
-    {
-        _timeText.text = $"DAY {DayManager.Ins.Day}, HOUR {DayManager.Ins.Hour}";
     }
 
     public void UpdateHungerUI(float hunger)

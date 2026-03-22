@@ -22,7 +22,7 @@ public class DialogBehavior : InteractableBehavior
         base.Interact();
         InteractingWith = this;
         UIManager.Ins.ShowDialog(true, _name, _dialog, _portrait);
-        DayManager.Ins.NextHour();
+        DayManager.Ins.ConsumeUnit(1);
     }
 
     public override void Quit()

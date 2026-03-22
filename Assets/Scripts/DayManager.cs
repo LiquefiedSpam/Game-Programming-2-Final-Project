@@ -1,15 +1,34 @@
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
+public enum DayInterval
+{
+    Morning,
+    Daytime,
+    Evening,
+    Night
+}
 public class DayManager : MonoBehaviour
 {
-    [SerializeField] private int _hoursInDay;
+    [SerializeField] private int unitsPerInterval;
 
-    public int Day { get; private set; } = 1;
-    public int Hour { get; private set; } = 1;
+    public int Day => day;
+    public int Units => units;
+
+    public event Action OnTimeChanged;
+
+    public DayInterval DayInterval => dayInterval;
+    public int UnitsPerInterval => unitsPerInterval;
     public static DayManager Ins => _instance;
     private static DayManager _instance;
+
+
+    private int day = 1;
+    private int units = 1;
+
+    private DayInterval dayInterval = DayInterval.Morning;
 
     void Awake()
     {
@@ -23,25 +42,48 @@ public class DayManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        units = unitsPerInterval;
     }
 
+    //force a next day, starting in the morning
     public void NextDay()
     {
-        Day++;
-        Hour = 1;
-        UIManager.Ins.UpdateTimeUI();
-        UIManager.Ins.UpdateHungerUI(PlayerController.MAX_HUNGER);
+        day++;
+        units = unitsPerInterval;
+        dayInterval = DayInterval.Morning;
+        OnTimeChanged?.Invoke();
     }
 
-    public void NextHour()
+    // advances units by  the number inputted. Will change over to next interval 
+    // or day if necessary and continue consumption.
+    public void ConsumeUnit(int unitsToConsume)
     {
-        if (Hour == _hoursInDay)
+        int remainingUnits = unitsToConsume;
+        bool changed = false;
+
+        while (remainingUnits > 0)
         {
-            NextDay();
-            return;
+            units--;
+            remainingUnits--;
+            changed = true;
+            if (units == 0)
+            {
+                if (dayInterval == DayInterval.Night)
+                {
+                    dayInterval = DayInterval.Morning;
+                }
+                else
+                {
+                    dayInterval = (DayInterval)((int)dayInterval + 1);
+                }
+                units = unitsPerInterval;
+            }
         }
 
-        Hour++;
-        UIManager.Ins.UpdateTimeUI();
+        if (changed)
+        {
+            OnTimeChanged?.Invoke();
+        }
     }
 }
