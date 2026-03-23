@@ -7,11 +7,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool hovering;
 
-    private ItemSO heldItem;
-    private int itemAmount;
-
-    [SerializeField] private Image iconImage;
-    [SerializeField] private TextMeshProUGUI amountTxt;
+    [SerializeField] protected ItemSO heldItem;
+    [SerializeField] protected int itemAmount;
+    [SerializeField] protected Image iconImage;
+    [SerializeField] protected TextMeshProUGUI amountTxt;
 
     // public void Awake()
     // {
@@ -37,7 +36,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         UpdateSlot();
     }
 
-    public void UpdateSlot()
+    public virtual void UpdateSlot()
     {
         if (heldItem != null)
         {
@@ -74,7 +73,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return itemAmount;
     }
 
-    public void ClearSlot()
+    public virtual void ClearSlot()
     {
         heldItem = null;
         itemAmount = 0;

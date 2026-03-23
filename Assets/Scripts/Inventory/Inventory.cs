@@ -5,40 +5,16 @@ using System;
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSO itemToCollect;
-    public int numberOfItem;
-    public GameObject inventorySlotParent;
-
-    public InputActionReference itemAction;
+    // public ItemSO itemToCollect;
+    // public int numberOfItem;
+    // public GameObject inventorySlotParent;
 
     [SerializeField] private List<Slot> inventorySlots = new List<Slot>();
-
-    public Action<ItemSO, int> OnSlotInteract;
 
     // private void Awake()
     // {
     //     inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
     // }
-
-    private void OnEnable()
-    {
-        itemAction.action.performed += OnInteract;
-        itemAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        itemAction.action.performed -= OnInteract;
-        itemAction.action.Disable();
-    }
-
-    private void OnInteract(InputAction.CallbackContext context)
-    {
-        Slot hoveredItem = GetHoveredItem();
-        if (hoveredItem == null || !hoveredItem.HasItem()) return;
-        OnSlotInteract?.Invoke(hoveredItem.GetItem(), hoveredItem.GetAmount());
-        // AddItem(itemToCollect, numberOfItem);
-    }
 
     public void AddItem(ItemSO itemToAdd, int amount)
     {

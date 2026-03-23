@@ -77,45 +77,45 @@ public class UIManager : MonoBehaviour
         _dialogParent.SetActive(show);
     }
 
-    public void ShowMerchantInventory(bool show, ItemListing[] items = null)
-    {
-        if (!show)
-        {
-            _merchantInventory.OnSlotInteract -= _playerInventory.AddItem;
-            _merchantInventory.OnSlotInteract -= _merchantInventory.RemoveItem;
-            _merchantInventory.gameObject.SetActive(false);
-        }
-        else
-        {
-            _merchantInventory.SetInventory(items);
-            _merchantInventory.OnSlotInteract += _playerInventory.AddItem;
-            _merchantInventory.OnSlotInteract += _merchantInventory.RemoveItem;
-            _merchantInventory.gameObject.SetActive(true);
-        }
-    }
+    // public void ShowMerchantInventory(bool show, ItemListing[] items = null)
+    // {
+    //     if (!show)
+    //     {
+    //         _merchantInventory.OnSlotInteract -= _playerInventory.AddItem;
+    //         _merchantInventory.OnSlotInteract -= _merchantInventory.RemoveItem;
+    //         _merchantInventory.gameObject.SetActive(false);
+    //     }
+    //     else
+    //     {
+    //         _merchantInventory.SetInventory(items);
+    //         _merchantInventory.OnSlotInteract += _playerInventory.AddItem;
+    //         _merchantInventory.OnSlotInteract += _merchantInventory.RemoveItem;
+    //         _merchantInventory.gameObject.SetActive(true);
+    //     }
+    // }
 
     public void ShowPlayerStall(bool show)
     {
-        Debug.Log("Show player stall");
-        if (!show)
-        {
-            _playerStall.OnSlotInteract -= _playerInventory.AddItem;
-            _playerStall.OnSlotInteract -= _playerStall.RemoveItem;
-            _playerInventory.OnSlotInteract -= _playerStall.AddItem;
-            _playerInventory.OnSlotInteract -= _playerInventory.RemoveItem;
-            _playerInventory.gameObject.SetActive(false);
-            _playerStall.gameObject.SetActive(false);
-            _menuController.enabled = true;
-        }
-        else
-        {
-            _playerStall.OnSlotInteract += _playerInventory.AddItem;
-            _playerStall.OnSlotInteract += _playerStall.RemoveItem;
-            _playerInventory.OnSlotInteract += _playerStall.AddItem;
-            _playerInventory.OnSlotInteract += _playerInventory.RemoveItem;
-            _playerInventory.gameObject.SetActive(true);
-            _playerStall.gameObject.SetActive(true);
-            _menuController.enabled = false;
-        }
+        // Debug.Log("Show player stall");
+        // if (!show)
+        // {
+        //     _playerStall.OnSlotInteract -= _playerInventory.AddItem;
+        //     _playerStall.OnSlotInteract -= _playerStall.RemoveItem;
+        //     _playerInventory.OnSlotInteract -= _playerStall.AddItem;
+        //     _playerInventory.OnSlotInteract -= _playerInventory.RemoveItem;
+        //     _playerInventory.gameObject.SetActive(false);
+        //     _playerStall.gameObject.SetActive(false);
+        //     _menuController.enabled = true;
+        // }
+        // else
+        // {
+        //     _playerStall.OnSlotInteract += _playerInventory.AddItem;
+        //     _playerStall.OnSlotInteract += _playerStall.RemoveItem;
+        //     _playerInventory.OnSlotInteract += _playerStall.AddItem;
+        //     _playerInventory.OnSlotInteract += _playerInventory.RemoveItem;
+        //     _playerInventory.gameObject.SetActive(true);
+        //     _playerStall.gameObject.SetActive(true);
+        //     _menuController.enabled = false;
+        // }
     }
 }
