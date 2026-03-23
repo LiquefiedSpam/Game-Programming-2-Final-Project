@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private float _hunger;
     private float _money = 0f;
 
+    private bool _canMove = true;
+
     public bool CanAfford(float cost)
     {
         return _money >= cost;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!_canMove) return;
+
         Vector3 positionChange = new Vector3(
             _playerInputController.MovementInputVector.x,
             0,
@@ -58,5 +62,15 @@ public class PlayerController : MonoBehaviour
         _hunger = MAX_HUNGER;
         UIManager.Ins.UpdateHungerUI(_hunger);
         DayManager.Ins.NextDay();
+    }
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        _canMove = enabled;
+
+        if (!enabled)
+        {
+            _playerInputController.ResetMovement();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] public Inventory _merchantInventory;
     [SerializeField] public Inventory _playerInventory;
     [SerializeField] public Inventory _playerStall;
+
+    [Header("Transition")]
+    [SerializeField] Image transitionImage;
+    [SerializeField] float transitionTime;
 
     public bool Visible => _canvas.gameObject.activeInHierarchy;
 
@@ -75,5 +80,32 @@ public class UIManager : MonoBehaviour
             _dialogPortrait.sprite = portrait;
         }
         _dialogParent.SetActive(show);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        yield return StartCoroutine(Fade(0f, 1f));
+    }
+    public IEnumerator FadeIn()
+    {
+        yield return StartCoroutine(Fade(1f, 0f));
+    }
+
+    private IEnumerator Fade(float start, float end)
+    {
+        float time = 0f;
+        Color color = transitionImage.color;
+
+        while (time < transitionTime)
+        {
+            float t = time / transitionTime;
+            color.a = Mathf.Lerp(start, end, t);
+            transitionImage.color = color;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = end;
+        transitionImage.color = color;
     }
 }

@@ -28,4 +28,9 @@ public class PlayerInputController : MonoBehaviour
             interactable.Interact();
         }
     }
+
+    public void ResetMovement()
+    {
+        MovementInputVector = Vector2.zero;
+    }
 }
