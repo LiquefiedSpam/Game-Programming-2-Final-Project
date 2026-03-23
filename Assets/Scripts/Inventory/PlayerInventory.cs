@@ -24,7 +24,7 @@ public class PlayerInventory : Inventory
         money = startMoney;
     }
 
-    public bool TryPurchase(float price, ItemSO item, int amount)
+    public bool TryPurchaseItem(float price, ItemSO item, int amount)
     {
         if (price > money) return false;
         AddItem(item, amount);

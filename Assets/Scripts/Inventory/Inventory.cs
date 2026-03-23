@@ -150,4 +150,9 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public List<Slot> GetInventorySlots()
+    {
+        return new(inventorySlots);
+    }
 }

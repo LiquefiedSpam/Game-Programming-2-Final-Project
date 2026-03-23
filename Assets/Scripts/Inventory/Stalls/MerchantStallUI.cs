@@ -20,7 +20,7 @@ public class MerchantStallUI : MonoBehaviour, IPointerClickHandler
     {
         StallSlot slot = GetClickedSlot();
         if (slot == null) return;
-        PlayerInventory.Instance.TryPurchase(slot.GetPrice(), slot.GetItem(), slot.GetAmount());
+        PlayerInventory.Instance.TryPurchaseItem(slot.GetPrice(), slot.GetItem(), slot.GetAmount());
         // if we want to add cooldown / remove items from shop do it here
     }
 
