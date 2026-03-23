@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class PlayerStallBehavior : InteractableBehavior
 {
+    [SerializeField] PlayerStallUI stallUI;
     public override void Interact()
     {
-        UIManager.Ins.ShowPlayerStall(true);
+        stallUI.Show();
         base.Interact();
     }
 
     public override void Quit()
     {
-        UIManager.Ins.ShowPlayerStall(false);
+        stallUI.Hide();
         base.Quit();
     }
 }
