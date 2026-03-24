@@ -40,7 +40,7 @@ public class StallSlot : Slot
             {
                 iconImage.sprite = heldItem.icon;
                 amountTxt.text = itemAmount.ToString();
-                priceTxt.text = "";
+                priceTxt.text = "$" + itemPrice.ToString();
             }
             else
             {
@@ -69,12 +69,14 @@ public class StallSlot : Slot
     public void SetPurchased(bool purchased)
     {
         itemPurchased = purchased;
+        iconImage.sprite = purchasedSprite;
         UpdateSlot();
     }
 
     public void SetPrice(float price)
     {
         itemPrice = price;
+        priceTxt.text = "$" + price.ToString();
         UpdateSlot();
     }
 

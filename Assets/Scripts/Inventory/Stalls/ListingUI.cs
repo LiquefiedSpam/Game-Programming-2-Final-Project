@@ -7,7 +7,7 @@ public class ListingUI : MonoBehaviour
 {
     [SerializeField] Image itemImage;
     [SerializeField] TextMeshProUGUI itemTitle;
-    [SerializeField] Slider itemPriceSlider;
+    [SerializeField] TMP_InputField itemPriceInput;
     [SerializeField] Button removeButton;
     [SerializeField] Button saveButton;
     [SerializeField] Button closeButton;
@@ -22,9 +22,9 @@ public class ListingUI : MonoBehaviour
         currentSlot = slot;
 
         itemImage.enabled = true;
-        if (slot.GetItem() == null) Debug.LogError("Slot item is null");
         itemImage.sprite = slot.GetItem().icon;
         itemTitle.text = slot.GetItem().itemName + "  x" + slot.GetAmount().ToString();
+        itemPriceInput.text = slot.GetPrice().ToString();
 
         saveButton.onClick.AddListener(SaveChanges);
         removeButton.onClick.AddListener(RemoveListing);
@@ -35,10 +35,14 @@ public class ListingUI : MonoBehaviour
 
     public void Hide()
     {
+        // OnUIClosed?.Invoke();
+
         gameObject.SetActive(false);
         saveButton.onClick.RemoveListener(SaveChanges);
         removeButton.onClick.RemoveListener(RemoveListing);
         closeButton.onClick.RemoveListener(CloseWindow);
+
+        currentSlot = null;
         OnListingRemoved = null;
         OnUIClosed = null;
     }
@@ -50,7 +54,10 @@ public class ListingUI : MonoBehaviour
 
     void SaveChanges()
     {
-        currentSlot.SetPrice(itemPriceSlider.value);
+        if (float.TryParse(itemPriceInput.text, out float newPrice))
+        {
+            currentSlot.SetPrice(newPrice);
+        }
         Hide();
     }
 
