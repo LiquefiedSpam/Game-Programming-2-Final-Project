@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Teleport : MonoBehaviour
 {
-    [SerializeField] private Transform teleportLocation;
+    [SerializeField] private GameObject teleportLocation;
+    [SerializeField] private Image mapImage;
+    [SerializeField] private Sprite woodMap;
+    [SerializeField] private Sprite sandMap;
+    [SerializeField] private Sprite stoneMap;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,7 +28,20 @@ public class Teleport : MonoBehaviour
         //start fade to black sequence
         yield return StartCoroutine(UIManager.Ins.FadeOut());
 
-        Vector3 target = teleportLocation.position;
+        Vector3 target = teleportLocation.transform.position;
+        if (teleportLocation.name == "Sand Teleport")
+        {
+            mapImage.sprite = sandMap;
+        }
+        else if (teleportLocation.name == "Stone Teleport")
+        {
+            mapImage.sprite = stoneMap;
+        }
+        else
+        {
+            mapImage.sprite = woodMap;
+        }
+        
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
 
         //unfade to black
