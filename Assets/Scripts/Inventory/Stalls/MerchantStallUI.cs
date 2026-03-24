@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MerchantStallUI : MonoBehaviour, IPointerClickHandler
+public class MerchantStallUI : MonoBehaviour
 {
     [SerializeField] StallSlot[] slots;
 
@@ -14,22 +14,5 @@ public class MerchantStallUI : MonoBehaviour, IPointerClickHandler
     public void Hide()
     {
         gameObject.SetActive(false);
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        StallSlot slot = GetClickedSlot();
-        if (slot == null) return;
-        PlayerInventory.Instance.TryPurchaseItem(slot.GetPrice(), slot.GetItem(), slot.GetAmount());
-        // if we want to add cooldown / remove items from shop do it here
-    }
-
-    StallSlot GetClickedSlot()
-    {
-        foreach (var s in slots)
-        {
-            if (s.hovering) return s;
-        }
-        return null;
     }
 }

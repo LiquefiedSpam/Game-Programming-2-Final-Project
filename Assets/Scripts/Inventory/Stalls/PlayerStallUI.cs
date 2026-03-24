@@ -2,31 +2,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerStallUI : MonoBehaviour, IPointerClickHandler
+public class PlayerStallUI : MonoBehaviour
 {
-    [SerializeField] StallSlot[] slots;
+    [SerializeField] StallSlot[] listingSlots;
     [SerializeField] ListingUI listingUI;
-
     [SerializeField] GameObject inventoryDisplayParent;
-    [SerializeField] Slot[] mockInventory;
-
-    bool selectingItemToSell = false;
+    [SerializeField] StallSlot[] inventorySlots;
 
     void OnEnable()
     {
-        listingUI.Hide();
-        // inventoryDisplayParent.SetActive(false);
+        ShowInventorySlots();
+        foreach (var s in listingSlots) s.OnSlotClicked += OnListingSlotClicked;
+        foreach (var s in inventorySlots) s.OnSlotClicked += OnInventorySlotClicked;
     }
 
     void OnDisable()
     {
         listingUI.Hide();
-        // inventoryDisplayParent.SetActive(true);
+        foreach (var s in listingSlots) s.OnSlotClicked -= OnListingSlotClicked;
+        foreach (var s in inventorySlots) s.OnSlotClicked -= OnInventorySlotClicked;
+        listingUI.OnListingRemoved -= () => RefreshInventorySlots();
+        listingUI.OnUIClosed -= () => ShowInventorySlots();
     }
 
     public void Show()
     {
-        RefreshInventory();
+        RefreshInventorySlots();
         gameObject.SetActive(true);
     }
 
@@ -35,89 +36,76 @@ public class PlayerStallUI : MonoBehaviour, IPointerClickHandler
         gameObject.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    void OnInventorySlotClicked(StallSlot s)
     {
-        Debug.Log("pointer click");
-        if (selectingItemToSell)
+        Debug.Log("Inventory slot clicked");
+        if (!CanPlaceItemForSale())
         {
-            Slot s = GetSelectedInventorySlot();
-            if (s == null || !s.HasItem()) return;
-            FoundItemToSell(s.GetItem(), s.GetAmount());
+            inventoryDisplayParent.SetActive(false);
+            Hide();
         }
-        else
-        {
-            StallSlot s = GetSelectedStallSlot();
-            if (s == null) return;
-            if (!s.HasItem()) ShowInventoryToChoose();
-            else EditListing(s);
-        }
+
+        PlayerInventory.Instance.RemoveItem(s.GetItem(), s.GetAmount());
+        CreateListing(s.GetItem(), s.GetAmount());
+        s.ClearSlot();
     }
 
-    Slot GetSelectedInventorySlot()
+    void ShowInventorySlots()
     {
-        if (!inventoryDisplayParent.activeInHierarchy) return null;
-        foreach (var s in mockInventory)
-        {
-            if (s != null && s.hovering)
-            {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    StallSlot GetSelectedStallSlot()
-    {
-        if (!gameObject.activeInHierarchy) return null;
-        foreach (var s in slots)
-        {
-            if (s != null && s.hovering)
-            {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    void ShowInventoryToChoose()
-    {
-        selectingItemToSell = true;
-
         listingUI.Hide();
-        RefreshInventory();
+        RefreshInventorySlots();
         inventoryDisplayParent.SetActive(true);
     }
 
-    void RefreshInventory()
+    void RefreshInventorySlots()
     {
         List<Slot> actualInventory = PlayerInventory.Instance.GetInventorySlots();
         for (int i = 0; i < actualInventory.Count; i++)
         {
-            if (i >= mockInventory.Length)
+            if (i >= inventorySlots.Length)
             {
                 Debug.LogWarning("Cannot display entire inventory");
                 return;
             }
-            mockInventory[i].SetItem(actualInventory[i].GetItem(), actualInventory[i].GetAmount());
+            inventorySlots[i].SetItem(actualInventory[i].GetItem(), actualInventory[i].GetAmount());
         }
     }
 
-    void FoundItemToSell(ItemSO item, int amount)
+
+
+
+    void OnListingSlotClicked(StallSlot s)
     {
-        selectingItemToSell = false;
-
-        inventoryDisplayParent.SetActive(false);
-        StallSlot s = FindEmptySlot();
-        if (s == null) return;
-
-        s.SetItem(item, amount);
-        PlayerInventory.Instance.RemoveItem(item, amount);
-        EditListing(s);
+        Debug.Log("Listing slot clicked");
+        if (!s.HasItem()) return;
+        ShowListingUI(s);
     }
 
-    StallSlot FindEmptySlot()
+    void CreateListing(ItemSO item, int amount)
     {
-        foreach (var s in slots)
+        Debug.Log("Create listing");
+        StallSlot s = FindEmptyStallSlot();
+        if (s == null)
+        {
+            Debug.LogError("No room to add listing, method should not have been called");
+            return;
+        }
+
+        s.SetItem(item, amount);
+        ShowListingUI(s);
+    }
+
+    void ShowListingUI(StallSlot s)
+    {
+        listingUI.OnListingRemoved += () => RefreshInventorySlots();
+        listingUI.OnUIClosed += () => ShowInventorySlots();
+        inventoryDisplayParent.SetActive(false);
+        listingUI.Show(s);
+    }
+
+    StallSlot FindEmptyStallSlot()
+    {
+        foreach (var s in listingSlots)
         {
             if (!s.HasItem()) return s;
         }
@@ -125,8 +113,8 @@ public class PlayerStallUI : MonoBehaviour, IPointerClickHandler
         return null;
     }
 
-    void EditListing(StallSlot s)
+    bool CanPlaceItemForSale()
     {
-        listingUI.Show(s);
+        return FindEmptyStallSlot() != null;
     }
 }

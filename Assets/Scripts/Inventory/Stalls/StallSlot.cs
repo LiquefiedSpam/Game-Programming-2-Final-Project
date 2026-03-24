@@ -1,18 +1,39 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StallSlot : Slot
 {
     [Header("Stall")]
-    [SerializeField] float itemPrice;
+    [SerializeField] protected float itemPrice;
     [SerializeField] bool itemPurchased;
     [SerializeField] TextMeshProUGUI priceTxt;
     [SerializeField] Sprite purchasedSprite;
+    [SerializeField] Button stallButton;
+
+    public Action<StallSlot> OnSlotClicked;
+
+    void OnEnable()
+    {
+        UpdateSlot();
+        if (heldItem != null)
+        {
+            Debug.Log("Add listener");
+            stallButton.onClick.AddListener(SlotClicked);
+        }
+    }
+
+    void OnDisable()
+    {
+        stallButton.onClick.RemoveListener(SlotClicked);
+    }
 
     public override void UpdateSlot()
     {
         if (heldItem != null)
         {
+            Debug.Log("Held item is not null");
             iconImage.enabled = true;
 
             if (!itemPurchased)
@@ -30,6 +51,7 @@ public class StallSlot : Slot
         }
         else
         {
+            Debug.Log("Held item is null");
             iconImage.enabled = false;
             amountTxt.text = "";
             priceTxt.text = "";
@@ -64,5 +86,10 @@ public class StallSlot : Slot
     public float GetPrice()
     {
         return itemPrice;
+    }
+
+    protected virtual void SlotClicked()
+    {
+        OnSlotClicked?.Invoke(this);
     }
 }

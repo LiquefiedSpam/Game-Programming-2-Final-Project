@@ -16,6 +16,11 @@ public class Inventory : MonoBehaviour
     //     inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
     // }
 
+    void Start()
+    {
+        foreach (var s in inventorySlots) s.UpdateSlot();
+    }
+
     public void AddItem(ItemSO itemToAdd, int amount)
     {
         int remaining = amount;
