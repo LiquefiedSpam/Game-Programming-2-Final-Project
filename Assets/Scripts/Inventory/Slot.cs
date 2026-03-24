@@ -12,12 +12,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] protected Image iconImage;
     [SerializeField] protected TextMeshProUGUI amountTxt;
 
-    // public void Awake()
-    // {
-    //     iconImage = transform.GetChild(0).GetComponent<Image>();
-    //     amountTxt = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-    // }
-
     public ItemSO GetItem()
     {
         return heldItem;

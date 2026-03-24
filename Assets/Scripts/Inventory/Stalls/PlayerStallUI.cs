@@ -27,7 +27,6 @@ public class PlayerStallUI : MonoBehaviour
 
     public void Show()
     {
-        RefreshInventorySlots();
         gameObject.SetActive(true);
     }
 
@@ -38,7 +37,6 @@ public class PlayerStallUI : MonoBehaviour
 
     void OnInventorySlotClicked(StallSlot s)
     {
-        Debug.Log("Inventory slot clicked");
         if (!CanPlaceItemForSale())
         {
             inventoryDisplayParent.SetActive(false);
@@ -72,18 +70,14 @@ public class PlayerStallUI : MonoBehaviour
     }
 
 
-
-
     void OnListingSlotClicked(StallSlot s)
     {
-        Debug.Log("Listing slot clicked");
         if (!s.HasItem()) return;
         ShowListingUI(s);
     }
 
     void CreateListing(ItemSO item, int amount)
     {
-        Debug.Log("Create listing");
         StallSlot s = FindEmptyStallSlot();
         if (s == null)
         {
@@ -97,10 +91,10 @@ public class PlayerStallUI : MonoBehaviour
 
     void ShowListingUI(StallSlot s)
     {
-        listingUI.OnListingRemoved += () => RefreshInventorySlots();
-        listingUI.OnUIClosed += () => ShowInventorySlots();
         inventoryDisplayParent.SetActive(false);
         listingUI.Show(s);
+        listingUI.OnListingRemoved += () => RefreshInventorySlots();
+        listingUI.OnUIClosed += () => ShowInventorySlots();
     }
 
     StallSlot FindEmptyStallSlot()

@@ -17,11 +17,7 @@ public class StallSlot : Slot
     void OnEnable()
     {
         UpdateSlot();
-        if (heldItem != null)
-        {
-            Debug.Log("Add listener");
-            stallButton.onClick.AddListener(SlotClicked);
-        }
+        stallButton.onClick.AddListener(SlotClicked);
     }
 
     void OnDisable()
@@ -33,7 +29,6 @@ public class StallSlot : Slot
     {
         if (heldItem != null)
         {
-            Debug.Log("Held item is not null");
             iconImage.enabled = true;
 
             if (!itemPurchased)
@@ -51,7 +46,6 @@ public class StallSlot : Slot
         }
         else
         {
-            Debug.Log("Held item is null");
             iconImage.enabled = false;
             amountTxt.text = "";
             priceTxt.text = "";
@@ -92,6 +86,9 @@ public class StallSlot : Slot
 
     protected virtual void SlotClicked()
     {
-        OnSlotClicked?.Invoke(this);
+        if (heldItem != null)
+        {
+            OnSlotClicked?.Invoke(this);
+        }
     }
 }

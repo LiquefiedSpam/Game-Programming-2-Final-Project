@@ -19,6 +19,20 @@ public class ListingUI : MonoBehaviour
 
     public void Show(StallSlot slot)
     {
+        if (currentSlot == null)
+        {
+            // we aren't already subscribed to these
+            saveButton.onClick.AddListener(SaveChanges);
+            removeButton.onClick.AddListener(RemoveListing);
+            closeButton.onClick.AddListener(CloseWindow);
+        }
+        else
+        {
+            // resubscribe to these in PlayerStallUI.ShowListingUI after this method is called
+            OnListingRemoved = null;
+            OnUIClosed = null;
+        }
+
         currentSlot = slot;
 
         itemImage.enabled = true;
@@ -26,16 +40,12 @@ public class ListingUI : MonoBehaviour
         itemTitle.text = slot.GetItem().itemName + "  x" + slot.GetAmount().ToString();
         itemPriceInput.text = slot.GetPrice().ToString();
 
-        saveButton.onClick.AddListener(SaveChanges);
-        removeButton.onClick.AddListener(RemoveListing);
-        closeButton.onClick.AddListener(CloseWindow);
-
         gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public void Hide(bool invokeAction = false)
     {
-        // OnUIClosed?.Invoke();
+        if (invokeAction) OnUIClosed?.Invoke();
 
         gameObject.SetActive(false);
         saveButton.onClick.RemoveListener(SaveChanges);
@@ -58,7 +68,7 @@ public class ListingUI : MonoBehaviour
         {
             currentSlot.SetPrice(newPrice);
         }
-        Hide();
+        Hide(true);
     }
 
     public void RemoveListing()
@@ -66,11 +76,12 @@ public class ListingUI : MonoBehaviour
         PlayerInventory.Instance.AddItem(currentSlot.GetItem(), currentSlot.GetAmount());
         currentSlot.ClearSlot();
         OnListingRemoved?.Invoke();
-        Hide();
+        Hide(true);
     }
 
     void CloseWindow()
     {
-        Hide();
+        gameObject.SetActive(false);
+        Hide(true);
     }
 }
