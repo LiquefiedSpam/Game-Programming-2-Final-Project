@@ -8,10 +8,16 @@ public class DialogBehavior : InteractableBehavior
     [SerializeField] string _dialog;
     [SerializeField] Sprite _portrait;
 
+    Animator animator;
+
     public override InteractableType Type => InteractableType.DIALOG;
 
     public static DialogBehavior InteractingWith;
 
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     public override void Interact()
     {
         if (InteractingWith != null)
