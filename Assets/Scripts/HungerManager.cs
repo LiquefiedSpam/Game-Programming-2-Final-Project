@@ -21,6 +21,20 @@ public class HungerManager : MonoBehaviour
     public static HungerManager Ins => _instance;
     private static HungerManager _instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Debug.LogError($"Multiple instances of HungerManager in scene, destroying component on {gameObject.name}");
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     void Start()
     {
         DayManager.Ins.OnUnitsConsumed += ConsumedUnitsToHunger;
@@ -41,7 +55,7 @@ public class HungerManager : MonoBehaviour
     void ConsumedUnitsToHunger(int units)
     {
         float hungerToRemove = units * (baseHungerRemoveRate * baseHungerRemoveRateModifier);
-        ModifyHungerByPercent(hungerToRemove);
+        ModifyHungerByPercent(-hungerToRemove);
     }
 
     void ModifyHungerByAmt(float amt)

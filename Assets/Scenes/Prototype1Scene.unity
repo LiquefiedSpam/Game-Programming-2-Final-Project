@@ -3649,9 +3649,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0.605
+  m_Value: 0.486
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3665,6 +3665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 390450252}
   - component: {fileID: 390450251}
+  - component: {fileID: 390450253}
   m_Layer: 0
   m_Name: TimeResourceManager
   m_TagString: Untagged
@@ -3700,6 +3701,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &390450253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390450250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f9f61300ba756448f04e95044ea56f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HungerManager
+  maxHunger: 100
 --- !u!1001 &393364258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4310,7 +4324,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 466425603}
   - {fileID: 2074128535}
   m_Father: {fileID: 1894831947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5394,7 +5407,6 @@ RectTransform:
   - {fileID: 218279020}
   - {fileID: 637563406}
   - {fileID: 966748319}
-  - {fileID: 1157190040}
   - {fileID: 838032214}
   - {fileID: 1061158253}
   m_Father: {fileID: 915573580}
@@ -8548,7 +8560,7 @@ MonoBehaviour:
   - {fileID: 218279021}
   - {fileID: 637563407}
   - {fileID: 966748320}
-  - {fileID: 1157190041}
+  - {fileID: 0}
   - {fileID: 838032215}
 --- !u!1001 &916122563
 PrefabInstance:
@@ -8829,8 +8841,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1629245340}
+  m_Children: []
   m_Father: {fileID: 1691004953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10651,8 +10662,6 @@ Transform:
   m_Children:
   - {fileID: 1094243377}
   - {fileID: 1422909638}
-  - {fileID: 135625323}
-  - {fileID: 1159886267}
   - {fileID: 2027557241}
   - {fileID: 485036639}
   - {fileID: 1748917303}
@@ -16101,9 +16110,6 @@ PrefabInstance:
       addedObject: {fileID: 605180041}
     - targetCorrespondingSourceObject: {fileID: 1255384314630699813, guid: 284d256f298694d00a01f81c3a44173c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1148483914}
-    - targetCorrespondingSourceObject: {fileID: 1255384314630699813, guid: 284d256f298694d00a01f81c3a44173c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1099683341}
     - targetCorrespondingSourceObject: {fileID: 1255384314630699813, guid: 284d256f298694d00a01f81c3a44173c, type: 3}
       insertIndex: -1
@@ -16156,7 +16162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStallUI
   listingSlots:
   - {fileID: 1597597954}
-  - {fileID: 1148483915}
+  - {fileID: 0}
   - {fileID: 1099683342}
   - {fileID: 1981300359}
   - {fileID: 1349089273}
@@ -16204,7 +16210,6 @@ Transform:
   - {fileID: 305799420}
   - {fileID: 398159488}
   - {fileID: 643258609}
-  - {fileID: 461570551}
   - {fileID: 1025666257}
   m_Father: {fileID: 1040294351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16288,6 +16293,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629245340}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1629245340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629245339}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1641431638
 GameObject:
   m_ObjectHideFlags: 0
@@ -19326,7 +19356,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1894831949}
   m_TextViewport: {fileID: 414114680}
   m_TextComponent: {fileID: 2074128536}
-  m_Placeholder: {fileID: 466425605}
+  m_Placeholder: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
@@ -24976,6 +25006,7 @@ GameObject:
   - component: {fileID: 4222079613350055880}
   - component: {fileID: 265577863796185977}
   - component: {fileID: 3842056310491018531}
+  - component: {fileID: 4571907394656368567}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -25030,6 +25061,20 @@ Transform:
   - {fileID: 3990420939922792545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4571907394656368567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4491728058487668344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188b07ef9f8d98a43901f47820b73c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HungerUIManager
+  hungerSlider: {fileID: 381846489}
+  hungerText: {fileID: 1561839742}
 --- !u!1001 &4668106248480066866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26779,6 +26824,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1629245340}
   - {fileID: 238265687}
   - {fileID: 1191138981}
   - {fileID: 1737155044}
