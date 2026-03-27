@@ -141,18 +141,22 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    // I have not tested this (Marcella)
-    public void RemoveRandomItems(int amount)
+    public void LoseItems(int amount)
     {
         var occupiedSlots = OccupiedSlots();
 
-        for (int i = 0; i < amount; i++)
+        int remainingToRemove = amount;
+
+        for (int i = 0; i < occupiedSlots.Count && remainingToRemove > 0; i++)
         {
-            Slot randomSlot = occupiedSlots[UnityEngine.Random.Range(0, occupiedSlots.Count)];
-            if (randomSlot.RemoveAmount(1) <= 0)
-            {
-                occupiedSlots.Remove(randomSlot);
-            }
+            Slot slot = occupiedSlots[i];
+
+            int initialItemAmount = slot.GetAmount();
+            int postRemovalItemAmount = slot.RemoveAmount(remainingToRemove);
+
+            int removedAmount = initialItemAmount - Mathf.Max(postRemovalItemAmount, 0);
+
+            remainingToRemove -= removedAmount;
         }
     }
 

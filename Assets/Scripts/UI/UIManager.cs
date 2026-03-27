@@ -30,6 +30,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image transitionImage;
     [SerializeField] float transitionTime;
 
+    [Header("MapUI")]
+    [SerializeField] private Image mapImage;
+
+    [SerializeField] private Sprite woodMap;
+    [SerializeField] private Sprite sandMap;
+    [SerializeField] private Sprite stoneMap;
+
+    [SerializeField] private TextMeshPro woodToStoneUI;
+    [SerializeField] private TextMeshPro woodToSandUI;
+    [SerializeField] private TextMeshPro sandToStoneUI;
+
+    [Header("Travel Status")]
+    [SerializeField] private CanvasGroup travelStatusUI;
+    [SerializeField] private TextMeshPro travelStatusText;
+    [SerializeField] float statusFadeOutTime = 5f;
+
     public bool Visible => _canvas.gameObject.activeInHierarchy;
 
     public static UIManager Ins => _instance;
@@ -82,6 +98,46 @@ public class UIManager : MonoBehaviour
         _dialogParent.SetActive(show);
     }
 
+    public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
+    {
+        mapImage.sprite = woodMap;
+        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chnace: {(woodToSandChance * 100f):F2}%";
+        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
+        woodToSandUI.enabled = true;
+        woodToStoneUI.enabled = true;
+        sandToStoneUI.enabled = false;
+    }
+
+    public void UpdateMapUIStone(float woodToStoneDangerLevel, float woodToStoneChance, float sandToStoneDangerLevel, float sandToStoneChance)
+    {
+        mapImage.sprite = stoneMap;
+        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chnace: {(woodToStoneChance * 100f):F2}%";
+        sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
+        sandToStoneUI.enabled = true;
+        woodToStoneUI.enabled = true;
+        woodToSandUI.enabled = false;
+    }
+
+    public void UpdateMapUISand(float woodToSandDangerLevel, float woodToSandChance, float sandToStoneDangerLevel, float sandToStoneChance)
+    {
+        mapImage.sprite = sandMap;
+        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chnace: {(woodToSandChance * 100f):F2}%";
+        sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
+        woodToSandUI.enabled = true;
+        sandToStoneUI.enabled = true;
+        woodToStoneUI.enabled = false;
+    }
+
+    public void ShowTravelStatus(string message)
+    {
+        travelStatusText.text = message;
+
+        travelStatusUI.alpha = 1f;
+        travelStatusUI.gameObject.SetActive(true);
+
+        StartCoroutine(StatusFadeOut());
+    }
+
     public IEnumerator FadeOut()
     {
         yield return StartCoroutine(Fade(0f, 1f));
@@ -107,5 +163,25 @@ public class UIManager : MonoBehaviour
 
         color.a = end;
         transitionImage.color = color;
+    }
+
+    private IEnumerator StatusFadeOut()
+    {
+        float time = 0f;
+
+        travelStatusUI.alpha = 1f;
+
+        while (time < statusFadeOutTime)
+        {
+            float t = time / statusFadeOutTime;
+
+            travelStatusUI.alpha = Mathf.Lerp(1f, 0f, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        travelStatusUI.alpha = 0f;
+        travelStatusUI.gameObject.SetActive(false);
     }
 }
