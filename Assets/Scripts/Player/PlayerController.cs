@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public const int MAX_HUNGER = 10;
+    public const int MAX_HUNGER = 100;
 
     [SerializeField]
     private float _speed;

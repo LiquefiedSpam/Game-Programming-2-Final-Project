@@ -1,6 +1,4 @@
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum DayInterval
@@ -17,7 +15,8 @@ public class DayManager : MonoBehaviour
     public int Day => day;
     public int Units => units;
 
-    public event Action OnTimeChanged;
+    public event Action OnTimeChanged; //for things that just need to know time has changed
+    public event Action<int> OnUnitsConsumed; //for things that need to know amount of units that elapsed
 
     public DayInterval DayInterval => dayInterval;
     public int UnitsPerInterval => unitsPerInterval;
@@ -84,6 +83,7 @@ public class DayManager : MonoBehaviour
         if (changed)
         {
             OnTimeChanged?.Invoke();
+            OnUnitsConsumed?.Invoke(unitsToConsume);
         }
     }
 }

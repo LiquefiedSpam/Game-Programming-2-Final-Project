@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TimeUI : MonoBehaviour
+public class TimeUIManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Slider timeSlider;
