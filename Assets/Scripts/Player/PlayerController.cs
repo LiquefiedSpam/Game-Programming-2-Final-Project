@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     private float _speed;
 
     private PlayerInputController _playerInputController;
-    private float _hunger;
     private float _money = 0f;
 
     private bool _canMove = true;
@@ -21,9 +20,16 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         _playerInputController = GetComponent<PlayerInputController>();
-        _hunger = MAX_HUNGER;
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
+        HungerManager.Ins.OnHungerKnockedOut += Knockout;
+    }
+
+    void OnDisable()
+    {
+        InteractableBehavior.OnInteract -= Interact;
+        InteractableBehavior.OnEndInteract -= EndInteract;
+        HungerManager.Ins.OnHungerKnockedOut -= Knockout;
     }
 
     void Update()
@@ -42,25 +48,22 @@ public class PlayerController : MonoBehaviour
 
     void Interact(float hungerCost)
     {
-        _hunger -= hungerCost;
-        UIManager.Ins.UpdateHungerUI(_hunger);
     }
 
     void EndInteract()
     {
-        if (_hunger <= 0)
-        {
-            ForceNextDay();
-            return;
-        }
+    }
+
+    void Knockout()
+    {
+        ForceNextDay();
     }
 
     void ForceNextDay()
     {
         Vector3 pos = InnBehavior.LastVisitedTeleportPoint.position;
         transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-        _hunger = MAX_HUNGER;
-        UIManager.Ins.UpdateHungerUI(_hunger);
+        HungerManager.Ins.ResetHunger();
         DayManager.Ins.NextDay();
     }
 

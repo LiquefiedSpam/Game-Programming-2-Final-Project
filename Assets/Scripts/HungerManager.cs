@@ -86,4 +86,10 @@ public class HungerManager : MonoBehaviour
         float amtToModify = (pct / 100) * maxHunger;
         ModifyHungerByAmt(amtToModify);
     }
+
+    public void ResetHunger()
+    {
+        currentHunger = maxHunger;
+        OnHungerChanged?.Invoke();
+    }
 }
