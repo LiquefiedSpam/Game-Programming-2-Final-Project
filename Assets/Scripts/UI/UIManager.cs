@@ -37,13 +37,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite sandMap;
     [SerializeField] private Sprite stoneMap;
 
-    [SerializeField] private TextMeshPro woodToStoneUI;
-    [SerializeField] private TextMeshPro woodToSandUI;
-    [SerializeField] private TextMeshPro sandToStoneUI;
+    [SerializeField] private TextMeshProUGUI woodToStoneUI;
+    [SerializeField] private TextMeshProUGUI woodToSandUI;
+    [SerializeField] private TextMeshProUGUI sandToStoneUI;
 
     [Header("Travel Status")]
-    [SerializeField] private CanvasGroup travelStatusUI;
-    [SerializeField] private TextMeshPro travelStatusText;
+    [SerializeField] private GameObject travelStatusUI;
+    [SerializeField] private TextMeshProUGUI travelStatusText;
     [SerializeField] float statusFadeOutTime = 5f;
 
     public bool Visible => _canvas.gameObject.activeInHierarchy;
@@ -69,6 +69,7 @@ public class UIManager : MonoBehaviour
     {
         _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
         _hungerSlider.value = PlayerController.MAX_HUNGER;
+        UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
     }
 
     public void Show(bool show)
@@ -101,7 +102,7 @@ public class UIManager : MonoBehaviour
     public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
     {
         mapImage.sprite = woodMap;
-        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chnace: {(woodToSandChance * 100f):F2}%";
+        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
         woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
         woodToSandUI.enabled = true;
         woodToStoneUI.enabled = true;
@@ -111,7 +112,7 @@ public class UIManager : MonoBehaviour
     public void UpdateMapUIStone(float woodToStoneDangerLevel, float woodToStoneChance, float sandToStoneDangerLevel, float sandToStoneChance)
     {
         mapImage.sprite = stoneMap;
-        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chnace: {(woodToStoneChance * 100f):F2}%";
+        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
         sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
         sandToStoneUI.enabled = true;
         woodToStoneUI.enabled = true;
@@ -121,7 +122,7 @@ public class UIManager : MonoBehaviour
     public void UpdateMapUISand(float woodToSandDangerLevel, float woodToSandChance, float sandToStoneDangerLevel, float sandToStoneChance)
     {
         mapImage.sprite = sandMap;
-        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chnace: {(woodToSandChance * 100f):F2}%";
+        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
         sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
         woodToSandUI.enabled = true;
         sandToStoneUI.enabled = true;
@@ -132,8 +133,7 @@ public class UIManager : MonoBehaviour
     {
         travelStatusText.text = message;
 
-        travelStatusUI.alpha = 1f;
-        travelStatusUI.gameObject.SetActive(true);
+        travelStatusUI.SetActive(true);
 
         StartCoroutine(StatusFadeOut());
     }
@@ -169,19 +169,22 @@ public class UIManager : MonoBehaviour
     {
         float time = 0f;
 
-        travelStatusUI.alpha = 1f;
+        Color panelColor = travelStatusUI.GetComponent<Image>().color;
+        panelColor.a = 1f;
 
         while (time < statusFadeOutTime)
         {
             float t = time / statusFadeOutTime;
 
-            travelStatusUI.alpha = Mathf.Lerp(1f, 0f, t);
+            panelColor.a = Mathf.Lerp(1f, 0f, t);
+            travelStatusUI.GetComponent<Image>().color = panelColor;
 
             time += Time.deltaTime;
             yield return null;
         }
 
-        travelStatusUI.alpha = 0f;
+        panelColor.a = 0f;
+        travelStatusUI.GetComponent<Image>().color = panelColor;
         travelStatusUI.gameObject.SetActive(false);
     }
 }

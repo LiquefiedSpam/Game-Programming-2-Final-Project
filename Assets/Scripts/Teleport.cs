@@ -106,7 +106,7 @@ public class Teleport : MonoBehaviour
                 }
                 else
                 {
-                    travelStatus = "No Mauraders attacked us!";
+                    travelStatus = "No Mauraders attacked you!";
                 }
                 break;
 
@@ -116,7 +116,7 @@ public class Teleport : MonoBehaviour
                 }
                 else
                 {
-                    travelStatus = "No Mauraders attacked us!";
+                    travelStatus = "No Mauraders attacked you!";
                 }
                 break;
 
@@ -127,7 +127,7 @@ public class Teleport : MonoBehaviour
                 }
                 else
                 {
-                    travelStatus = "No Mauraders attacked us!";
+                    travelStatus = "No Mauraders attacked you!";
                 }
                 break;
         }
@@ -138,6 +138,6 @@ public class Teleport : MonoBehaviour
         //perform ability of depleting items from inventory slots
         PlayerInventory.Instance.LoseItems(dangerLevel);
 
-        travelStatus = $"We were attacked by Marauders and lost {dangerLevel} item(s)";
+        travelStatus = $"You were attacked by Marauders and lost {dangerLevel} item(s)";
     }
 }
