@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour
     {
         InteractableBehavior.OnInteract -= Interact;
         InteractableBehavior.OnEndInteract -= EndInteract;
-        HungerManager.Ins.OnHungerKnockedOut -= Knockout;
+        if (HungerManager.Ins != null)
+            HungerManager.Ins.OnHungerKnockedOut -= Knockout;
     }
 
     void Update()
     {
         if (!_canMove) return;
-        Debug.Log("hey");
 
         Vector3 positionChange = new Vector3(
             _playerInputController.MovementInputVector.x,
