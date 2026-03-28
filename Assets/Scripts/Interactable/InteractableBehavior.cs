@@ -17,6 +17,23 @@ public class InteractableBehavior : MonoBehaviour
         if (_hungerCost > 0) OnInteract?.Invoke(_hungerCost);
     }
 
+    public virtual void Interact(Vector3 playerPos)
+    {
+        if (_hungerCost > 0) OnInteract?.Invoke(_hungerCost);
+
+        Vector3 direction = playerPos - transform.position;
+
+        direction.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            5f * Time.deltaTime
+        );
+    }
+
     public virtual void Quit()
     {
         OnEndInteract?.Invoke();

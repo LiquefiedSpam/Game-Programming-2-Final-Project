@@ -15,6 +15,7 @@ public class PlayerInputController : MonoBehaviour
     private void OnInteract()
     {
         Debug.Log("OnInteract");
+        Debug.Log($"Interactable: {_interactableMonitor.Interactable}");
         InteractableBehavior interactable = _interactableMonitor.Interactable;
 
         if (_interactableMonitor.Interacting)
@@ -25,7 +26,7 @@ public class PlayerInputController : MonoBehaviour
         else if (interactable != null)
         {
             _interactableMonitor.SetInteracting(true);
-            interactable.Interact();
+            interactable.Interact(this.transform.position);
         }
     }
 
