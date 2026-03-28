@@ -434,3 +434,8 @@ MonoBehaviour:
   priceTxt: {fileID: 4223784472615278085}
   purchasedSprite: {fileID: 21300000, guid: 278baea45bce247e995246b0426e1d5a, type: 3}
   stallButton: {fileID: 7720572997092812734}
+  reactionSprites: {fileID: 0}
+  buyable: 0
+  debug: 0
+  DaysToWait: 0
+  CustomerReaction: 0

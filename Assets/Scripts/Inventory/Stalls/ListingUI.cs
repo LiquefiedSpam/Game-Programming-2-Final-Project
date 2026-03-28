@@ -85,7 +85,7 @@ public class ListingUI : MonoBehaviour
     {
         if (currentSlot == null)
         {
-            saveButton.onClick.AddListener(CloseWindow);
+            closeButton.onClick.AddListener(CloseWindow);
             profitButton.onClick.AddListener(GainProfit);
         }
         else

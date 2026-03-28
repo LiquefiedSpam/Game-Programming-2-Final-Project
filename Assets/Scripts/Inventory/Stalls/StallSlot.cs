@@ -57,7 +57,7 @@ public class StallSlot : Slot
             }
             else
             {
-                iconImage.sprite = purchasedSprite;
+                // iconImage.sprite = purchasedSprite;
                 amountTxt.text = "";
                 priceTxt.text = "";
             }
@@ -92,6 +92,7 @@ public class StallSlot : Slot
         if (debug) Debug.Log("Set purchased");
         itemPurchased = true;
         CustomerReaction = heldItem.GetCustomerReaction(DaysToWait);
+        iconImage.sprite = Data.CustomerReactions.GetSprite(CustomerReaction);
         UpdateSlot();
     }
 

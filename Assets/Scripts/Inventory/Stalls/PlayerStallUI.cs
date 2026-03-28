@@ -73,8 +73,10 @@ public class PlayerStallUI : MonoBehaviour
     {
         if (s.IsPurchased())
         {
-            PlayerInventory.Instance.AddMoney(s.GetPrice());
-            s.ClearSlot();
+            ShowListingUI(s);
+            return;
+            // PlayerInventory.Instance.AddMoney(s.GetPrice());
+            // s.ClearSlot();
         }
         if (!s.HasItem()) return;
         ShowListingUI(s);
