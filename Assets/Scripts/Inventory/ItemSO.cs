@@ -60,7 +60,7 @@ public class ItemSO : ScriptableObject
         {
             if (price < priceThreshold)
             {
-                days = i + 1;
+                days = i;
                 break;
             }
             priceThreshold += maxPricePerDay;

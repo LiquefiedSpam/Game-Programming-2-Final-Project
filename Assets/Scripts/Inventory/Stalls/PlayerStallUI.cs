@@ -75,8 +75,6 @@ public class PlayerStallUI : MonoBehaviour
         {
             ShowListingUI(s);
             return;
-            // PlayerInventory.Instance.AddMoney(s.GetPrice());
-            // s.ClearSlot();
         }
         if (!s.HasItem()) return;
         ShowListingUI(s);

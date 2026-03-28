@@ -9,18 +9,15 @@ public class StallSlot : Slot
     [SerializeField] protected float itemPrice;
     [SerializeField] bool itemPurchased;
     [SerializeField] TextMeshProUGUI priceTxt;
-    [SerializeField] Sprite purchasedSprite;
     [SerializeField] Button stallButton;
-    [SerializeField] CustomerReactions reactionSprites;
     [SerializeField] bool buyable;
-    [SerializeField] bool debug;
 
     public Action<StallSlot> OnSlotClicked;
 
     int daysWaited = 0;
     bool waitingToBuy;
-    public int DaysToWait;
-    public CustomerReaction CustomerReaction;
+    public int DaysToWait { get; private set; }
+    public CustomerReaction CustomerReaction { get; private set; }
 
     void Awake()
     {
@@ -57,7 +54,6 @@ public class StallSlot : Slot
             }
             else
             {
-                // iconImage.sprite = purchasedSprite;
                 amountTxt.text = "";
                 priceTxt.text = "";
             }
@@ -78,7 +74,6 @@ public class StallSlot : Slot
 
     public override void ClearSlot()
     {
-        if (debug) Debug.Log("Clear slot");
         heldItem = null;
         itemAmount = 0;
         itemPurchased = false;
@@ -89,7 +84,6 @@ public class StallSlot : Slot
 
     public void SetPurchased()
     {
-        if (debug) Debug.Log("Set purchased");
         itemPurchased = true;
         CustomerReaction = heldItem.GetCustomerReaction(DaysToWait);
         iconImage.sprite = Data.CustomerReactions.GetSprite(CustomerReaction);
@@ -98,7 +92,6 @@ public class StallSlot : Slot
 
     public void ClearPurchased()
     {
-        if (debug) Debug.Log("Clear purchased");
         itemPurchased = false;
         ClearSlot();
     }
@@ -133,7 +126,6 @@ public class StallSlot : Slot
     {
         if (!waitingToBuy)
         {
-            if (debug) Debug.Log("Not waiting to buy");
             return;
         }
 
@@ -141,7 +133,6 @@ public class StallSlot : Slot
 
         if (daysWaited >= DaysToWait)
         {
-            if (debug) Debug.Log("Apparently set purchase got called");
             SetPurchased();
             waitingToBuy = false;
         }
@@ -154,14 +145,11 @@ public class StallSlot : Slot
         DaysToWait = heldItem.GetDaysBeforePurchase(itemPrice / itemAmount, PlayerInventory.Instance.CurrentTown);
         if (DaysToWait >= 0)
         {
-            if (debug) Debug.Log($"Get wait time successful, wait to buy = {DaysToWait}");
-
             waitingToBuy = true;
             daysWaited = 0;
         }
         else
         {
-            if (debug) Debug.Log($"Get wait time failed, not waiting to buy");
             waitingToBuy = false;
         }
     }

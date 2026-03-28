@@ -35,6 +35,6 @@ public class HungerUIManager : MonoBehaviour
         hungerSlider.value = currentHunger;
 
         hungerText.text = ((int)currentHunger).ToString();
-        Debug.Log(currentHunger);
+        // Debug.Log(currentHunger);
     }
 }
