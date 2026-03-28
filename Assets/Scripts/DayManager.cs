@@ -86,4 +86,14 @@ public class DayManager : MonoBehaviour
             OnUnitsConsumed?.Invoke(unitsToConsume);
         }
     }
+
+    public Vector2Int TimePassed((int, DayInterval) sinceTime)
+    {
+        int passedDays = day - sinceTime.Item1 - 1;
+        int passedIntervals = 3 - (int)sinceTime.Item2 + (int)DayInterval;
+        passedDays += passedIntervals / 4;
+        passedIntervals %= 4;
+
+        return new(passedDays, passedIntervals);
+    }
 }

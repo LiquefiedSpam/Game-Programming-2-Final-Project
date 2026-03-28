@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Always Active")]
     [SerializeField] Slider _hungerSlider;
+    [SerializeField] TextMeshProUGUI _moneyText;
 
     [Header("Sign")]
     [SerializeField] GameObject _signParent;
@@ -80,6 +81,11 @@ public class UIManager : MonoBehaviour
     public void UpdateHungerUI(float hunger)
     {
         _hungerSlider.value = hunger;
+    }
+
+    public void UpdateMoneyUI(float money)
+    {
+        _moneyText.text = $"$ {money}";
     }
 
     public void ShowSign(bool show, string message = "")

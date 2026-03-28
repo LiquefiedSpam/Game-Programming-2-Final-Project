@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return itemAmount;
     }
 
-    public void SetItem(ItemSO item, int amount = 1)
+    public virtual void SetItem(ItemSO item, int amount = 1)
     {
         heldItem = item;
         itemAmount = amount;

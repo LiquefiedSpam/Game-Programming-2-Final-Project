@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerStallUI : MonoBehaviour
 {
@@ -72,6 +71,11 @@ public class PlayerStallUI : MonoBehaviour
 
     void OnListingSlotClicked(StallSlot s)
     {
+        if (s.IsPurchased())
+        {
+            PlayerInventory.Instance.AddMoney(s.GetPrice());
+            s.ClearSlot();
+        }
         if (!s.HasItem()) return;
         ShowListingUI(s);
     }

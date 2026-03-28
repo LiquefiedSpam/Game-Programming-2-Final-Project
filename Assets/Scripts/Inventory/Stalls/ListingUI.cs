@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class ListingUI : MonoBehaviour
 {
+    [Header("Common")]
     [SerializeField] Image itemImage;
     [SerializeField] TextMeshProUGUI itemTitle;
+    [SerializeField] Button closeButton;
+    [Header("Active Listing")]
+    [SerializeField] GameObject activeListingParent;
     [SerializeField] TMP_InputField itemPriceInput;
     [SerializeField] Button removeButton;
     [SerializeField] Button saveButton;
-    [SerializeField] Button closeButton;
+    [Header("Purchased Listing")]
+    [SerializeField] GameObject purchaseListingParent;
+    [SerializeField] Image reactionImage;
+    [SerializeField] Button profitButton;
 
     StallSlot currentSlot;
 
@@ -18,6 +25,38 @@ public class ListingUI : MonoBehaviour
     public Action OnUIClosed;
 
     public void Show(StallSlot slot)
+    {
+        if (slot.IsPurchased()) ShowUIForPurchasedListing(slot);
+        else ShowUIForActiveListing(slot);
+
+        itemImage.enabled = true;
+        itemImage.sprite = slot.GetItem().icon;
+        itemTitle.text = slot.GetItem().itemName + "  x" + slot.GetAmount().ToString();
+
+        gameObject.SetActive(true);
+    }
+
+    public void Hide(bool invokeAction = false)
+    {
+        if (invokeAction) OnUIClosed?.Invoke();
+
+        gameObject.SetActive(false);
+        saveButton.onClick.RemoveListener(SaveChanges);
+        removeButton.onClick.RemoveListener(RemoveListing);
+        closeButton.onClick.RemoveListener(CloseWindow);
+        profitButton.onClick.RemoveListener(GainProfit);
+
+        currentSlot = null;
+        OnListingRemoved = null;
+        OnUIClosed = null;
+    }
+
+    void OnDisable()
+    {
+        Hide();
+    }
+
+    void ShowUIForActiveListing(StallSlot slot)
     {
         if (currentSlot == null)
         {
@@ -35,31 +74,31 @@ public class ListingUI : MonoBehaviour
 
         currentSlot = slot;
 
-        itemImage.enabled = true;
-        itemImage.sprite = slot.GetItem().icon;
-        itemTitle.text = slot.GetItem().itemName + "  x" + slot.GetAmount().ToString();
+        purchaseListingParent.SetActive(false);
+        activeListingParent.SetActive(true);
+
         itemPriceInput.text = slot.GetPrice().ToString();
-
-        gameObject.SetActive(true);
     }
 
-    public void Hide(bool invokeAction = false)
+    void ShowUIForPurchasedListing(StallSlot slot)
     {
-        if (invokeAction) OnUIClosed?.Invoke();
+        if (currentSlot == null)
+        {
+            saveButton.onClick.AddListener(CloseWindow);
+            profitButton.onClick.AddListener(GainProfit);
+        }
+        else
+        {
+            OnListingRemoved = null;
+            OnUIClosed = null;
+        }
 
-        gameObject.SetActive(false);
-        saveButton.onClick.RemoveListener(SaveChanges);
-        removeButton.onClick.RemoveListener(RemoveListing);
-        closeButton.onClick.RemoveListener(CloseWindow);
+        currentSlot = slot;
 
-        currentSlot = null;
-        OnListingRemoved = null;
-        OnUIClosed = null;
-    }
+        activeListingParent.SetActive(false);
+        purchaseListingParent.SetActive(true);
 
-    void OnDisable()
-    {
-        Hide();
+        reactionImage.sprite = Data.ReactionSprites.GetSprite(slot.CustomerReaction);
     }
 
     void SaveChanges()
@@ -82,6 +121,13 @@ public class ListingUI : MonoBehaviour
     void CloseWindow()
     {
         gameObject.SetActive(false);
+        Hide(true);
+    }
+
+    void GainProfit()
+    {
+        PlayerInventory.Instance.AddMoney(currentSlot.GetPrice());
+        currentSlot.ClearSlot();
         Hide(true);
     }
 }

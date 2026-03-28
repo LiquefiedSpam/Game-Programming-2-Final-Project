@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
 public class Teleport : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Teleport : MonoBehaviour
         WoodToSand,
         SandToStone
     }
+
+    public static Action<int> OnTownChanged;
 
     private TravelPath currentPath;
 
@@ -56,14 +59,17 @@ public class Teleport : MonoBehaviour
         if (teleportLocation.name == "Sand Teleport")
         {
             UIManager.Ins.UpdateMapUISand(woodToSandDangerLevel, woodToSandChance, sandToStoneDangerLevel, sandToStoneChance);
+            OnTownChanged?.Invoke(2);
         }
         else if (teleportLocation.name == "Stone Teleport")
         {
             UIManager.Ins.UpdateMapUIStone(woodToStoneDangerLevel, woodToStoneChance, sandToStoneDangerLevel, sandToStoneChance);
+            OnTownChanged?.Invoke(3);
         }
         else
         {
             UIManager.Ins.UpdateMapUIWood(woodToSandDangerLevel, woodToSandChance, woodToStoneDangerLevel, woodToStoneChance);
+            OnTownChanged?.Invoke(1);
         }
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
@@ -111,7 +117,8 @@ public class Teleport : MonoBehaviour
                 break;
 
             case TravelPath.WoodToSand:
-                if (percentForAttack <= woodToSandChance) {
+                if (percentForAttack <= woodToSandChance)
+                {
                     MarauderAttack(woodToSandDangerLevel);
                 }
                 else
