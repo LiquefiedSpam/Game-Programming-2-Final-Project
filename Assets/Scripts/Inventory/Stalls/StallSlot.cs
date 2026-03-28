@@ -88,7 +88,7 @@ public class StallSlot : Slot
     {
         Debug.Log("Set purchased");
         itemPurchased = true;
-        CustomerReaction = Data.GetReaction(GetItem(), WaitToBuy);
+        CustomerReaction = heldItem.GetCustomerReaction(WaitToBuy);
         UpdateSlot();
     }
 
@@ -143,9 +143,9 @@ public class StallSlot : Slot
 
     void SetWaitingToBuy()
     {
-        if (GetItem() == null) return;
+        if (heldItem == null) return;
 
-        if (Data.TryGetPurchaseTime(GetItem(), itemPrice / GetAmount(), out WaitToBuy))
+        if (heldItem.TryGetPurchaseTime(itemPrice / GetAmount(), PlayerInventory.Instance.CurrentTown, out WaitToBuy))
         {
             Debug.Log($"Try get purchased tim successful, wait to buy = {WaitToBuy}");
             timePosted = (DayManager.Ins.Day, DayManager.Ins.DayInterval);

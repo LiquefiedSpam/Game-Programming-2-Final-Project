@@ -18,6 +18,7 @@ public class ListingUI : MonoBehaviour
     [SerializeField] GameObject purchaseListingParent;
     [SerializeField] Image reactionImage;
     [SerializeField] Button profitButton;
+    [SerializeField] TextMeshPro priceText;
 
     StallSlot currentSlot;
 
@@ -98,7 +99,8 @@ public class ListingUI : MonoBehaviour
         activeListingParent.SetActive(false);
         purchaseListingParent.SetActive(true);
 
-        reactionImage.sprite = Data.ReactionSprites.GetSprite(slot.CustomerReaction);
+        reactionImage.sprite = Data.CustomerReactions.GetSprite(slot.CustomerReaction);
+        priceText.text = $"Sold for ${slot.GetPrice()}";
     }
 
     void SaveChanges()

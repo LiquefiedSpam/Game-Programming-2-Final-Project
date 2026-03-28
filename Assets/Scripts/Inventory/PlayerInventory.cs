@@ -8,6 +8,7 @@ public class PlayerInventory : Inventory
 
     [SerializeField] float startMoney = 10f;
     public Action<float> OnMoneyChanged;
+    public int CurrentTown { get; private set; } = 1;
 
     float money;
     public float Money => money;
@@ -29,6 +30,12 @@ public class PlayerInventory : Inventory
     {
         money = startMoney;
         UIManager.Ins.UpdateMoneyUI(money);
+        Teleport.OnTownChanged += TownChanged;
+    }
+
+    void OnDestroy()
+    {
+        Teleport.OnTownChanged -= TownChanged;
     }
 
     public bool TryPurchaseItem(float price, ItemSO item, int amount)
@@ -44,5 +51,10 @@ public class PlayerInventory : Inventory
         money += amt;
         UIManager.Ins.UpdateMoneyUI(money);
         OnMoneyChanged?.Invoke(money);
+    }
+
+    void TownChanged(int town)
+    {
+        CurrentTown = town;
     }
 }

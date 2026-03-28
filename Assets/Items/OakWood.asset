@@ -17,3 +17,6 @@ MonoBehaviour:
   maxStackSize: 16
   itemPrefab: {fileID: 7475640196448705139, guid: aabe6757b6a3442f081cc6ddc6437467, type: 3}
   handItemPrefab: {fileID: 7475640196448705139, guid: aabe6757b6a3442f081cc6ddc6437467, type: 3}
+  maxPriceTown1: 1
+  maxPriceTown2: 3
+  maxPriceTown3: 2

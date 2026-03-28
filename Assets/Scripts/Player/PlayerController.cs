@@ -8,14 +8,9 @@ public class PlayerController : MonoBehaviour
     private float _speed;
 
     private PlayerInputController _playerInputController;
-    private float _money = 0f;
 
     private bool _canMove = true;
 
-    public bool CanAfford(float cost)
-    {
-        return _money >= cost;
-    }
 
     void Awake()
     {
