@@ -45,46 +45,35 @@ public class ItemSO : ScriptableObject
     /// take longer than max purchase days.
     /// </summary>
     /// <returns></returns>
-    public bool TryGetPurchaseTime(float price, int town, out Vector2Int purchaseTime)
+    public int GetDaysBeforePurchase(float price, int town)
     {
         if (!ValidPrice(price, town))
         {
-            purchaseTime = Vector2Int.zero;
-            return false;
+            return -1;
         }
 
-        float maxPricePerDay = MaxPriceForTown(town) / MAX_PURCHASE_DAYS;
-
         int days = 0;
-        int intervals = 0;
 
+        float maxPricePerDay = MaxPriceForTown(town) / MAX_PURCHASE_DAYS;
         float priceThreshold = maxPricePerDay;
         for (int i = 0; i < MAX_PURCHASE_DAYS; i++)
         {
             if (price < priceThreshold)
             {
-                days = i;
-                intervals = Mathf.RoundToInt(INTERVAL_COUNT * Mathf.Max(0f, price - (priceThreshold * i)));
+                days = i + 1;
                 break;
             }
             priceThreshold += maxPricePerDay;
         }
 
-        if (intervals == INTERVAL_COUNT)
-        {
-            days++;
-            intervals = 0;
-        }
-
-        purchaseTime = new(days, intervals);
-        return true;
+        return days;
     }
 
-    public CustomerReaction GetCustomerReaction(Vector2Int buyWaitTime)
+    public CustomerReaction GetCustomerReaction(int buyWaitTime)
     {
-        if (buyWaitTime.x < 1) return CustomerReaction.HAPPY;
-        if (buyWaitTime.x < 2) return CustomerReaction.OKAY;
-        if (buyWaitTime.x < 3) return CustomerReaction.ANNOYED;
+        if (buyWaitTime <= 1) return CustomerReaction.HAPPY;
+        if (buyWaitTime <= 2) return CustomerReaction.OKAY;
+        if (buyWaitTime <= 3) return CustomerReaction.ANNOYED;
         return CustomerReaction.ANGRY;
     }
 }

@@ -18,7 +18,7 @@ public class ListingUI : MonoBehaviour
     [SerializeField] GameObject purchaseListingParent;
     [SerializeField] Image reactionImage;
     [SerializeField] Button profitButton;
-    [SerializeField] TextMeshPro priceText;
+    [SerializeField] TextMeshProUGUI priceText;
 
     StallSlot currentSlot;
 

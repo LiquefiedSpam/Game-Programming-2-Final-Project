@@ -17,6 +17,7 @@ public class DayManager : MonoBehaviour
 
     public event Action OnTimeChanged; //for things that just need to know time has changed
     public event Action<int> OnUnitsConsumed; //for things that need to know amount of units that elapsed
+    public Action OnDayChanged;
 
     public DayInterval DayInterval => dayInterval;
     public int UnitsPerInterval => unitsPerInterval;
@@ -52,6 +53,7 @@ public class DayManager : MonoBehaviour
         units = unitsPerInterval;
         dayInterval = DayInterval.Morning;
         OnTimeChanged?.Invoke();
+        OnDayChanged?.Invoke();
     }
 
     // advances units by  the number inputted. Will change over to next interval 
@@ -70,6 +72,7 @@ public class DayManager : MonoBehaviour
             {
                 if (dayInterval == DayInterval.Night)
                 {
+                    OnDayChanged?.Invoke();
                     dayInterval = DayInterval.Morning;
                 }
                 else
@@ -85,15 +88,5 @@ public class DayManager : MonoBehaviour
             OnTimeChanged?.Invoke();
             OnUnitsConsumed?.Invoke(unitsToConsume);
         }
-    }
-
-    public Vector2Int TimePassed((int, DayInterval) sinceTime)
-    {
-        int passedDays = day - sinceTime.Item1 - 1;
-        int passedIntervals = 3 - (int)sinceTime.Item2 + (int)DayInterval;
-        passedDays += passedIntervals / 4;
-        passedIntervals %= 4;
-
-        return new(passedDays, passedIntervals);
     }
 }

@@ -13,17 +13,18 @@ public class StallSlot : Slot
     [SerializeField] Button stallButton;
     [SerializeField] CustomerReactions reactionSprites;
     [SerializeField] bool buyable;
+    [SerializeField] bool debug;
 
     public Action<StallSlot> OnSlotClicked;
 
-    (int, DayInterval) timePosted;
+    int daysWaited = 0;
     bool waitingToBuy;
-    public Vector2Int WaitToBuy;
+    public int DaysToWait;
     public CustomerReaction CustomerReaction;
 
     void Awake()
     {
-        if (buyable) DayManager.Ins.OnTimeChanged += HandleTimeChanged;
+        if (buyable) DayManager.Ins.OnDayChanged += HandleDayChanged;
     }
 
     void OnEnable()
@@ -39,7 +40,7 @@ public class StallSlot : Slot
 
     void OnDestroy()
     {
-        if (buyable) DayManager.Ins.OnTimeChanged -= HandleTimeChanged;
+        if (buyable) DayManager.Ins.OnDayChanged -= HandleDayChanged;
     }
 
     public override void UpdateSlot()
@@ -77,23 +78,26 @@ public class StallSlot : Slot
 
     public override void ClearSlot()
     {
+        if (debug) Debug.Log("Clear slot");
         heldItem = null;
         itemAmount = 0;
         itemPurchased = false;
+        daysWaited = 0;
+        waitingToBuy = false;
         UpdateSlot();
-        if (buyable) waitingToBuy = false;
     }
 
     public void SetPurchased()
     {
-        Debug.Log("Set purchased");
+        if (debug) Debug.Log("Set purchased");
         itemPurchased = true;
-        CustomerReaction = heldItem.GetCustomerReaction(WaitToBuy);
+        CustomerReaction = heldItem.GetCustomerReaction(DaysToWait);
         UpdateSlot();
     }
 
     public void ClearPurchased()
     {
+        if (debug) Debug.Log("Clear purchased");
         itemPurchased = false;
         ClearSlot();
     }
@@ -124,18 +128,19 @@ public class StallSlot : Slot
         }
     }
 
-    void HandleTimeChanged()
+    void HandleDayChanged()
     {
         if (!waitingToBuy)
         {
-            Debug.Log("Not waiting to buy");
+            if (debug) Debug.Log("Not waiting to buy");
             return;
         }
 
-        Vector2Int timePassed = DayManager.Ins.TimePassed(timePosted);
-        if (timePassed.x > WaitToBuy.x
-            || (timePassed.x == WaitToBuy.x && timePassed.y >= WaitToBuy.y))
+        daysWaited++;
+
+        if (daysWaited >= DaysToWait)
         {
+            if (debug) Debug.Log("Apparently set purchase got called");
             SetPurchased();
             waitingToBuy = false;
         }
@@ -145,14 +150,17 @@ public class StallSlot : Slot
     {
         if (heldItem == null) return;
 
-        if (heldItem.TryGetPurchaseTime(itemPrice / GetAmount(), PlayerInventory.Instance.CurrentTown, out WaitToBuy))
+        DaysToWait = heldItem.GetDaysBeforePurchase(itemPrice / itemAmount, PlayerInventory.Instance.CurrentTown);
+        if (DaysToWait >= 0)
         {
-            Debug.Log($"Try get purchased tim successful, wait to buy = {WaitToBuy}");
-            timePosted = (DayManager.Ins.Day, DayManager.Ins.DayInterval);
+            if (debug) Debug.Log($"Get wait time successful, wait to buy = {DaysToWait}");
+
             waitingToBuy = true;
+            daysWaited = 0;
         }
         else
         {
+            if (debug) Debug.Log($"Get wait time failed, not waiting to buy");
             waitingToBuy = false;
         }
     }
