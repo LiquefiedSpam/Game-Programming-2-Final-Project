@@ -12,7 +12,6 @@ public class DialogBehavior : InteractableBehavior
     private float detectionRadius = 10f;
     private Quaternion defaultRotation;
     private Coroutine _rotateCoroutine;
-    [SerializeField] private LayerMask playerLayer;
 
     Animator animator;
 
@@ -89,13 +88,5 @@ public class DialogBehavior : InteractableBehavior
         transform.rotation = targetRot;
         animator.SetBool("isTurning", false);
         animator.SetBool(targetAnim, true);
-    }
-
-    private Transform GetNearbyPlayer()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
-        if (hits.Length > 0)
-            return hits[0].transform;
-        return null;
     }
 }

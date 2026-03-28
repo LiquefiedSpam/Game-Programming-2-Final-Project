@@ -487,116 +487,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5415756404467315702, guid: f8185d24a183444a2b4d5c0cd7242f9f, type: 3}
   m_PrefabInstance: {fileID: 1679815118051070697}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &30238439
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 155500, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_Name
-      value: Town1Villager
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.023361
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0000002674055
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 408984, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 155500, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 30238442}
-    - targetCorrespondingSourceObject: {fileID: 155500, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 30238441}
-  m_SourcePrefab: {fileID: 100100000, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
---- !u!1 &30238440 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 155500, guid: c3b564d07ffff33409aaf436a9f29c01, type: 3}
-  m_PrefabInstance: {fileID: 30238439}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &30238441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30238440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2015ed3e4e3474b81df59314951f09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogBehavior
-  _hungerCost: 0
-  _name: Villager
-  _dialog: Move items to/from your inventory by hovering over them and pressing 'Q'.
-  _portrait: {fileID: 0}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!136 &30238442
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30238440}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &35813315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5217,11 +5107,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4282887458101321194, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
   m_PrefabInstance: {fileID: 495679163}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &504280122 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-  m_PrefabInstance: {fileID: 574487623}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &507187103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5902,145 +5787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b891c81d51264f2fbd52bac8d428118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StallSlot
---- !u!1001 &574487623
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1737155044}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.14
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10.43
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.72825146
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.68531007
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 273.48
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_Name
-      value: Town1Villager
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      propertyPath: m_TagString
-      value: Interactable
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574487626}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574487627}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574487628}
-  m_SourcePrefab: {fileID: 100100000, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
---- !u!4 &574487624 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26226d34bdc67014f8829f397458aaeb, type: 3}
-  m_PrefabInstance: {fileID: 574487623}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &574487626
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504280122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2.6520486
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8260243, z: 0}
---- !u!114 &574487627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504280122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2015ed3e4e3474b81df59314951f09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogBehavior
-  _hungerCost: 0.5
-  _name: Villager
-  _dialog: Move items to/from your inventory by hovering over them and pressing 'Q'.
-  _portrait: {fileID: 21300000, guid: 6495d487ba8ef450caf11ef7620bff12, type: 3}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!95 &574487628
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504280122}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 784288108e015034e81e50a97cf93557, type: 2}
-  m_Controller: {fileID: 9100000, guid: afb09d25046627a4b9c7e700294881a3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &575243254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13270,7 +13016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eb7f442c4128c244bba21fa3760643d6, type: 3}
       propertyPath: m_Name
-      value: NpcVillagerKid
+      value: Villager1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eb7f442c4128c244bba21fa3760643d6, type: 3}
       propertyPath: m_TagString
@@ -13334,9 +13080,6 @@ MonoBehaviour:
   _name: Jimmy
   _dialog: This town doesn't have any wheat!
   _portrait: {fileID: 21300000, guid: b49e19ed92a554238bc8bd2159d5b46b, type: 3}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!95 &1183348298
 Animator:
   serializedVersion: 7
@@ -13729,82 +13472,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.6134715, y: 3.064641, z: 3.136914}
   m_Center: {x: 0.017487053, y: 0.056758404, z: -0.009870711}
---- !u!1001 &1216143223
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1737155044}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 12.95
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.8
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.2232501
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.97476125
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -205.8
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_Name
-      value: Town1Child
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      propertyPath: m_TagString
-      value: Interactable
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2141183324}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2141183325}
-  m_SourcePrefab: {fileID: 100100000, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
---- !u!4 &1216143224 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-  m_PrefabInstance: {fileID: 1216143223}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1216814416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16307,6 +15974,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1737155044}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1001 &1490864150
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.126425
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000011920929
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.858843
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5371326
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.025871787
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8428799
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.01930497
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -3.459
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -475.024
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1.313
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_Name
+      value: Villager2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 68996657b0eff5c4cbfea3e957fe02ca, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'forearm_R'\n\tTransform 'spine_002'\n\tTransform
+        'thigh_L'\n\tTransform 'foot_R'\n\tTransform 'spine_004'\n\tTransform 'shin_R'\n\tTransform
+        'foot_L'\n\tTransform 'upper_arm_L'\n\tTransform 'shoulder_L'\n\tTransform
+        'shoulder_R'\n\tand more ...\n\tFrom animation clip 'Turning1'\n\tFrom animation
+        clip 'Talking1'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490864152}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490864155}
+  m_SourcePrefab: {fileID: 100100000, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+--- !u!1 &1490864151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+  m_PrefabInstance: {fileID: 1490864150}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1490864152
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490864151}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &1490864155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490864151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2015ed3e4e3474b81df59314951f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogBehavior
+  _hungerCost: 1
+  _name: Bobson
+  _dialog: Move items to/from your inventory by hovering over them and pressing 'Q'.
+  _portrait: {fileID: 21300000, guid: 6495d487ba8ef450caf11ef7620bff12, type: 3}
 --- !u!1001 &1505077913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18726,8 +18522,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1556512201}
-  - {fileID: 1216143224}
-  - {fileID: 574487624}
   - {fileID: 2096950504}
   - {fileID: 693793474}
   - {fileID: 78810622}
@@ -24571,53 +24365,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2141183323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 731a2509f6129ee4591bac893bc84ef9, type: 3}
-  m_PrefabInstance: {fileID: 1216143223}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &2141183324
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141183323}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &2141183325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141183323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2015ed3e4e3474b81df59314951f09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogBehavior
-  _hungerCost: 1
-  _name: Child
-  _dialog: 'This town doesn''t have any wheat! '
-  _portrait: {fileID: 21300000, guid: b49e19ed92a554238bc8bd2159d5b46b, type: 3}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1001 &2142168570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28225,5 +27972,5 @@ SceneRoots:
   - {fileID: 1954401802}
   - {fileID: 4571907394656368566}
   - {fileID: 304255955}
-  - {fileID: 30238439}
   - {fileID: 1183348294}
+  - {fileID: 1490864150}
