@@ -26,7 +26,14 @@ public class PlayerInputController : MonoBehaviour
         else if (interactable != null)
         {
             _interactableMonitor.SetInteracting(true);
-            interactable.Interact(this.transform.position);
+            if (interactable.Type == InteractableType.DIALOG)
+            {
+                interactable.Interact(this.transform.position);
+            }
+            else
+            {
+                interactable.Interact();
+            }
         }
     }
 

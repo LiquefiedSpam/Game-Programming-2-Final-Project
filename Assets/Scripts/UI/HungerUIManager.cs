@@ -31,7 +31,6 @@ public class HungerUIManager : MonoBehaviour
 
     void Refresh()
     {
-        Debug.Log("hiii");
         float currentHunger = HungerManager.Ins.CurrentHunger;
         hungerSlider.value = currentHunger;
 

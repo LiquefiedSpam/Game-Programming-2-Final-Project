@@ -10,6 +10,7 @@ public class SignBehavior : InteractableBehavior
 
     public override void Interact()
     {
+        Debug.Log("interacted with me");
         if (InteractingWith != null)
         {
             Debug.LogError($"Already interacting with {InteractingWith.gameObject.name}");
