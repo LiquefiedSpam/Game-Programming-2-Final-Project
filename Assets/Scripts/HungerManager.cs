@@ -20,7 +20,6 @@ public class HungerManager : MonoBehaviour
 
     public static HungerManager Ins => _instance;
     private static HungerManager _instance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
     {
