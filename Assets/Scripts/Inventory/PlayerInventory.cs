@@ -6,7 +6,7 @@ public class PlayerInventory : Inventory
     public static PlayerInventory Instance => instance;
     public static PlayerInventory instance;
 
-    [SerializeField] float startMoney = 10f;
+    [SerializeField] float startMoney = 100f;
     public Action<float> OnMoneyChanged;
     public int CurrentTown { get; private set; } = 1;
 
