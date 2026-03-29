@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -72,6 +73,9 @@ public class PlayerController : MonoBehaviour
 
     void ForceNextDay()
     {
+        PlayerInventory.Instance.TownChanged(InnBehavior.LastVisitedTown);
+        PlayerInventory.Instance.HalfMoney();
+
         Vector3 pos = InnBehavior.LastVisitedTeleportPoint.position;
         transform.position = new Vector3(pos.x, transform.position.y, pos.z);
         HungerManager.Ins.ResetHunger();

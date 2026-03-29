@@ -53,8 +53,14 @@ public class PlayerInventory : Inventory
         OnMoneyChanged?.Invoke(money);
     }
 
-    void TownChanged(int town)
+    public void HalfMoney()
     {
+        AddMoney(-(money / 2));
+    }
+
+    public void TownChanged(int town)
+    {
+        Debug.Log($"Current town: {town}");
         CurrentTown = town;
     }
 }
