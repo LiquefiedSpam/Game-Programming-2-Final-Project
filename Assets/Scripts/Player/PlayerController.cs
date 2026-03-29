@@ -4,8 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     public const int MAX_HUNGER = 100;
 
-    [SerializeField]
-    private float _speed;
+    [SerializeField] private float _speed;
+    private Animator animator;
 
     private PlayerInputController _playerInputController;
 
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         _playerInputController = GetComponent<PlayerInputController>();
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
@@ -36,14 +37,24 @@ public class PlayerController : MonoBehaviour
     {
         if (!_canMove) return;
 
-        Vector3 positionChange = new Vector3(
+        Vector3 moveDir = new Vector3(
             _playerInputController.MovementInputVector.x,
             0,
-            _playerInputController.MovementInputVector.y)
-            * Time.deltaTime
-            * _speed;
+            _playerInputController.MovementInputVector.y);
 
-        transform.position += positionChange;
+        if (moveDir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(moveDir);
+            animator.SetBool("isIdle", false);
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isIdle", true);
+        }
+
+        transform.position += moveDir * Time.deltaTime * _speed;
     }
 
     void Interact(float hungerCost)
