@@ -21,9 +21,7 @@ public class NpcBehavior : InteractableBehavior
     {
         defaultRotation = this.transform.rotation;
         animator = GetComponent<Animator>();
-        animator.SetBool("isIdle", true);
-        animator.SetBool("isTalking", false);
-        animator.SetBool("isTurning", false);
+        setAnimation("isIdle");
     }
     public override void Interact(Vector3 playerPos)
     {
@@ -86,5 +84,14 @@ public class NpcBehavior : InteractableBehavior
         transform.rotation = targetRot;
         animator.SetBool("isTurning", false);
         animator.SetBool(targetAnim, true);
+    }
+
+    void setAnimation(string animName)
+    {
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isTalking", false);
+        animator.SetBool("isTurning", false);
+
+        animator.SetBool(animName, true);
     }
 }
