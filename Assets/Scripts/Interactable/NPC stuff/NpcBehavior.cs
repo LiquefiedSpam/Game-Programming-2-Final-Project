@@ -1,12 +1,25 @@
 using UnityEngine;
 using System.Collections;
+using System.Reflection;
+using System.Collections.Generic;
 
 public class NpcBehavior : InteractableBehavior
 {
+
+    [Header("Identity")]
     [SerializeField] string _name;
     [TextArea(2, 10)]
     [SerializeField] Sprite _portrait;
-    [SerializeField] string _dialog;
+
+
+    [Header("Greetings")]
+    [SerializeField][TextArea(2, 5)] string morningGreeting;
+    [SerializeField][TextArea(2, 5)] string daytimeGreeting;
+    [SerializeField][TextArea(2, 5)] string eveningGreeting;
+    [SerializeField][TextArea(2, 5)] string nightGreeting;
+    [SerializeField][TextArea(2, 5)] string goodbyeMessage;
+
+    List<DialogueOption> options;
 
     private float detectionRadius = 10f;
     private Quaternion defaultRotation;
@@ -23,6 +36,8 @@ public class NpcBehavior : InteractableBehavior
         animator = GetComponent<Animator>();
         setAnimation("isIdle");
     }
+
+
     public override void Interact(Vector3 playerPos)
     {
         if (InteractingWith != null)
@@ -41,7 +56,8 @@ public class NpcBehavior : InteractableBehavior
         StartRotate(targetRotation, "isTalking");
 
         //now, dialogue
-        UIManager.Ins.ShowDialog(true, _name, _dialog, _portrait);
+        UIManager.Ins.ShowDialog(options, true, _name, CorrectGreeting(), _portrait);
+
         DayManager.Ins.ConsumeUnit(1);
     }
 
@@ -53,6 +69,26 @@ public class NpcBehavior : InteractableBehavior
 
         //disengage visually
         StartRotate(defaultRotation, "isIdle");
+    }
+
+    private string CorrectGreeting()
+    {
+        switch (DayManager.Ins.DayInterval)
+        {
+            case DayInterval.Morning:
+                return morningGreeting;
+
+            case DayInterval.Daytime:
+                return daytimeGreeting;
+
+            case DayInterval.Evening:
+                return eveningGreeting;
+
+            case DayInterval.Night:
+                return nightGreeting;
+        }
+        Debug.LogError("correct greeting not found!");
+        return "";
     }
 
 

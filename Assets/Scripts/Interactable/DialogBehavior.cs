@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DialogBehavior : InteractableBehavior
 {
     [SerializeField] string _name;
     [TextArea(2, 10)]
+    [SerializeField] List<DialogueUnit> beginningDialogue;
     [SerializeField] string _dialog;
     [SerializeField] Sprite _portrait;
 
@@ -21,6 +23,7 @@ public class DialogBehavior : InteractableBehavior
 
     void Awake()
     {
+        //beginningDialogue = new List<DialogueUnit>();
         defaultRotation = this.transform.rotation;
         animator = GetComponent<Animator>();
         animator.SetBool("isIdle", true);
