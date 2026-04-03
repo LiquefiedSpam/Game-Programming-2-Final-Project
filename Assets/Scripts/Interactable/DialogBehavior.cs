@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class DialogBehavior : InteractableBehavior
 {
     [SerializeField] string _name;
-    [TextArea(2, 10)]
-    [SerializeField] List<DialogueUnit> beginningDialogue;
-    [SerializeField] string _dialog;
+    [TextArea(2, 10)][SerializeField] string _dialog;
     [SerializeField] Sprite _portrait;
 
 

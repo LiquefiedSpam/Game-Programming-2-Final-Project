@@ -56,7 +56,7 @@ public class NpcBehavior : InteractableBehavior
         StartRotate(targetRotation, "isTalking");
 
         //now, dialogue
-        UIManager.Ins.ShowDialog(options, true, _name, CorrectGreeting(), _portrait);
+        UIManager.Ins.ShowDialog(true, _name, CorrectGreeting(), _portrait);
 
         DayManager.Ins.ConsumeUnit(1);
     }
