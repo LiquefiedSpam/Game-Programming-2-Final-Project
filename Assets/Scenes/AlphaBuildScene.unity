@@ -3137,7 +3137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 7041593}
   mapImage: {fileID: 1881379450}
 --- !u!65 &398159490
@@ -14437,7 +14439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 1939405303}
   mapImage: {fileID: 1881379450}
 --- !u!65 &643258611
@@ -15246,7 +15250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 1350477510}
   mapImage: {fileID: 1881379450}
 --- !u!1 &750494454
@@ -21522,7 +21528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 1939405303}
   mapImage: {fileID: 1881379450}
 --- !u!1001 &961446942
@@ -25527,7 +25535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 1350477510}
   mapImage: {fileID: 1881379450}
 --- !u!65 &1416148978
@@ -39737,7 +39747,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  currentTown: 
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
   teleportLocation: {fileID: 7041593}
   mapImage: {fileID: 1881379450}
 --- !u!65 &1882578944
@@ -46639,6 +46651,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245c7a086eb3c49149d3ca84e8a93caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStallSlot
+--- !u!1 &2069322082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2069322083}
+  - component: {fileID: 2069322084}
+  m_Layer: 0
+  m_Name: TravelPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2069322083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069322082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -125, y: 0, z: -275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2069322084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069322082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab47d8bbf21f4f24d86f075b11dfc1cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileManager
+  travelPathLength: 3
+  travelPathObject: {fileID: 2069322083}
+  nextSpawnPoint: {x: -125, y: 0, z: -275}
 --- !u!1 &2088663347
 GameObject:
   m_ObjectHideFlags: 0
@@ -51375,3 +51434,4 @@ SceneRoots:
   - {fileID: 1040294351}
   - {fileID: 304255955}
   - {fileID: 2057660965628067608}
+  - {fileID: 2069322083}

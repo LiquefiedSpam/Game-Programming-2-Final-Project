@@ -3,10 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 using Random = UnityEngine.Random;
+using System.Collections.Generic;
 
 public class Teleport : MonoBehaviour
 {
-    [SerializeField] private string currentTown;
+    [Header("Tile Prefabs")]
+    public GameObject[] grassTilePrefabs;
+    public GameObject[] sandTilePrefabs;
+    public GameObject[] stoneTilePrefabs;
+
     [SerializeField] private GameObject teleportLocation;
 
     [SerializeField] private Image mapImage;
@@ -106,36 +111,42 @@ public class Teleport : MonoBehaviour
         switch (currentPath)
         {
             case TravelPath.WoodToStone:
-                if (percentForAttack <= woodToStoneChance)
-                {
-                    MarauderAttack(woodToStoneDangerLevel);
-                }
-                else
-                {
-                    travelStatus = "No Mauraders attacked you!";
-                }
+                TileManager.Instance.GenerateTravelPath(grassTilePrefabs, stoneTilePrefabs);
+
+                //if (percentForAttack <= woodToStoneChance)
+                //{
+                //    MarauderAttack(woodToStoneDangerLevel);
+                //}
+                //else
+                //{
+                //    travelStatus = "No Mauraders attacked you!";
+                //}
                 break;
 
             case TravelPath.WoodToSand:
-                if (percentForAttack <= woodToSandChance)
-                {
-                    MarauderAttack(woodToSandDangerLevel);
-                }
-                else
-                {
-                    travelStatus = "No Mauraders attacked you!";
-                }
+                TileManager.Instance.GenerateTravelPath(grassTilePrefabs, sandTilePrefabs);
+
+                //if (percentForAttack <= woodToSandChance)
+                //{
+                //    MarauderAttack(woodToSandDangerLevel);
+                //}
+                //else
+                //{
+                //    travelStatus = "No Mauraders attacked you!";
+                //}
                 break;
 
             case TravelPath.SandToStone:
-                if (percentForAttack <= sandToStoneChance)
-                {
-                    MarauderAttack(sandToStoneDangerLevel);
-                }
-                else
-                {
-                    travelStatus = "No Mauraders attacked you!";
-                }
+                TileManager.Instance.GenerateTravelPath(sandTilePrefabs, stoneTilePrefabs);
+
+                //if (percentForAttack <= sandToStoneChance)
+                //{
+                //    MarauderAttack(sandToStoneDangerLevel);
+                //}
+                //else
+                //{
+                //    travelStatus = "No Mauraders attacked you!";
+                //}
                 break;
         }
     }
