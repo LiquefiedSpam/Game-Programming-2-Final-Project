@@ -79,7 +79,7 @@ public class RapportManager : MonoBehaviour
         if (rapport <= 50)
             return 5;
 
-        return 0;
+        return 6;
     }
 
     void ClearRapportCooldown()
