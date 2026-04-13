@@ -24186,6 +24186,7 @@ GameObject:
   - component: {fileID: 1191138981}
   - component: {fileID: 1191138980}
   - component: {fileID: 1191138982}
+  - component: {fileID: 1191138983}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -24302,6 +24303,26 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &1191138983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191138979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daccfcd45e02ee044bc20806101089ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayNightLighting
+  morningAngle: 30
+  daytimeAngle: 60
+  eveningAngle: 150
+  nightAngle: 180
+  morningColor: {r: 1, g: 0.7, b: 0.4, a: 1}
+  daytimeColor: {r: 1, g: 1, b: 0.9, a: 1}
+  eveningColor: {r: 1, g: 0.4, b: 0.2, a: 1}
+  nightColor: {r: 0.1, g: 0.1, b: 0.3, a: 1}
 --- !u!1 &1205276654
 GameObject:
   m_ObjectHideFlags: 0

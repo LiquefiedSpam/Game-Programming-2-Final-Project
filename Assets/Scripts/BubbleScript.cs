@@ -85,7 +85,6 @@ public class BubbleScript : MonoBehaviour
 
     public void Expand(bool inRange)
     {
-        Debug.Log("grggr");
         if (inRange)
             StartCoroutine(ScaleTo(defaultScale * expandSize, 0.1f));
 
@@ -110,7 +109,6 @@ public class BubbleScript : MonoBehaviour
 
     public IEnumerator PopAndShrink()
     {
-        Debug.Log("yeah");
         yield return ScaleTo(defaultScale * 1.8f, 0.1f); // pop bigger
         yield return ScaleTo(defaultScale, 0.2f);        // settle back to default
     }

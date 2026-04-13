@@ -79,6 +79,7 @@ public class DayManager : MonoBehaviour
                 {
                     dayInterval = (DayInterval)((int)dayInterval + 1);
                 }
+
                 units = unitsPerInterval;
             }
         }

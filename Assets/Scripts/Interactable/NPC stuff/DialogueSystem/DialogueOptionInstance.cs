@@ -10,7 +10,5 @@ public class DialogueOptionInstance
 
     // [TextArea(2, 5)]
     // public string nightResponse;
-
-    public DialogueOptionCondition condition;
     public DialogueOptionAction action;
 }
