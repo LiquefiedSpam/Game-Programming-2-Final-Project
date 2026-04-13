@@ -39,7 +39,7 @@ public class Teleport : MonoBehaviour
 
     private void Start()
     {
-        ReRollValues();
+        //ReRollValues();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,25 +61,29 @@ public class Teleport : MonoBehaviour
         yield return StartCoroutine(UIManager.Ins.FadeOut());
 
         Vector3 target = teleportLocation.transform.position;
-        if (teleportLocation.name == "Sand Teleport")
+        //if (teleportLocation.name == "Sand Teleport")
+        //{
+        //    UIManager.Ins.UpdateMapUISand(woodToSandDangerLevel, woodToSandChance, sandToStoneDangerLevel, sandToStoneChance);
+        //    OnTownChanged?.Invoke(2);
+        //}
+        //else if (teleportLocation.name == "Stone Teleport")
+        //{
+        //    UIManager.Ins.UpdateMapUIStone(woodToStoneDangerLevel, woodToStoneChance, sandToStoneDangerLevel, sandToStoneChance);
+        //    OnTownChanged?.Invoke(3);
+        //}
+        //else
+        //{
+        //    UIManager.Ins.UpdateMapUIWood(woodToSandDangerLevel, woodToSandChance, woodToStoneDangerLevel, woodToStoneChance);
+        //    OnTownChanged?.Invoke(1);
+        //}
+        if (teleportLocation.name == "TravelPath")
         {
-            UIManager.Ins.UpdateMapUISand(woodToSandDangerLevel, woodToSandChance, sandToStoneDangerLevel, sandToStoneChance);
-            OnTownChanged?.Invoke(2);
-        }
-        else if (teleportLocation.name == "Stone Teleport")
-        {
-            UIManager.Ins.UpdateMapUIStone(woodToStoneDangerLevel, woodToStoneChance, sandToStoneDangerLevel, sandToStoneChance);
-            OnTownChanged?.Invoke(3);
-        }
-        else
-        {
-            UIManager.Ins.UpdateMapUIWood(woodToSandDangerLevel, woodToSandChance, woodToStoneDangerLevel, woodToStoneChance);
-            OnTownChanged?.Invoke(1);
+            ConstructTravelPath();
         }
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
-        TravelSafetyCheck();
-        ReRollValues();
+        //TravelSafetyCheck();
+        //ReRollValues();
 
         //unfade to black
         yield return StartCoroutine(UIManager.Ins.FadeIn());
@@ -108,46 +112,64 @@ public class Teleport : MonoBehaviour
     {
         float percentForAttack = Random.Range(0f, 1f);
 
+        if (percentForAttack <= woodToStoneChance)
+        {
+            MarauderAttack(woodToStoneDangerLevel);
+        }
+        else
+        {
+            travelStatus = "No Mauraders attacked you!";
+        }
+
+        if (percentForAttack <= woodToSandChance)
+        {
+            MarauderAttack(woodToSandDangerLevel);
+        }
+        else
+        {
+            travelStatus = "No Mauraders attacked you!";
+        }
+
+        if (percentForAttack <= sandToStoneChance)
+        {
+            MarauderAttack(sandToStoneDangerLevel);
+        }
+        else
+        {
+            travelStatus = "No Mauraders attacked you!";
+        }
+    }
+
+    private void ConstructTravelPath()
+    {
+        GameObject[] interactionZones;
         switch (currentPath)
         {
             case TravelPath.WoodToStone:
-                TileManager.Instance.GenerateTravelPath(grassTilePrefabs, stoneTilePrefabs);
-
-                //if (percentForAttack <= woodToStoneChance)
-                //{
-                //    MarauderAttack(woodToStoneDangerLevel);
-                //}
-                //else
-                //{
-                //    travelStatus = "No Mauraders attacked you!";
-                //}
+                interactionZones = TileManager.Instance.GenerateTravelPath(grassTilePrefabs, stoneTilePrefabs);
+                CheckInteractionZones(interactionZones);
                 break;
 
             case TravelPath.WoodToSand:
-                TileManager.Instance.GenerateTravelPath(grassTilePrefabs, sandTilePrefabs);
-
-                //if (percentForAttack <= woodToSandChance)
-                //{
-                //    MarauderAttack(woodToSandDangerLevel);
-                //}
-                //else
-                //{
-                //    travelStatus = "No Mauraders attacked you!";
-                //}
+                interactionZones = TileManager.Instance.GenerateTravelPath(grassTilePrefabs, sandTilePrefabs);
+                CheckInteractionZones(interactionZones);
                 break;
 
             case TravelPath.SandToStone:
-                TileManager.Instance.GenerateTravelPath(sandTilePrefabs, stoneTilePrefabs);
-
-                //if (percentForAttack <= sandToStoneChance)
-                //{
-                //    MarauderAttack(sandToStoneDangerLevel);
-                //}
-                //else
-                //{
-                //    travelStatus = "No Mauraders attacked you!";
-                //}
+                interactionZones = TileManager.Instance.GenerateTravelPath(sandTilePrefabs, stoneTilePrefabs);
+                CheckInteractionZones(interactionZones);
                 break;
+        }
+
+        //loop through interaction nodes
+        
+    }
+
+    private void CheckInteractionZones(GameObject[] interactionZones)
+    {
+        for (int i = 0; i < interactionZones.Length; i++)
+        {
+            //check to see if it is a path selector or a marauder attack event
         }
     }
 

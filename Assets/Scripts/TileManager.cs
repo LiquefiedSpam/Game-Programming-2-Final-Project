@@ -11,10 +11,11 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private Vector3 nextSpawnPoint;
 
-    public void GenerateTravelPath(GameObject[] startingTown, GameObject[] endingTown)
+    public GameObject[] GenerateTravelPath(GameObject[] startingTown, GameObject[] endingTown)
     {
         List<GameObject> startTiles = new List<GameObject>(startingTown);
         List<GameObject> endTiles = new List<GameObject>(endingTown);
+        List<GameObject> interactionZones = new List<GameObject>();
 
         GameObject tilePrefab;
 
@@ -54,8 +55,18 @@ public class TileManager : MonoBehaviour
             GameObject newTile = Instantiate(tilePrefab, nextSpawnPoint, Quaternion.identity);
             newTile.transform.SetParent(travelPathObject);
 
+            foreach (Transform child in newTile.GetComponentsInChildren<Transform>())
+            {
+                if (child.CompareTag("InteractionZone"))
+                {
+                    interactionZones.Add(child.gameObject);
+                }
+            }
+
             Tile tileScript = newTile.GetComponent<Tile>();
             nextSpawnPoint += new Vector3(tileScript.GetLength(), 0, 0);
         }
+
+        return interactionZones.ToArray();
     }
 }
