@@ -85,11 +85,8 @@ public class BubbleScript : MonoBehaviour
 
     public void Expand(bool inRange)
     {
-        if (inRange)
-            StartCoroutine(ScaleTo(defaultScale * expandSize, 0.1f));
-
-        if (!inRange)
-            StartCoroutine(ScaleTo(defaultScale, 0.1f));
+        Vector3 target = inRange ? defaultScale * expandSize : defaultScale;
+        StartCoroutine(UIAnimations.ScaleTo(transform, target, 0.1f));
     }
 
     IEnumerator ScaleTo(Vector3 targetScale, float duration)
@@ -109,8 +106,7 @@ public class BubbleScript : MonoBehaviour
 
     public IEnumerator PopAndShrink()
     {
-        yield return ScaleTo(defaultScale * 1.8f, 0.1f); // pop bigger
-        yield return ScaleTo(defaultScale, 0.2f);        // settle back to default
+        yield return UIAnimations.PopAndShrink(transform, defaultScale, 1.6f);
     }
 
     public IEnumerator SpawnHeart()

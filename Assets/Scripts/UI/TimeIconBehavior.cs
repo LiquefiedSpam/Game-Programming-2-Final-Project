@@ -5,59 +5,56 @@ using System.Collections;
 
 public class TimeIconBehavior : MonoBehaviour
 {
+    [SerializeField] private Image image;
+    private float transitionDuration = .5f;
 
+    private Coroutine transition;
 
-    public Image timeIntervalImage;
-    public Vector3 fadeInStartRot = new Vector3(0, 0, 50);
-    public Vector3 fadeOutEndRot = new Vector3(0, 0, -50);
-    public Vector3 neutralRot = new Vector3(0, 0, 0);
-
-    void Start()
+    public void SetSprite(Sprite sprite)
     {
-        transform.rotation = Quaternion.Euler(fadeInStartRot);
+        image.sprite = sprite;
+        image.color = Color.white;
+        transform.localRotation = Quaternion.identity;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TransitionTo(Sprite newSprite)
     {
-
+        if (transition != null) StopCoroutine(transition);
+        transition = StartCoroutine(DoTransition(newSprite));
     }
 
-    public void SetSprite(Sprite spr)
+    private IEnumerator DoTransition(Sprite newSprite)
     {
-        timeIntervalImage.sprite = spr;
-    }
-
-    public IEnumerator Fade(bool fadeIn)
-    {
-        Vector3 targetRot;
-        Vector3 startRot;
-        if (fadeIn)
-        {
-            targetRot = neutralRot;
-            startRot = fadeInStartRot;
-        }
-        else
-        {
-            targetRot = fadeOutEndRot;
-            startRot = neutralRot;
-        }
-
-        float duration = 1f;
         float elapsed = 0f;
 
-        while (elapsed < duration)
+        // Fade/rotate out
+        while (elapsed < transitionDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-
-            transform.rotation = Quaternion.Euler(Vector3.Lerp(startRot, targetRot, t));
-            timeIntervalImage.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0f, t));
-
+            float t = elapsed / transitionDuration;
+            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, -20, t));
+            image.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, t));
             yield return null;
         }
 
-        if (!fadeIn)
-            Destroy(this);
+        // Swap sprite while invisible
+        image.sprite = newSprite;
+        transform.localRotation = Quaternion.Euler(0, 0, 20);
+        elapsed = 0f;
+
+        // Fade/rotate in
+        while (elapsed < transitionDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / transitionDuration;
+            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(20, 0, t));
+            image.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, t));
+            yield return null;
+        }
+
+        SetSprite(newSprite);
+
+        yield return UIAnimations.PopAndShrink(image.transform, image.transform.localScale, 1.2f);
+        transition = null;
     }
 }

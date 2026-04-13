@@ -7,9 +7,7 @@ public class TimeUIManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Slider timeSlider;
     [SerializeField] private TMP_Text unitsText;
-    [SerializeField] private Image intervalImage;
-    [SerializeField] private GameObject timeIconPrefab;
-    [SerializeField] private GameObject timeIconPrefabHolder;
+    [SerializeField] private TimeIconBehavior timeIcon;
 
     [Header("Interval Sprites")]
     [SerializeField] private Sprite morningSprite;
@@ -17,48 +15,13 @@ public class TimeUIManager : MonoBehaviour
     [SerializeField] private Sprite eveningSprite;
     [SerializeField] private Sprite nightSprite;
 
-    Sprite currentImg;
-    TimeIconBehavior currentIconPrefab;
-    Vector3 timeIconPrefabPos = new Vector3(362, -9, 0);
-
-
+    private DayInterval lastInterval;
 
     private void Start()
     {
         DayManager.Ins.OnTimeChanged += Refresh;
-        StartingIcon();
-        Refresh();
-    }
-
-    private void StartingIcon()
-    {
-        currentImg = GetCorrectImg();
-        spawnInIcon(true);
-        currentIconPrefab.SetSprite(currentImg);
-    }
-
-    private void ChangeIcon()
-    {
-        StartCoroutine(currentIconPrefab.Fade(false));
-        spawnInIcon(false);
-        StartCoroutine(currentIconPrefab.Fade(true));
-    }
-
-    private void spawnInIcon(bool isStarting)
-    {
-        Vector3 startingRot;
-        if (isStarting)
-        {
-            startingRot = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            startingRot = new Vector3(0, 0, 50);
-        }
-
-        GameObject iconPrefab = Instantiate(timeIconPrefab, timeIconPrefabHolder.transform.position,
-        Quaternion.Euler(startingRot), timeIconPrefabHolder.transform);
-        currentIconPrefab = iconPrefab.GetComponent<TimeIconBehavior>();
+        lastInterval = DayManager.Ins.DayInterval;
+        timeIcon.SetSprite(GetCorrectSprite());
     }
 
     private void OnDestroy()
@@ -69,33 +32,23 @@ public class TimeUIManager : MonoBehaviour
 
     private void Refresh()
     {
-        int units = DayManager.Ins.Units;
-        int maxUnits = DayManager.Ins.UnitsPerInterval;
+        timeSlider.maxValue = DayManager.Ins.UnitsPerInterval;
+        timeSlider.value = DayManager.Ins.Units;
+        unitsText.text = DayManager.Ins.Units.ToString();
 
-        timeSlider.maxValue = maxUnits;
-        timeSlider.value = units;
-
-        unitsText.text = units.ToString();
-
-        //change out icon?
-        if (currentImg != GetCorrectImg())
+        if (DayManager.Ins.DayInterval != lastInterval)
         {
-            ChangeIcon();
+            lastInterval = DayManager.Ins.DayInterval;
+            timeIcon.TransitionTo(GetCorrectSprite());
         }
     }
 
-    //Gets what the displayed image SHOULD be. Does not set it on its own.
-    private Sprite GetCorrectImg()
+    private Sprite GetCorrectSprite() => DayManager.Ins.DayInterval switch
     {
-        Sprite returnSprite = DayManager.Ins.DayInterval switch
-        {
-            DayInterval.Morning => morningSprite,
-            DayInterval.Daytime => daytimeSprite,
-            DayInterval.Evening => eveningSprite,
-            DayInterval.Night => nightSprite,
-            _ => morningSprite
-        };
-
-        return returnSprite;
-    }
+        DayInterval.Morning => morningSprite,
+        DayInterval.Daytime => daytimeSprite,
+        DayInterval.Evening => eveningSprite,
+        DayInterval.Night => nightSprite,
+        _ => morningSprite
+    };
 }
