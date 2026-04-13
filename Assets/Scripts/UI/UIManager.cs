@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _dialogText;
     [SerializeField] TextMeshProUGUI _dialogNameText;
     [SerializeField] Image _dialogPortrait;
+    [SerializeField] Transform optionsContainer;
+    [SerializeField] GameObject optionButtonPrefab;
+    [SerializeField] GameObject continuePrompt;
+    [SerializeField] TextMeshProUGUI continuePromptText;
 
     [Header("Inventory")]
     [SerializeField] public Inventory _merchantInventory;
@@ -94,16 +99,55 @@ public class UIManager : MonoBehaviour
         _signParent.SetActive(show);
     }
 
-    public void ShowDialog(bool show, string npcName = "Name", string dialog = "Dialog", Sprite portrait = null)
+    public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
+    Sprite portrait = null)
     {
-        if (show)
-        {
-            _dialogText.SetText(dialog);
-            _dialogNameText.SetText(npcName);
-            _dialogPortrait.sprite = portrait;
-        }
-        _dialogParent.SetActive(show);
+        ClearOptions();
+        _dialogParent.SetActive(true);
+        _dialogText.SetText(dialog);
+        _dialogNameText.SetText(npcName);
+        _dialogPortrait.sprite = portrait;
+        continuePrompt.SetActive(cont);
     }
+
+    public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
+                             Sprite portrait = null, List<DialogueOptionInstance> options = null)
+    {
+        ShowDialogue(cont, npcName, dialog, portrait);
+        continuePrompt.SetActive(false);
+
+        if (options != null)
+            foreach (var opt in options)
+                SpawnOptionButton(opt);
+    }
+
+    public void CloseDialogue()
+    {
+        ClearOptions();
+        _dialogParent.SetActive(false);
+    }
+
+    public void ShowResponse(string response)
+    {
+        _dialogText.text = response;
+        ClearOptions(); // hide options while response is shown
+    }
+
+    void SpawnOptionButton(DialogueOptionInstance opt)
+    {
+        var go = Instantiate(optionButtonPrefab, optionsContainer);
+        go.GetComponentInChildren<TMP_Text>().text = opt.definition.label.ToString();
+        go.GetComponent<Button>().onClick.AddListener(() =>
+            NpcBehavior.InteractingWith?.HandleOptionSelected(opt));
+    }
+
+    void ClearOptions()
+    {
+        foreach (Transform child in optionsContainer)
+            Destroy(child.gameObject);
+    }
+
+
 
     public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
     {

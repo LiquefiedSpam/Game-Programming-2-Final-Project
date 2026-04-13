@@ -30,6 +30,7 @@ public class DialogBehavior : InteractableBehavior
     }
     public override void Interact(Vector3 playerPos)
     {
+        Debug.Log("interacting");
         if (InteractingWith != null)
         {
             Debug.LogError($"Already interacting with {InteractingWith.gameObject.name}");
@@ -46,14 +47,14 @@ public class DialogBehavior : InteractableBehavior
         StartRotate(targetRotation, "isTalking");
 
         //now, dialogue
-        UIManager.Ins.ShowDialog(true, _name, _dialog, _portrait);
+        UIManager.Ins.ShowDialogue(true, _name, _dialog, _portrait);
         DayManager.Ins.ConsumeUnit(1);
     }
 
     public override void Quit()
     {
         base.Quit();
-        UIManager.Ins.ShowDialog(false);
+        UIManager.Ins.ShowDialogue(false, options: null);
         InteractingWith = null;
 
         //disengage visually
