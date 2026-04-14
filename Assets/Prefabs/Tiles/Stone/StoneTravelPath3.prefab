@@ -693,6 +693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7814532522870229761}
+  - component: {fileID: 9128448626814595239}
   m_Layer: 0
   m_Name: Interaction Zone 2A
   m_TagString: InteractionZone
@@ -715,6 +716,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5147231840158967178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9128448626814595239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2555037455882658738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
+  MarauderHut: {fileID: 0}
 --- !u!1 &2768538061367834464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4142873570693899844}
+  - component: {fileID: 6629381483209092790}
   m_Layer: 0
   m_Name: Interaction Zone 1
   m_TagString: InteractionZone
@@ -1625,6 +1640,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5147231840158967178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6629381483209092790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8411418483625146178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2320873016bad941a0befa5dac92470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathingManager
+  signPrefab: {fileID: 0}
+  PathA: {fileID: 2555037455882658738}
+  PathB: {fileID: 9197903601992182897}
 --- !u!1 &8800871914684818064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,6 +1695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9179325407826092220}
+  - component: {fileID: 8797453417910371823}
   m_Layer: 0
   m_Name: Interaction Zone 2B
   m_TagString: InteractionZone
@@ -1687,3 +1718,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5147231840158967178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8797453417910371823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9197903601992182897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
+  MarauderHut: {fileID: 0}

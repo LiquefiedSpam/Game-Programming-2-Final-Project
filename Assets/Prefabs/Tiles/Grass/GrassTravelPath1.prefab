@@ -457,6 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4635733636603007450}
+  - component: {fileID: 3324232563667516882}
   m_Layer: 0
   m_Name: InteractionZone 2A
   m_TagString: InteractionZone
@@ -479,6 +480,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5147231840158967178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3324232563667516882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222713760855697876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
 --- !u!1 &3977908795114215951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3773656675754340161}
+  - component: {fileID: 8034859258919963942}
   m_Layer: 0
   m_Name: Interaction Zone 2B
   m_TagString: InteractionZone
@@ -1101,6 +1115,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5147231840158967178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8034859258919963942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5308494524490628943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
 --- !u!1 &5460164292876825154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,6 +1695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2320873016bad941a0befa5dac92470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathingManager
+  signPrefab: {fileID: 0}
   PathA: {fileID: 3222713760855697876}
   PathB: {fileID: 5308494524490628943}
 --- !u!1 &8800871914684818064
