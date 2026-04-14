@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class Teleport : MonoBehaviour
 {
@@ -31,22 +30,8 @@ public class Teleport : MonoBehaviour
 
     private TravelPath currentPath;
 
-    private int woodToStoneDangerLevel;
-    private int woodToSandDangerLevel;
-    private int sandToStoneDangerLevel;
-
-    private float woodToStoneChance;
-    private float woodToSandChance;
-    private float sandToStoneChance;
-
-    private string travelStatus;
-
     private List<GameObject> interactionZones;
-
-    private void Start()
-    {
-        //ReRollValues();
-    }
+    private List<GameObject> travelPath;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -90,67 +75,19 @@ public class Teleport : MonoBehaviour
         }
         else
         {
-            //TravelSafetyCheck();
-            //ReRollValues();
 
             //unfade to black
             yield return StartCoroutine(UIManager.Ins.FadeIn());
 
-            //state whether we were attacked or if we are ok
-
             //turn on player controls
             player.SetMovementEnabled(true);
-
-            ////show travel status via UI temporary UI component
-            //UIManager.Ins.ShowTravelStatus(travelStatus);
-        }
-    }
-
-    private void ReRollValues()
-    {
-        woodToStoneDangerLevel = Random.Range(1, 5);
-        woodToSandDangerLevel = Random.Range(1, 5);
-        sandToStoneDangerLevel = Random.Range(1, 5);
-
-        woodToStoneChance = Random.Range(0, 1f);
-        woodToSandChance = Random.Range(0, 1f);
-        sandToStoneChance = Random.Range(0, 1f);
-    }
-
-    private void TravelSafetyCheck()
-    {
-        float percentForAttack = Random.Range(0f, 1f);
-
-        if (percentForAttack <= woodToStoneChance)
-        {
-            MarauderAttack(woodToStoneDangerLevel);
-        }
-        else
-        {
-            travelStatus = "No Mauraders attacked you!";
-        }
-
-        if (percentForAttack <= woodToSandChance)
-        {
-            MarauderAttack(woodToSandDangerLevel);
-        }
-        else
-        {
-            travelStatus = "No Mauraders attacked you!";
-        }
-
-        if (percentForAttack <= sandToStoneChance)
-        {
-            MarauderAttack(sandToStoneDangerLevel);
-        }
-        else
-        {
-            travelStatus = "No Mauraders attacked you!";
         }
     }
 
     private void ConstructTravelPath(PlayerController player)
     {
+
+        //move camera closer to player so they can't see interaction
         switch (currentPath)
         {
             case TravelPath.WoodToStone:
@@ -180,11 +117,16 @@ public class Teleport : MonoBehaviour
             //check to see if it is a path selector or a marauder attack event
             if (interactionZones[i].GetComponentInChildren<PathingManager>())
             {
+                travelPath.Add(interactionZones[i]);
                 interactionZones[i].GetComponentInChildren<PathingManager>().spawnSign();
             }
             else if (interactionZones[i].GetComponentInChildren<MarauderCampManager>())
             {
                 interactionZones[i].GetComponentInChildren<MarauderCampManager>().spawnHut();
+            }
+            else
+            {
+                travelPath.Add(interactionZones[i]);
             }
         }
     }
@@ -193,46 +135,52 @@ public class Teleport : MonoBehaviour
     {
         yield return StartCoroutine(UIManager.Ins.FadeIn());
         //make the player move from where they are to next Interaction Zone
-        if (interactionZones != null) {
-            for (int i = 0; i < interactionZones.Count; i++)
+        if (travelPath != null) {
+            for (int i = 0; i < travelPath.Count; i++)
             {
                 Vector3 navgiationLocation = new Vector3(
-                    interactionZones[i].transform.position.x,
-                    0, 
-                    interactionZones[i].transform.position.z
+                    travelPath[i].transform.position.x,
+                    player.transform.position.y, 
+                    travelPath[i].transform.position.z
                 );
-                
-                player.transform.position = Vector3.MoveTowards(player.transform.position, navgiationLocation, speed * Time.deltaTime);
 
                 //wait until we arrive at point
+                while (Vector3.Distance(player.transform.position, navgiationLocation) > 0.05f) {
+                    player.transform.position = Vector3.MoveTowards(
+                        player.transform.position, 
+                        navgiationLocation, 
+                        speed * Time.deltaTime
+                    );
+
+                    yield return null;
+                }
                 
-                if (interactionZones[i].GetComponentInChildren<PathingManager>())
+                if (travelPath[i].GetComponentInChildren<PathingManager>())
                 {
-                    PathingManager pathManager = interactionZones[i].GetComponentInChildren<PathingManager>();
+                    PathingManager pathManager = travelPath[i].GetComponentInChildren<PathingManager>();
+
+                    pathManager.ResetSelection();
+
                     //display pathing options
+                    UIManager.Ins.UpdatePathingDisplay();
+
                     //await for player to make decision on where to go
+                    yield return new WaitUntil(() => pathManager.HasSelectedPath);
+
+                    UIManager.Ins.UpdatePathingDisplay();
+
                     //add to start of path to navigate to
-                    interactionZones.Insert(0, pathManager.getSelectedPath());
+                    travelPath.Insert(i + 1, pathManager.getSelectedPath());
                 }
                 //if location is marauder camp
-                else if (interactionZones[i].GetComponentInChildren<MarauderCampManager>())
+                else if (travelPath[i].GetComponentInChildren<MarauderCampManager>())
                 {
-                    //review stats for area and calculate probablity/effect of being attacked
-
+                    MarauderCampManager marauderCamp = interactionZones[i].GetComponentInChildren<MarauderCampManager>();
+                    //check to see if marauder camp is there (yes, lose items and change map icon, no change map icon and continue)
+                    //display status of encountered area
+                    UIManager.Ins.ShowTravelStatus(marauderCamp.EncounterDetails());
                 }
-
             }
-            //move them towards the teleport location to next town (change x and z)
-            Vector3 teleportLocation = new Vector3(0f, 0f, 0f);
-            player.transform.position = Vector3.MoveTowards(player.transform.position, teleportLocation, speed * Time.deltaTime);
         }
-    }
-
-    private void MarauderAttack(int dangerLevel)
-    {
-        //perform ability of depleting items from inventory slots
-        PlayerInventory.Instance.LoseItems(dangerLevel);
-
-        travelStatus = $"You were attacked by Marauders and lost {dangerLevel} item(s)";
     }
 }

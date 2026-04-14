@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
     {
         _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
         _hungerSlider.value = PlayerController.MAX_HUNGER;
-        UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
+        //UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
     }
 
     public void Show(bool show)
@@ -147,36 +147,38 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
     }
 
+    //public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
+    //{
+    //    mapImage.sprite = woodMap;
+    //    woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
+    //    woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
+    //    woodToSandUI.enabled = true;
+    //    woodToStoneUI.enabled = true;
+    //    sandToStoneUI.enabled = false;
+    //}
 
+    //public void UpdateMapUIStone(float woodToStoneDangerLevel, float woodToStoneChance, float sandToStoneDangerLevel, float sandToStoneChance)
+    //{
+    //    mapImage.sprite = stoneMap;
+    //    woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
+    //    sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
+    //    sandToStoneUI.enabled = true;
+    //    woodToStoneUI.enabled = true;
+    //    woodToSandUI.enabled = false;
+    //}
 
-    public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
+    //public void UpdateMapUISand(float woodToSandDangerLevel, float woodToSandChance, float sandToStoneDangerLevel, float sandToStoneChance)
+    //{
+    //    mapImage.sprite = sandMap;
+    //    woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
+    //    sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
+    //    woodToSandUI.enabled = true;
+    //    sandToStoneUI.enabled = true;
+    //    woodToStoneUI.enabled = false;
+    //}
+    public void UpdatePathingDisplay()
     {
-        mapImage.sprite = woodMap;
-        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
-        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
-        woodToSandUI.enabled = true;
-        woodToStoneUI.enabled = true;
-        sandToStoneUI.enabled = false;
-    }
-
-    public void UpdateMapUIStone(float woodToStoneDangerLevel, float woodToStoneChance, float sandToStoneDangerLevel, float sandToStoneChance)
-    {
-        mapImage.sprite = stoneMap;
-        woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
-        sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
-        sandToStoneUI.enabled = true;
-        woodToStoneUI.enabled = true;
-        woodToSandUI.enabled = false;
-    }
-
-    public void UpdateMapUISand(float woodToSandDangerLevel, float woodToSandChance, float sandToStoneDangerLevel, float sandToStoneChance)
-    {
-        mapImage.sprite = sandMap;
-        woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
-        sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
-        woodToSandUI.enabled = true;
-        sandToStoneUI.enabled = true;
-        woodToStoneUI.enabled = false;
+        //check to see if panel is active (if so, disable it; if not, enable it)
     }
 
     public void ShowTravelStatus(string message)

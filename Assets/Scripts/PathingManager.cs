@@ -5,27 +5,34 @@ public class PathingManager : MonoBehaviour
     [SerializeField] private GameObject signPrefab;
     
     [Header("Path Settings")]
-    [SerializeField] private GameObject PathA;
-    [SerializeField] private GameObject PathB;
+    [SerializeField] private GameObject topPath;
+    [SerializeField] private GameObject bottomPath;
 
     private GameObject selectedPath;
+
+    public bool HasSelectedPath => selectedPath != null;
 
     public void spawnSign()
     {
 
     }
-    public void selectPathA()
+    public void selectTopPath()
     {
-        selectedPath = PathA;
+        selectedPath = topPath;
     }
 
-    public void selectPathB()
+    public void selectBottomPath()
     {
-        selectedPath = PathB;
+        selectedPath = bottomPath;
     }
 
     public GameObject getSelectedPath()
     {
         return selectedPath;
+    }
+
+    public void ResetSelection()
+    {
+        selectedPath = null;
     }
 }

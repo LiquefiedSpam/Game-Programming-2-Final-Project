@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 3324232563667516882}
   m_Layer: 0
   m_Name: InteractionZone 2A
-  m_TagString: InteractionZone
+  m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,6 +492,139 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
+  MarauderHut: {fileID: 0}
+  campData: {fileID: 0}
+--- !u!1 &3687551262246164317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5018968384990309601}
+  - component: {fileID: 6573191691703950337}
+  - component: {fileID: 211054527961141281}
+  - component: {fileID: 694233041821895780}
+  - component: {fileID: 5658650112377833348}
+  m_Layer: 0
+  m_Name: TeleportZone
+  m_TagString: InteractionZone
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5018968384990309601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687551262246164317}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 70, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 5, z: 9}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5147231840158967178}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6573191691703950337
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687551262246164317}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &211054527961141281
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687551262246164317}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &694233041821895780
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687551262246164317}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5658650112377833348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687551262246164317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Teleport
+  grassTilePrefabs: []
+  sandTilePrefabs: []
+  stoneTilePrefabs: []
+  teleportLocation: {fileID: 0}
+  mapImage: {fileID: 0}
+  speed: 2
 --- !u!1 &3977908795114215951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,7 +1228,7 @@ GameObject:
   - component: {fileID: 8034859258919963942}
   m_Layer: 0
   m_Name: Interaction Zone 2B
-  m_TagString: InteractionZone
+  m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1127,6 +1260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765c302df3c16f343843859190d42100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarauderCampManager
+  MarauderHut: {fileID: 0}
+  campData: {fileID: 0}
 --- !u!1 &5460164292876825154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,6 +1454,7 @@ Transform:
   - {fileID: 4635733636603007450}
   - {fileID: 3773656675754340161}
   - {fileID: 6824508442305031819}
+  - {fileID: 5018968384990309601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8035334789831487278
@@ -1696,8 +1832,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathingManager
   signPrefab: {fileID: 0}
-  PathA: {fileID: 3222713760855697876}
-  PathB: {fileID: 5308494524490628943}
+  topPath: {fileID: 3222713760855697876}
+  bottomPath: {fileID: 5308494524490628943}
 --- !u!1 &8800871914684818064
 GameObject:
   m_ObjectHideFlags: 0
