@@ -11,7 +11,7 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private Vector3 nextSpawnPoint;
 
-    public GameObject[] GenerateTravelPath(GameObject[] startingTown, GameObject[] endingTown)
+    public List<GameObject> GenerateTravelPath(GameObject[] startingTown, GameObject[] endingTown)
     {
         List<GameObject> startTiles = new List<GameObject>(startingTown);
         List<GameObject> endTiles = new List<GameObject>(endingTown);
@@ -50,6 +50,7 @@ public class TileManager : MonoBehaviour
                 int index = Random.Range(0, endTiles.Count);
                 tilePrefab = endTiles[index];
                 endTiles.RemoveAt(index);
+                tilePrefab.GetComponent<Teleport>().enabled = true;
             }
 
             GameObject newTile = Instantiate(tilePrefab, nextSpawnPoint, Quaternion.identity);
@@ -67,6 +68,6 @@ public class TileManager : MonoBehaviour
             nextSpawnPoint += new Vector3(tileScript.GetLength(), 0, 0);
         }
 
-        return interactionZones.ToArray();
+        return interactionZones;
     }
 }

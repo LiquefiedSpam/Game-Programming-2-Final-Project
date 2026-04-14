@@ -1,9 +1,11 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System;
 using Random = UnityEngine.Random;
-using System.Collections.Generic;
 
 public class Teleport : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class Teleport : MonoBehaviour
 
     public static Action<int> OnTownChanged;
 
+    public float speed = 2f;
+
     private TravelPath currentPath;
 
     private int woodToStoneDangerLevel;
@@ -36,6 +40,8 @@ public class Teleport : MonoBehaviour
     private float sandToStoneChance;
 
     private string travelStatus;
+
+    private List<GameObject> interactionZones;
 
     private void Start()
     {
@@ -76,25 +82,28 @@ public class Teleport : MonoBehaviour
         //    UIManager.Ins.UpdateMapUIWood(woodToSandDangerLevel, woodToSandChance, woodToStoneDangerLevel, woodToStoneChance);
         //    OnTownChanged?.Invoke(1);
         //}
-        if (teleportLocation.name == "TravelPath")
-        {
-            ConstructTravelPath();
-        }
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
-        //TravelSafetyCheck();
-        //ReRollValues();
+        if (teleportLocation.name == "TravelPath")
+        {
+            ConstructTravelPath(player);
+        }
+        else
+        {
+            //TravelSafetyCheck();
+            //ReRollValues();
 
-        //unfade to black
-        yield return StartCoroutine(UIManager.Ins.FadeIn());
+            //unfade to black
+            yield return StartCoroutine(UIManager.Ins.FadeIn());
 
-        //state whether we were attacked or if we are ok
+            //state whether we were attacked or if we are ok
 
-        //turn on player controls
-        player.SetMovementEnabled(true);
+            //turn on player controls
+            player.SetMovementEnabled(true);
 
-        //show travel status via UI temporary UI component
-        UIManager.Ins.ShowTravelStatus(travelStatus);
+            ////show travel status via UI temporary UI component
+            //UIManager.Ins.ShowTravelStatus(travelStatus);
+        }
     }
 
     private void ReRollValues()
@@ -140,36 +149,82 @@ public class Teleport : MonoBehaviour
         }
     }
 
-    private void ConstructTravelPath()
+    private void ConstructTravelPath(PlayerController player)
     {
-        GameObject[] interactionZones;
         switch (currentPath)
         {
             case TravelPath.WoodToStone:
                 interactionZones = TileManager.Instance.GenerateTravelPath(grassTilePrefabs, stoneTilePrefabs);
-                CheckInteractionZones(interactionZones);
+                SetInteractionZones();
                 break;
 
             case TravelPath.WoodToSand:
                 interactionZones = TileManager.Instance.GenerateTravelPath(grassTilePrefabs, sandTilePrefabs);
-                CheckInteractionZones(interactionZones);
+                SetInteractionZones();
                 break;
 
             case TravelPath.SandToStone:
                 interactionZones = TileManager.Instance.GenerateTravelPath(sandTilePrefabs, stoneTilePrefabs);
-                CheckInteractionZones(interactionZones);
+                SetInteractionZones();
                 break;
         }
 
-        //loop through interaction nodes
+        StartCoroutine(TraverseBetweenTowns(player));
         
     }
 
-    private void CheckInteractionZones(GameObject[] interactionZones)
+    private void SetInteractionZones()
     {
-        for (int i = 0; i < interactionZones.Length; i++)
+        for (int i = 0; i < interactionZones.Count; i++)
         {
             //check to see if it is a path selector or a marauder attack event
+            if (interactionZones[i].GetComponentInChildren<PathingManager>())
+            {
+                interactionZones[i].GetComponentInChildren<PathingManager>().spawnSign();
+            }
+            else if (interactionZones[i].GetComponentInChildren<MarauderCampManager>())
+            {
+                interactionZones[i].GetComponentInChildren<MarauderCampManager>().spawnHut();
+            }
+        }
+    }
+
+    private IEnumerator TraverseBetweenTowns(PlayerController player)
+    {
+        yield return StartCoroutine(UIManager.Ins.FadeIn());
+        //make the player move from where they are to next Interaction Zone
+        if (interactionZones != null) {
+            for (int i = 0; i < interactionZones.Count; i++)
+            {
+                Vector3 navgiationLocation = new Vector3(
+                    interactionZones[i].transform.position.x,
+                    0, 
+                    interactionZones[i].transform.position.z
+                );
+                
+                player.transform.position = Vector3.MoveTowards(player.transform.position, navgiationLocation, speed * Time.deltaTime);
+
+                //wait until we arrive at point
+                
+                if (interactionZones[i].GetComponentInChildren<PathingManager>())
+                {
+                    PathingManager pathManager = interactionZones[i].GetComponentInChildren<PathingManager>();
+                    //display pathing options
+                    //await for player to make decision on where to go
+                    //add to start of path to navigate to
+                    interactionZones.Insert(0, pathManager.getSelectedPath());
+                }
+                //if location is marauder camp
+                else if (interactionZones[i].GetComponentInChildren<MarauderCampManager>())
+                {
+                    //review stats for area and calculate probablity/effect of being attacked
+
+                }
+
+            }
+            //move them towards the teleport location to next town (change x and z)
+            Vector3 teleportLocation = new Vector3(0f, 0f, 0f);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, teleportLocation, speed * Time.deltaTime);
         }
     }
 
