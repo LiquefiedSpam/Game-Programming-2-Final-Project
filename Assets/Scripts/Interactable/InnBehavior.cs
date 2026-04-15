@@ -4,12 +4,12 @@ public class InnBehavior : InteractableBehavior
 {
     [SerializeField] private Transform _teleportPoint;
     [SerializeField] private bool _defaultLastVisited;
-    [SerializeField] private int _town;
+    [SerializeField] private Town _town;
 
     public override InteractableType Type => InteractableType.INN;
     public override bool Instant => true;
     public static Transform LastVisitedTeleportPoint;
-    public static int LastVisitedTown;
+    public static Town LastVisitedTown;
 
     void Awake()
     {

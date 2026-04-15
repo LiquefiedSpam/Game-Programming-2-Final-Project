@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviour
 
     void ForceNextDay()
     {
-        PlayerInventory.Instance.TownChanged(InnBehavior.LastVisitedTown);
-        PlayerInventory.Instance.HalfMoney();
+        Data.CurrentTown = InnBehavior.LastVisitedTown;
+        MoneyManager.Ins.HalfMoney();
 
         Vector3 pos = InnBehavior.LastVisitedTeleportPoint.position;
         transform.position = new Vector3(pos.x, transform.position.y, pos.z);

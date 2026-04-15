@@ -1,91 +1,54 @@
+using System;
 using UnityEngine;
-using TMPro;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+[Serializable]
+public class Slot
 {
-    public bool hovering;
+    public const int STACK_SIZE = 16;
 
-    [SerializeField] protected ItemSO heldItem;
-    [SerializeField] protected int itemAmount;
-    [SerializeField] protected Image iconImage;
-    [SerializeField] protected TextMeshProUGUI amountTxt;
+    public ItemData item;
+    public int amount;
 
-    public ItemSO GetItem()
+    public Action OnSlotChanged;
+
+    public Slot(ItemData itemData, int itemAmount)
     {
-        return heldItem;
+        item = itemData;
+        amount = itemAmount;
     }
 
-    public int GetAmount()
+    public Slot(Slot slot)
     {
-        return itemAmount;
+        item = slot.item;
+        amount = slot.amount;
     }
 
-    public virtual void SetItem(ItemSO item, int amount = 1)
+    public float GetMerchantPrice()
     {
-        heldItem = item;
-        itemAmount = amount;
-
-        UpdateSlot();
+        return item.merchantSalePrice * amount;
     }
 
-    public virtual void UpdateSlot()
+    /// <summary>
+    /// Returns amount that couldn't be added without exceeding stack size.
+    /// </summary>
+    /// <param name="addAmount"></param>
+    /// <returns></returns>
+    public int AddAmount(int addAmount)
     {
-        if (heldItem != null)
-        {
-            iconImage.enabled = true;
-            iconImage.sprite = heldItem.icon;
-            amountTxt.text = itemAmount.ToString();
-        }
-        else
-        {
-            iconImage.enabled = false;
-            amountTxt.text = "";
-        }
+        amount = Mathf.Min(STACK_SIZE, amount + addAmount);
+        OnSlotChanged?.Invoke();
+        return Mathf.Max(0, amount + addAmount - STACK_SIZE);
     }
 
-    public int AddAmount(int amountToAdd)
+    /// <summary>
+    /// Returns new amount.
+    /// </summary>
+    /// <param name="subAmount"></param>
+    /// <returns></returns>
+    public int SubtractAmount(int subAmount)
     {
-        itemAmount += amountToAdd;
-        UpdateSlot();
-        return itemAmount;
-    }
-
-    public int RemoveAmount(int amountToRemove)
-    {
-        itemAmount -= amountToRemove;
-        if (itemAmount <= 0)
-        {
-            ClearSlot();
-        }
-        else
-        {
-            UpdateSlot();
-        }
-
-        return itemAmount;
-    }
-
-    public virtual void ClearSlot()
-    {
-        heldItem = null;
-        itemAmount = 0;
-        UpdateSlot();
-    }
-
-    public bool HasItem()
-    {
-        return heldItem != null;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        hovering = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hovering = false;
+        amount = Mathf.Max(0, amount - subAmount);
+        OnSlotChanged?.Invoke();
+        return amount;
     }
 }

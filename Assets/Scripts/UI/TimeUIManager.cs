@@ -5,6 +5,7 @@ using TMPro;
 public class TimeUIManager : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] GameObject timeUIRoot;
     [SerializeField] private Slider timeSlider;
     [SerializeField] private TMP_Text unitsText;
     [SerializeField] private TimeIconBehavior timeIcon;
@@ -51,4 +52,9 @@ public class TimeUIManager : MonoBehaviour
         DayInterval.Night => nightSprite,
         _ => morningSprite
     };
+
+    public void SetTimeUIVisibility(bool visible)
+    {
+        timeUIRoot.gameObject.SetActive(visible);
+    }
 }

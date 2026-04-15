@@ -27,11 +27,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject continuePrompt;
     [SerializeField] TextMeshProUGUI continuePromptText;
 
-    [Header("Inventory")]
-    [SerializeField] public Inventory _merchantInventory;
-    [SerializeField] public Inventory _playerInventory;
-    [SerializeField] public Inventory _playerStall;
-
     [Header("Transition")]
     [SerializeField] Image transitionImage;
     [SerializeField] float transitionTime;
@@ -69,6 +64,8 @@ public class UIManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        // MoneyManager.Ins.OnMoneyChanged += UpdateMoneyUI;
     }
 
     void Start()

@@ -1,167 +1,174 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
+
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : SlotGroup
 {
-    // public ItemSO itemToCollect;
-    // public int numberOfItem;
-    // public GameObject inventorySlotParent;
+    [SerializeField] int slotAmount = 5;
+    [SerializeField] Slot[] startingInventory;
+    Slot[] slots;
 
-    [SerializeField] private List<Slot> inventorySlots = new List<Slot>();
+    static int[] randomIndices;
 
-    // private void Awake()
-    // {
-    //     inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
-    // }
+    public override int Count => slotAmount;
 
-    void Start()
+    public static Inventory Ins;
+
+    void Awake()
     {
-        foreach (var s in inventorySlots) s.UpdateSlot();
+        if (Ins != null && Ins != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Ins = this;
+        }
+
+        slots = new Slot[slotAmount];
+        for (int i = 0; i < startingInventory.Length; i++)
+        {
+            slots[i] = startingInventory[i];
+            slots[i].OnSlotChanged += InventoryChanged;
+        }
+
+        randomIndices = new int[slotAmount];
+        for (int i = 0; i < slotAmount; i++) randomIndices[i] = i;
     }
 
-    public void AddItem(ItemSO itemToAdd, int amount)
+    public void Add(Slot purchase)
     {
-        int remaining = amount;
-
-        foreach (Slot slot in inventorySlots)
+        if (TryAddToExisting(purchase) > 0)
         {
-            if (slot.HasItem() && slot.GetItem() == itemToAdd)
+            if (TryGetEmptySlotIndex(out var idx))
             {
-                int currentAmount = slot.GetAmount();
-                int maxStack = itemToAdd.maxStackSize;
+                slots[idx] = new Slot(purchase);
+                purchase.OnSlotChanged += InventoryChanged;
+            }
+            else Debug.LogWarning("Could not add item to inventory, no room");
+        }
 
-                if (currentAmount < maxStack)
-                {
-                    int spaceLeft = maxStack - currentAmount;
-                    int amountToAdd = Mathf.Min(spaceLeft, remaining);
+        OnSlotGroupChanged?.Invoke();
+    }
 
-                    slot.SetItem(itemToAdd, currentAmount + amountToAdd);
-                    remaining -= amountToAdd;
-
-                    if (remaining <= 0)
-                    {
-                        return;
-                    }
-                }
+    public bool Remove(Slot slot)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == slot)
+            {
+                slots[i].OnSlotChanged -= InventoryChanged;
+                slots[i] = null;
+                OnSlotGroupChanged?.Invoke();
+                return true;
             }
         }
+        return false;
+    }
 
-        foreach (Slot slot in inventorySlots)
+    public Slot RemoveAt(int idx)
+    {
+        if (idx >= slotAmount || idx < 0) return null;
+        Slot s = slots[idx];
+        slots[idx] = null;
+        OnSlotGroupChanged?.Invoke();
+        return s;
+    }
+
+    public override Slot GetAt(int idx)
+    {
+        if (idx >= slotAmount || idx < 0) return null;
+        return slots[idx];
+    }
+
+    public override bool Contains(Slot s)
+    {
+        return slots.Contains(s);
+    }
+
+    public bool HasRoomFor(Slot s)
+    {
+        if (TryGetEmptySlotIndex(out var idx))
         {
-            if (!slot.HasItem())
-            {
-                int amountToPlace = Mathf.Min(itemToAdd.maxStackSize, remaining);
-                slot.SetItem(itemToAdd, amountToPlace);
-                remaining -= amountToPlace;
+            return true;
+        }
+        else if (CanFitInExisting(s))
+        {
+            return true;
+        }
 
-                if (remaining <= 0)
-                {
-                    return;
-                }
+        return false;
+    }
+
+    // returns amount that couldn't be added to existing slot
+    int TryAddToExisting(Slot purchase)
+    {
+        int remaining = purchase.amount;
+        foreach (var s in slots)
+        {
+            if (s == null || s.item == null) continue;
+            if (s.item == purchase.item)
+            {
+                remaining = s.AddAmount(purchase.amount);
+                if (remaining <= 0) return 0;
             }
         }
-
-        if (remaining > 0)
-        {
-            Debug.Log($"{gameObject.name} Inventory is full, could not add " + remaining + " of " + itemToAdd.itemName);
-        }
+        return remaining;
     }
 
-    public void RemoveItem(ItemSO itemToRemove, int amountToRemove)
+    bool CanFitInExisting(Slot slot)
     {
-        int remaining = amountToRemove;
-
-        foreach (Slot slot in inventorySlots)
+        int remaining = slot.amount;
+        foreach (var s in slots)
         {
-            if (slot.HasItem() && slot.GetItem() == itemToRemove)
+            if (s == null || s.item == null) continue;
+            if (s.item == slot.item)
             {
-                int currentAmount = slot.GetAmount();
-                if (currentAmount > remaining)
-                {
-                    slot.SetItem(itemToRemove, currentAmount - amountToRemove);
-                    remaining = 0;
-                }
-                else if (currentAmount <= amountToRemove)
-                {
-                    slot.ClearSlot();
-                    remaining -= currentAmount;
-                }
-                if (remaining == 0) return;
+                remaining -= (Slot.STACK_SIZE - s.amount);
+                if (remaining <= 0) return true;
             }
         }
-
-        if (remaining >= 0)
-        {
-            Debug.LogError($"Tried to remove more {itemToRemove.name} than inventory contained");
-        }
+        return false;
     }
 
-    public List<Slot> OccupiedSlots()
+    // returns true if there is an empty slot
+    bool TryGetEmptySlotIndex(out int idx)
     {
-        List<Slot> occupied = new();
-        foreach (var s in inventorySlots)
+        for (int i = 0; i < slots.Length; i++)
         {
-            if (s.HasItem()) occupied.Add(s);
-        }
-        return occupied;
-    }
-
-    public void SetInventory(ItemListing[] items)
-    {
-        if (items.Length > inventorySlots.Count)
-        {
-            Debug.LogWarning("More items than slots");
-        }
-
-        for (int i = 0; i < inventorySlots.Count; i++)
-        {
-            Slot s = inventorySlots[i];
-            if (i >= items.Length) s.ClearSlot();
-            else
+            if (slots[i] == null || slots[i].amount == 0)
             {
-                ItemSO item = items[i].item;
-                int amount = items[i].amount;
-                s.SetItem(item, amount);
+                idx = i;
+                return true;
             }
         }
+        idx = 0;
+        return false;
     }
 
-    public Slot GetHoveredItem()
+    void InventoryChanged()
     {
-        // TODO this is so inefficient
-        foreach (var slot in inventorySlots)
-        {
-            if (slot != null && slot.HasItem() && slot.hovering)
-            {
-                return slot;
-            }
-        }
-        return null;
+        OnSlotGroupChanged?.Invoke();
     }
 
-    public void LoseItems(int amount)
+    public void RemoveRandomItems(int amount)
     {
-        var occupiedSlots = OccupiedSlots();
+        randomIndices.Shuffle();
 
         int remainingToRemove = amount;
 
-        for (int i = 0; i < occupiedSlots.Count && remainingToRemove > 0; i++)
+        for (int i = 0; i < slotAmount; i++)
         {
-            Slot slot = occupiedSlots[i];
-
-            int initialItemAmount = slot.GetAmount();
-            int postRemovalItemAmount = slot.RemoveAmount(remainingToRemove);
-
-            int removedAmount = initialItemAmount - Mathf.Max(postRemovalItemAmount, 0);
-
-            remainingToRemove -= removedAmount;
+            int randomIdx = randomIndices[i];
+            if (slots[randomIdx] != null && slots[randomIdx].item != null)
+            {
+                slots[randomIdx] = null;
+                remainingToRemove--;
+                if (remainingToRemove <= 0) break;
+            }
         }
-    }
-
-    public List<Slot> GetInventorySlots()
-    {
-        return new(inventorySlots);
     }
 }

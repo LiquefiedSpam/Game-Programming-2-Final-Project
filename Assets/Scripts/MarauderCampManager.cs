@@ -36,7 +36,7 @@ public class MarauderCampManager : MonoBehaviour
         {
             campData.EncounteredMarauder();
             //perform ability of depleting items from inventory slots
-            PlayerInventory.Instance.LoseItems(campData.GetDangerLevel);
+            Inventory.Ins.RemoveRandomItems(campData.GetDangerLevel);
 
             travelStatus = $"You were attacked by Marauders and lost {campData.GetDangerLevel} item(s)";
         }

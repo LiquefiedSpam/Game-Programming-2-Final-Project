@@ -10,7 +10,7 @@ public class NpcBehavior : InteractableBehavior
 {
 
     [Header("Assign if merchant")]
-    [SerializeField] MerchantStallUI stallUI;
+    [SerializeField] MerchantStall merchantStall;
     [SerializeField] AudioSource audioSource;
 
 
@@ -103,7 +103,7 @@ public class NpcBehavior : InteractableBehavior
 
             case DialogueLabel.Purchase:
                 audioSource.Play();
-                stallUI.Show();
+                InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall);
                 break;
 
             case DialogueLabel.Leave:
@@ -132,10 +132,10 @@ public class NpcBehavior : InteractableBehavior
     public override void Quit()
     {
         UIManager.Ins.CloseDialogue();
-        if (stallUI != null && audioSource != null)
+        if (merchantStall != null && audioSource != null)
         {
             audioSource.Stop();
-            stallUI.Hide();
+            InventoryDisplayManager.Ins.HideMerchantStall();
         }
 
         StartRotate(defaultRotation, "isIdle");

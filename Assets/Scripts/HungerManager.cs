@@ -57,7 +57,7 @@ public class HungerManager : MonoBehaviour
         ModifyHungerByPercent(-hungerToRemove);
     }
 
-    void ModifyHungerByAmt(float amt)
+    public void ModifyHungerByAmt(float amt)
     {
         if (currentHunger + amt > maxHunger)
         {
@@ -90,5 +90,10 @@ public class HungerManager : MonoBehaviour
     {
         currentHunger = maxHunger;
         OnHungerChanged?.Invoke();
+    }
+
+    public bool CanConsume()
+    {
+        return currentHunger < maxHunger;
     }
 }

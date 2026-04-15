@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class MerchantBehavior : InteractableBehavior
 {
-    [SerializeField] MerchantStallUI stallUI;
+    [SerializeField] MerchantStall listings;
     [SerializeField] AudioSource audioSource;
 
     public override void Interact()
     {
         audioSource.Play();
-        stallUI.Show();
+        InventoryDisplayManager.Ins.ShowMerchantStall(listings);
         base.Interact();
     }
 
     public override void Quit()
     {
         audioSource.Stop();
-        stallUI.Hide();
+        InventoryDisplayManager.Ins.HideMerchantStall();
         base.Quit();
     }
 }
