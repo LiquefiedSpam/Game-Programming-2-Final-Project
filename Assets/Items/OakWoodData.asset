@@ -15,7 +15,7 @@ MonoBehaviour:
   title: Oak Log
   sprite: {fileID: 21300000, guid: 32d47129b653f40f9b71abc8d675a0d6, type: 3}
   town: 0
-  merchant: 
+  merchant: Stefan
   merchantSalePrice: 5
   town1TargetPrice: 5
   town2TargetPrice: 12

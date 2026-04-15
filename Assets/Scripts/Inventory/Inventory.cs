@@ -41,11 +41,13 @@ public class Inventory : SlotGroup
 
     public void Add(Slot purchase)
     {
-        if (TryAddToExisting(purchase) > 0)
+        int remaining = TryAddToExisting(purchase);
+
+        if (remaining > 0)
         {
             if (TryGetEmptySlotIndex(out var idx))
             {
-                slots[idx] = new Slot(purchase);
+                slots[idx] = new(purchase.item, remaining);
                 purchase.OnSlotChanged += InventoryChanged;
             }
             else Debug.LogWarning("Could not add item to inventory, no room");
@@ -112,10 +114,11 @@ public class Inventory : SlotGroup
             if (s == null || s.item == null) continue;
             if (s.item == purchase.item)
             {
-                remaining = s.AddAmount(purchase.amount);
-                if (remaining <= 0) return 0;
+                remaining = s.AddAmount(remaining);
+                if (remaining == 0) break;
             }
         }
+
         return remaining;
     }
 

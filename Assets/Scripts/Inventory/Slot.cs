@@ -35,9 +35,10 @@ public class Slot
     /// <returns></returns>
     public int AddAmount(int addAmount)
     {
-        amount = Mathf.Min(STACK_SIZE, amount + addAmount);
+        int maxAmount = amount + addAmount;
+        amount = Mathf.Min(STACK_SIZE, maxAmount);
         OnSlotChanged?.Invoke();
-        return Mathf.Max(0, amount + addAmount - STACK_SIZE);
+        return Mathf.Max(0, maxAmount - STACK_SIZE);
     }
 
     /// <summary>

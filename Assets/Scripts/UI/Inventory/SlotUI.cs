@@ -10,8 +10,6 @@ public class SlotUI : MonoBehaviour
     [SerializeField] TMP_Text amountText;
     [SerializeField] TMP_Text priceText;
     [SerializeField] Image itemImage;
-    [SerializeField] Sprite emptyItemSprite;
-    [SerializeField] GameObject purchaseOverlay;
     [SerializeField] Button button;
     [SerializeField] EventTrigger eventTrigger;
 
@@ -29,6 +27,7 @@ public class SlotUI : MonoBehaviour
 
         titleText.text = slot.item.title;
         amountText.text = "x" + slot.amount.ToString();
+        itemImage.gameObject.SetActive(true);
         itemImage.sprite = slot.item.sprite;
 
         SetEventTriggers();
@@ -69,7 +68,7 @@ public class SlotUI : MonoBehaviour
     void SetEmptySlot()
     {
         button.enabled = false;
-        itemImage.sprite = emptyItemSprite;
+        itemImage.gameObject.SetActive(false);
         titleText.text = "";
         amountText.text = "";
         priceText.text = "";
