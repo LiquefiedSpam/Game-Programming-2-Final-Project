@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 6573191691703950337}
   - component: {fileID: 211054527961141281}
   - component: {fileID: 694233041821895780}
-  - component: {fileID: 5658650112377833348}
+  - component: {fileID: 7239610175337373699}
   m_Layer: 0
   m_Name: TeleportZone
   m_TagString: InteractionZone
@@ -607,7 +607,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5658650112377833348
+--- !u!114 &7239610175337373699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -616,15 +616,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3687551262246164317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d13843023b7e404e8f809e00f3a2ab2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs: []
-  sandTilePrefabs: []
-  stoneTilePrefabs: []
-  teleportLocation: {fileID: 0}
-  mapImage: {fileID: 0}
-  speed: 2
+  m_EditorClassIdentifier: '::'
+  teleportLocation: Wood Teleport
 --- !u!1 &3977908795114215951
 GameObject:
   m_ObjectHideFlags: 0

@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7041594}
   m_Layer: 0
-  m_Name: Wood Teleport (Town1)
+  m_Name: Wood Teleport
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2439,6 +2439,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 2
 --- !u!65 &398159490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13599,6 +13600,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 3
 --- !u!65 &643258611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14512,6 +14514,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 1
 --- !u!1 &750494454
 GameObject:
   m_ObjectHideFlags: 0
@@ -23305,6 +23308,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 0
 --- !u!1001 &967480896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27435,6 +27439,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 5
 --- !u!65 &1416148978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41288,6 +41293,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 2069322082}
   mapImage: {fileID: 1881379450}
   speed: 2
+  currentPath: 4
 --- !u!65 &1882578944
 BoxCollider:
   m_ObjectHideFlags: 0

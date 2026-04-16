@@ -21,14 +21,17 @@ public class Teleport : MonoBehaviour
     {
         WoodToStone,
         WoodToSand,
-        SandToStone
+        SandToWood,
+        SandToStone,
+        StoneToWood,
+        StoneToSand
     }
 
     public static Action<int> OnTownChanged;
 
     public float speed = 2f;
 
-    private TravelPath currentPath;
+    [SerializeField] private TravelPath currentPath;
 
     private List<GameObject> interactionZones;
     private List<GameObject> travelPath;
@@ -52,36 +55,9 @@ public class Teleport : MonoBehaviour
         yield return StartCoroutine(UIManager.Ins.FadeOut());
 
         Vector3 target = teleportLocation.transform.position;
-        //if (teleportLocation.name == "Sand Teleport")
-        //{
-        //    UIManager.Ins.UpdateMapUISand(woodToSandDangerLevel, woodToSandChance, sandToStoneDangerLevel, sandToStoneChance);
-        //    OnTownChanged?.Invoke(2);
-        //}
-        //else if (teleportLocation.name == "Stone Teleport")
-        //{
-        //    UIManager.Ins.UpdateMapUIStone(woodToStoneDangerLevel, woodToStoneChance, sandToStoneDangerLevel, sandToStoneChance);
-        //    OnTownChanged?.Invoke(3);
-        //}
-        //else
-        //{
-        //    UIManager.Ins.UpdateMapUIWood(woodToSandDangerLevel, woodToSandChance, woodToStoneDangerLevel, woodToStoneChance);
-        //    OnTownChanged?.Invoke(1);
-        //}
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
-        if (teleportLocation.name == "TravelPath")
-        {
-            ConstructTravelPath(player);
-        }
-        else
-        {
-
-            //unfade to black
-            yield return StartCoroutine(UIManager.Ins.FadeIn());
-
-            //turn on player controls
-            player.SetMovementEnabled(true);
-        }
+        ConstructTravelPath(player);
     }
 
     private void ConstructTravelPath(PlayerController player)
@@ -100,10 +76,26 @@ public class Teleport : MonoBehaviour
                 SetInteractionZones();
                 break;
 
+            case TravelPath.SandToWood:
+                interactionZones = TileManager.Instance.GenerateTravelPath(sandTilePrefabs, grassTilePrefabs);
+                SetInteractionZones();
+                break;
+
             case TravelPath.SandToStone:
                 interactionZones = TileManager.Instance.GenerateTravelPath(sandTilePrefabs, stoneTilePrefabs);
                 SetInteractionZones();
                 break;
+
+            case TravelPath.StoneToWood:
+                interactionZones = TileManager.Instance.GenerateTravelPath(stoneTilePrefabs, grassTilePrefabs);
+                SetInteractionZones();
+                break;
+
+            case TravelPath.StoneToSand:
+                interactionZones = TileManager.Instance.GenerateTravelPath(stoneTilePrefabs, sandTilePrefabs);
+                SetInteractionZones();
+                break;
+
         }
 
         StartCoroutine(TraverseBetweenTowns(player));
