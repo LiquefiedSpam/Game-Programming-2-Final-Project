@@ -1,26 +1,22 @@
-using System.Security.Cryptography;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Pathing/TileNode", menuName = "TileData")]
 public class TileData : ScriptableObject
 {
-    [SerializeField] private Image mysteryIcon;
-    [SerializeField] private Image tileIcon;
-    //circle for potential interaction zone (zone1)
-    //circle for potential interaction zone (zone2)
+    [SerializeField] private Sprite mysteryIcon;
+    [SerializeField] private Sprite tileIcon;
 
-    private Image currentIcon;
-
-    private void Awake()
+    [System.Serializable]
+    public class InteractionPoint
     {
-        currentIcon = mysteryIcon;
+        public Vector2 normalizePosition;
+        public float size;
     }
 
-    void DiscoveryTile()
-    {
-        currentIcon = tileIcon;
-        //show spots for interaction
-        //give details for the paths based on what is stored in the MarauderCampData
-    }
+    [SerializeField] private List<InteractionPoint> interactionPoints;
+
+    public Sprite MysteryIcon => mysteryIcon;
+    public Sprite TileIcon => tileIcon;
+    public List<InteractionPoint> InteractionPoints => interactionPoints;
 }
