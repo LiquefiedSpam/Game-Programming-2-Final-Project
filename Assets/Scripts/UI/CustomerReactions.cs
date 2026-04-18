@@ -4,23 +4,21 @@ using UnityEngine;
 public class CustomerReactions : ScriptableObject
 {
     [SerializeField] Sprite angrySprite;
-    [SerializeField] Sprite annoyedSprite;
-    [SerializeField] Sprite okaySprite;
-    [SerializeField] Sprite amazingSprite;
+    [SerializeField] Sprite goodSprite;
+    [SerializeField] Sprite greatSprite;
 
     public Sprite GetReactionSprite(CustomerReaction reaction)
     {
         return reaction switch
         {
-            CustomerReaction.ANGRY => angrySprite,
-            CustomerReaction.ANNOYED => annoyedSprite,
-            CustomerReaction.OKAY => okaySprite,
-            _ => amazingSprite,
+            CustomerReaction.CHEAP => greatSprite,
+            CustomerReaction.TARGET => goodSprite,
+            _ => angrySprite
         };
     }
 }
 
 public enum CustomerReaction
 {
-    ANGRY, ANNOYED, OKAY, AMAZING
+    CHEAP, TARGET, EXPENSIVE
 }

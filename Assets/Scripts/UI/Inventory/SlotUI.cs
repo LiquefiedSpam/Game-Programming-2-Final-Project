@@ -79,9 +79,9 @@ public class SlotUI : MonoBehaviour
         if (slot is PlayerListingSlot listing)
         {
             priceText.text = "$" + listing.ListedPrice.ToString("F2");
-            if (listing.HasResult)
+            if (listing.HasSaleResult)
             {
-                itemImage.sprite = listing.ReactionSprite;
+                itemImage.sprite = Data.CustomerReactions.GetReactionSprite(listing.CustomerReaction);
             }
         }
     }

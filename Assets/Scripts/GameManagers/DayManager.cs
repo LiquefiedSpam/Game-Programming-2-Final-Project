@@ -50,6 +50,7 @@ public class DayManager : MonoBehaviour
     public void NextDay()
     {
         day++;
+        OnUnitsConsumed?.Invoke(units);
         units = unitsPerInterval;
         dayInterval = DayInterval.Morning;
         OnTimeChanged?.Invoke();

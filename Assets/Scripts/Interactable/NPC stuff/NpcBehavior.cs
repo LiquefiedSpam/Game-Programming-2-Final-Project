@@ -38,7 +38,7 @@ public class NpcBehavior : InteractableBehavior
     Animator animator;
     Quaternion defaultRotation;
     Coroutine _rotateCoroutine;
-    BubbleScript bubbleScript;
+    // BubbleScript bubbleScript;
 
     protected override void Awake()
     {
@@ -48,10 +48,14 @@ public class NpcBehavior : InteractableBehavior
         BuildRuntimeOptions();
         animator = GetComponent<Animator>();
         defaultRotation = transform.rotation;
-        GameManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
 
         if (interactableIcon != null)
             bubbleScript = interactableIcon.GetComponent<BubbleScript>();
+    }
+
+    void Start()
+    {
+        GameManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
     }
 
     void OnDisable()
@@ -126,6 +130,7 @@ public class NpcBehavior : InteractableBehavior
 
             case DialogueLabel.Purchase:
                 audioSource.Play();
+                UIManager.Ins.CloseDialogue();
                 InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall);
                 break;
 

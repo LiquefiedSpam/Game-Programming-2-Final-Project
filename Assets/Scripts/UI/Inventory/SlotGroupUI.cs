@@ -86,6 +86,7 @@ public class SlotGroupUI : MonoBehaviour
 
     protected virtual void SlotClicked(Slot s)
     {
+        Debug.Log("slot details clicked");
         selectedSlot = s;
         slotDetails.ShowSlotDetails(s, SlotType);
         slotDetails.OnCloseDetails += ExitDetails;

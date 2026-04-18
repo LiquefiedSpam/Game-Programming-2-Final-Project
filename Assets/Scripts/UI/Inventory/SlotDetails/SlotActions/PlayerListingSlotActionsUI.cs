@@ -10,9 +10,8 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
     [SerializeField] Button removeButton;
     [Header("Listing")]
     [SerializeField] GameObject priceParent;
-    [SerializeField] TMP_InputField priceInput;
-    [SerializeField] Button savePriceButton;
-    [SerializeField] Button revertPriceButton;
+    [SerializeField] TMP_InputField pricePerItemInput;
+    [SerializeField] TMP_Text totalPriceText;
     [Header("Sale")]
     [SerializeField] GameObject saleParent;
     [SerializeField] Image reactionImage;
@@ -29,7 +28,7 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
         }
         else return;
 
-        if (listing.HasResult)
+        if (listing.HasSaleResult)
         {
             ShowListingResult();
         }
@@ -46,18 +45,18 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
         priceParent.SetActive(false);
         saleParent.SetActive(true);
 
-        reactionImage.sprite = listing.ReactionSprite;
+        reactionImage.sprite = Data.CustomerReactions.GetReactionSprite(listing.CustomerReaction);
 
-        if (listing.SaleResult == SaleResult.REJECTED)
+        if (!listing.Sold)
         {
-            reactionText.text = $"Sale price (${listing.ListedPrice}) rejected.";
+            reactionText.text = $"Sale price ($" + listing.ListedPrice.ToString("F2") + ") rejected.";
             profitButton.gameObject.SetActive(false);
             removeParent.SetActive(true);
             SetRemoveButton();
         }
         else
         {
-            reactionText.text = $"Sold for ${listing.ListedPrice} in {listing.ResultWaitTime.x} days and {listing.ResultWaitTime.y} hours!";
+            reactionText.text = "Sold for $" + listing.ListedPrice.ToString("F2") + "($" + listing.ListedPricePerItem.ToString("F2") + " / item)";
             removeParent.SetActive(false);
             profitButton.gameObject.SetActive(true);
             profitButton.onClick.AddListener(OnProfitClicked);
@@ -72,9 +71,9 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
         removeParent.SetActive(true);
         SetRemoveButton();
 
-        priceInput.text = $"{listing.ListedPrice}";
-        savePriceButton.onClick.AddListener(OnSavePriceClicked);
-        revertPriceButton.onClick.AddListener(OnRevertPriceClicked);
+        pricePerItemInput.text = listing.ListedPricePerItem.ToString("F2");
+        pricePerItemInput.onEndEdit.AddListener(_ => OnPricePerItemEdited());
+        totalPriceText.text = listing.ListedPrice.ToString("F2");
     }
 
     void SetRemoveButton()
@@ -96,15 +95,14 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
     {
         removeButton.onClick.RemoveAllListeners();
         profitButton.onClick.RemoveAllListeners();
-        savePriceButton.onClick.RemoveAllListeners();
-        revertPriceButton.onClick.RemoveAllListeners();
+        pricePerItemInput.onEndEdit.RemoveAllListeners();
     }
 
     void OnRemoveClicked()
     {
         if (!Inventory.Ins.HasRoomFor(listing)) return;
 
-        listing.CancelSale();
+        listing.Cancel();
         Data.ClosestPlayerStall.Remove(listing);
         Inventory.Ins.Add(new(listing));
         Hide();
@@ -117,25 +115,45 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
         Hide();
     }
 
+    void OnPricePerItemEdited()
+    {
+        if (float.TryParse(pricePerItemInput.text, out var price))
+        {
+            if (price == listing.ListedPricePerItem) return;
+
+            if (price >= PlayerListingSlot.MIN_PRICE_PER_ITEM)
+            {
+                listing.SetPricePerItem(price);
+                pricePerItemInput.text = price.ToString("F2");
+            }
+            else
+            {
+                pricePerItemInput.text = listing.ListedPricePerItem.ToString("F2");
+            }
+
+            totalPriceText.text = listing.ListedPrice.ToString("F2");
+        }
+    }
+
     void OnSavePriceClicked()
     {
-        if (float.TryParse(priceInput.text, out var price))
+        if (float.TryParse(pricePerItemInput.text, out var price))
         {
-            if (price >= PlayerListingSlot.MIN_PRICE)
+            if (price >= PlayerListingSlot.MIN_PRICE_PER_ITEM)
             {
-                listing.SetPrice(price);
-                priceInput.text = price.ToString("F2");
+                listing.SetPricePerItem(price);
+                pricePerItemInput.text = price.ToString("F2");
                 return;
             }
             else
             {
-                priceInput.text = listing.ListedPrice.ToString("F2");
+                pricePerItemInput.text = listing.ListedPrice.ToString("F2");
             }
         }
     }
 
     void OnRevertPriceClicked()
     {
-        priceInput.text = listing.ListedPrice.ToString("F2");
+        pricePerItemInput.text = listing.ListedPrice.ToString("F2");
     }
 }

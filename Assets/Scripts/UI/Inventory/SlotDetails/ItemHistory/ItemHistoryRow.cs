@@ -17,27 +17,27 @@ public class ItemHistoryRow : MonoBehaviour
 
     public void SetListing(PlayerListingSlot listing)
     {
-        amountText.text = "x" + listing.amount.ToString();
-        boughtForText.text = "- $" + listing.GetMerchantPrice().ToString("F2");
-        reactionImage.sprite = listing.ReactionSprite;
-        townText.text = listing.SoldInTown.ToString();
-        soldForText.text = "+ $" + listing.ListedPrice.ToString("F2");
+        // amountText.text = "x" + listing.amount.ToString();
+        // boughtForText.text = "- $" + listing.GetMerchantPrice().ToString("F2");
+        // reactionImage.sprite = listing.ReactionSprite;
+        // townText.text = listing.SoldInTown.ToString();
+        // soldForText.text = "+ $" + listing.ListedPrice.ToString("F2");
 
-        if (listing.SaleResult != SaleResult.REJECTED)
-        {
-            float profit = Mathf.RoundToInt((listing.ListedPrice / listing.GetMerchantPrice() - 1) * 100f);
-            string sign = profit >= 0 ? "+ " : "- ";
-            profitText.color = profit >= 0 ? positiveColor : negativeColor;
-            profitText.text = sign + Mathf.Abs(profit).ToString() + "%";
+        // if (listing.SaleResult != SaleResult.REJECTED)
+        // {
+        //     float profit = Mathf.RoundToInt((listing.ListedPrice / listing.GetMerchantPrice() - 1) * 100f);
+        //     string sign = profit >= 0 ? "+ " : "- ";
+        //     profitText.color = profit >= 0 ? positiveColor : negativeColor;
+        //     profitText.text = sign + Mathf.Abs(profit).ToString() + "%";
 
-            reactionText.text = $"{listing.ResultWaitTime.x} days,\n{listing.ResultWaitTime.y} hours";
-        }
-        else
-        {
-            soldForText.text = "--";
-            profitText.color = negativeColor;
-            profitText.text = "--";
-            reactionText.text = "REJECTED";
-        }
+        //     reactionText.text = $"{listing.ResultWaitTime.x} days,\n{listing.ResultWaitTime.y} hours";
+        // }
+        // else
+        // {
+        //     soldForText.text = "--";
+        //     profitText.color = negativeColor;
+        //     profitText.text = "--";
+        //     reactionText.text = "REJECTED";
+        // }
     }
 }

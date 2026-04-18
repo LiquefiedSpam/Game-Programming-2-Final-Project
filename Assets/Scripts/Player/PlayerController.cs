@@ -20,12 +20,12 @@ public class PlayerController : MonoBehaviour
         _playerInputController = GetComponent<PlayerInputController>();
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
-        GameManager.Ins.OnEnterExitCutscene += SetMovementDisable;
     }
 
     void Start()
     {
         HungerManager.Ins.OnHungerKnockedOut += Knockout;
+        GameManager.Ins.OnEnterExitCutscene += SetMovementDisable;
     }
 
     void OnDisable()

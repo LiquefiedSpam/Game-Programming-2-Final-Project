@@ -6,7 +6,7 @@ public class InteractableBehavior : MonoBehaviour
 {
     [SerializeField] private float _hungerCost;
     [SerializeField] public GameObject interactableIcon;
-    private BubbleScript bubbleScript;
+    protected BubbleScript bubbleScript;
 
     public virtual InteractableType Type { get; protected set; }
     public virtual bool Instant { get; protected set; } = false;
@@ -17,7 +17,7 @@ public class InteractableBehavior : MonoBehaviour
 
     protected virtual void Awake()
     {
-        interactableIcon.GetComponent<BubbleScript>();
+        if (interactableIcon) interactableIcon.GetComponent<BubbleScript>();
     }
     public virtual void Interact()
     {

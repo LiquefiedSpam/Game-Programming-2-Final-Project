@@ -2,19 +2,16 @@ using UnityEngine;
 
 public class PlayerListingSlot : Slot
 {
-    float hoursInDay = 3;
-    public const float MIN_PRICE = 0.5f;
+    public const float MIN_PRICE_PER_ITEM = 0.5f;
+    public const float SALE_CHANCE_PER_TIME_UNIT = 0.04f; // listing has a 4% chance of being sold when 1 time unit passes
 
     public float ListedPrice { get; private set; }
-    public bool HasResult { get; private set; }
-    public SaleResult SaleResult { get; private set; }
+    public bool HasSaleResult { get; private set; }
+    public bool Sold { get; private set; }
     public CustomerReaction CustomerReaction { get; private set; }
-    public Sprite ReactionSprite { get; private set; }
-    public Vector2Int ResultWaitTime { get; private set; }
     public Town SoldInTown { get; private set; }
     public string ID { get; private set; }
-    Vector2Int timePassed;
-
+    public float ListedPricePerItem => ListedPrice / amount;
 
     public PlayerListingSlot(ItemData itemData, int itemAmount, float price, Town inTown) : base(itemData, itemAmount)
     {
@@ -23,78 +20,47 @@ public class PlayerListingSlot : Slot
         ListedPrice = price;
         SoldInTown = inTown;
         ID = System.Guid.NewGuid().ToString();
-        BeginWaitForResult();
+        DayManager.Ins.OnUnitsConsumed += OnUnitsConsumed;
     }
 
-    public PlayerListingSlot(Slot slot, float price) : base(slot.item, slot.amount)
+    public void SetPricePerItem(float pricePerItem)
     {
-        item = slot.item;
-        amount = slot.amount;
-        ListedPrice = price;
-    }
+        if (HasSaleResult) return;
 
-    public void SetPrice(float price)
-    {
-        ListedPrice = price;
+        ListedPrice = pricePerItem * amount;
         OnSlotChanged?.Invoke();
-        BeginWaitForResult();
     }
 
-    public void CancelSale()
+    public void Cancel()
     {
-        // unsubscribe from wait time methods
-        // TODO actually do this
-        // InputHandler.OnHourPassed -= OnHourIncremented;
-    }
-
-    void BeginWaitForResult()
-    {
-        timePassed = Vector2Int.zero;
-        HasResult = false;
-        // get wait time from item and set ResultWaitTime
-        // TODO actually do this
-        ResultWaitTime = item.GetWaitTime(ListedPrice, amount);
-
-        if (SaleResult != SaleResult.WAITING) // i.e. if not already subscribed
-        {
-            // TODO actually do this
-            // subscribe OnHourIncremented to time passing actions
-            // InputHandler.OnHourPassed += OnHourIncremented;
-        }
+        DayManager.Ins.OnUnitsConsumed -= OnUnitsConsumed;
     }
 
     void EndWaitForResult()
     {
-        // get sale result from item and set SaleResult
-        // get CustomerReaction from item and set CustomerReaction
-        // TODO actually do this
-        CustomerReaction = item.GetCustomerReaction(ResultWaitTime);
-        CustomerReactions reactions = Resources.Load<CustomerReactions>("CustomerReactions");
-        ReactionSprite = reactions.GetReactionSprite(CustomerReaction);
+        DayManager.Ins.OnUnitsConsumed -= OnUnitsConsumed;
 
-        SaleResult = item.GetSaleResult(CustomerReaction);
-        HasResult = true;
+        item.SetSaleResult(ListedPricePerItem, SoldInTown, out CustomerReaction reaction, out bool sold);
+        CustomerReaction = reaction;
+        Sold = sold;
+
+        HasSaleResult = true;
 
         History.AddListing(this);
     }
 
-    void OnHourIncremented()
+    void OnUnitsConsumed(int units)
     {
-        timePassed.y += 1;
-        if (timePassed.y > hoursInDay)
+        if (HasSaleResult)
         {
-            timePassed.x++;
-            timePassed.y = 0;
+            DayManager.Ins.OnUnitsConsumed -= OnUnitsConsumed;
+            return;
         }
-        if (timePassed.x > ResultWaitTime.x
-            || (timePassed.x == ResultWaitTime.x && timePassed.y >= ResultWaitTime.y))
+
+        float saleChance = units * SALE_CHANCE_PER_TIME_UNIT;
+        if (Random.value < saleChance)
         {
             EndWaitForResult();
         }
     }
-}
-
-public enum SaleResult
-{
-    NONE, WAITING, ACCEPTED, REJECTED
 }

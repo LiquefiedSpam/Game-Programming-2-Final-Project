@@ -7,9 +7,12 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
     [Header("Create Listing")]
     [SerializeField] Slider amountSlider;
     [SerializeField] TMP_Text sliderText;
-    [SerializeField] TMP_InputField priceInput;
+    [SerializeField] TMP_InputField pricePerItemInput;
+    [SerializeField] TMP_Text totalPriceText;
     [SerializeField] Button createListingButton;
     [SerializeField] TMP_Text noOpenSlotText;
+
+    float pricePerItem;
 
     public override void Show(Slot s)
     {
@@ -24,7 +27,9 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
         amountSlider.minValue = 1;
         amountSlider.value = 1;
         amountSlider.wholeNumbers = true;
-        priceInput.text = "1.00";
+        pricePerItemInput.text = PlayerListingSlot.MIN_PRICE_PER_ITEM.ToString("F2");
+        totalPriceText.text = pricePerItemInput.text;
+        pricePerItem = PlayerListingSlot.MIN_PRICE_PER_ITEM;
 
         if (Data.ClosestPlayerStall.CanAddListing())
         {
@@ -32,6 +37,8 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
             createListingButton.onClick.AddListener(OnCreateListingClicked);
             amountSlider.interactable = true;
             amountSlider.onValueChanged.AddListener(_ => OnSliderValueChanged());
+            pricePerItemInput.interactable = true;
+            pricePerItemInput.onEndEdit.AddListener(_ => OnPricePerItemChanged());
             sliderText.text = "1";
             noOpenSlotText.text = "";
         }
@@ -39,6 +46,7 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
         {
             createListingButton.interactable = false;
             amountSlider.interactable = false;
+            pricePerItemInput.interactable = false;
             sliderText.text = "0";
             noOpenSlotText.text = "No room for another sale!";
         }
@@ -46,23 +54,20 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
 
     void OnCreateListingClicked()
     {
-        if (float.TryParse(priceInput.text, out var price))
-        {
-            int sellingAmount = (int)amountSlider.value;
-            PlayerListingSlot listing = new(slot.item, sellingAmount, price, Data.CurrentTown); // TODO actually fix
-            Data.ClosestPlayerStall.Add(listing);
+        int sellingAmount = (int)amountSlider.value;
+        PlayerListingSlot listing = new(slot.item, sellingAmount, pricePerItem * sellingAmount, Data.CurrentTown);
+        Data.ClosestPlayerStall.Add(listing);
 
-            if (slot.SubtractAmount(sellingAmount) == 0)
-            {
-                Inventory.Ins.Remove(slot);
-                Hide();
-            }
-            else
-            {
-                createListingButton.onClick.RemoveAllListeners();
-                amountSlider.onValueChanged.RemoveAllListeners();
-                SetCreateListingDisplay();
-            }
+        if (slot.SubtractAmount(sellingAmount) == 0)
+        {
+            Inventory.Ins.Remove(slot);
+            Hide();
+        }
+        else
+        {
+            createListingButton.onClick.RemoveAllListeners();
+            amountSlider.onValueChanged.RemoveAllListeners();
+            SetCreateListingDisplay();
         }
     }
 
@@ -72,6 +77,19 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
         if (sliderText.text != sliderValue.ToString())
         {
             sliderText.text = sliderValue.ToString();
+            totalPriceText.text = (pricePerItem * sliderValue).ToString("F2");
+        }
+    }
+
+    void OnPricePerItemChanged()
+    {
+        float prevPricePerItem = pricePerItem;
+        SetPricePerItem();
+
+        if (prevPricePerItem != pricePerItem)
+        {
+            int sliderValue = (int)amountSlider.value;
+            totalPriceText.text = (pricePerItem * sliderValue).ToString("F2");
         }
     }
 
@@ -79,6 +97,15 @@ public class PlayerStallInvActionsUI : InventorySlotActionsUI
     {
         createListingButton.onClick.RemoveAllListeners();
         amountSlider.onValueChanged.RemoveAllListeners();
+        pricePerItemInput.onEndEdit.RemoveAllListeners();
         base.UnsubscribeFromActions();
+    }
+
+    void SetPricePerItem()
+    {
+        if (float.TryParse(pricePerItemInput.text, out var price))
+        {
+            pricePerItem = price;
+        }
     }
 }

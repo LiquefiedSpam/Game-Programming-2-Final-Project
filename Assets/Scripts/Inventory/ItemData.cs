@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
@@ -17,19 +18,49 @@ public class ItemData : ScriptableObject
     public bool consumable;
     public float healthIncrease;
 
-    // TODO actually implement all of this
-    public Vector2Int GetWaitTime(float price, int amount)
+    public float GetTownTargetPrice(Town town)
     {
-        return Vector2Int.one;
+        return town switch
+        {
+            Town.TOWN_1 => town1TargetPrice,
+            Town.TOWN_2 => town2TargetPrice,
+            _ => town3TargetPrice
+        };
     }
-    public CustomerReaction GetCustomerReaction(Vector2Int wait)
+
+    public void SetSaleResult(float pricePerItem, Town town, out CustomerReaction reaction, out bool sold)
     {
-        int rand = Random.Range(0, 5);
-        return (CustomerReaction)rand;
+        float targetPrice = GetTownTargetPrice(town);
+        float cheapThreshold = targetPrice / 2f;
+
+        if (pricePerItem < cheapThreshold)
+        {
+            reaction = CustomerReaction.CHEAP;
+            sold = true;
+        }
+        else if (pricePerItem <= targetPrice)
+        {
+            reaction = CustomerReaction.TARGET;
+            sold = true;
+        }
+        else
+        {
+            reaction = CustomerReaction.EXPENSIVE;
+            float saleChance = GetSaleChance(targetPrice, pricePerItem);
+            sold = Random.value < saleChance;
+        }
     }
-    public SaleResult GetSaleResult(CustomerReaction customerReaction)
+
+    float GetSaleChance(float targetPrice, float pricePerItem)
     {
-        if (customerReaction == CustomerReaction.ANGRY) return SaleResult.REJECTED;
-        else return SaleResult.ACCEPTED;
+        if (pricePerItem <= targetPrice) return 1f;
+
+        float noSaleThreshold = pricePerItem * 2f;
+        if (pricePerItem >= noSaleThreshold) return 0f;
+
+        float priceAboveTarget = targetPrice - pricePerItem;
+        float tooExpensiveIntervalLength = noSaleThreshold - targetPrice;
+
+        return 1 - (priceAboveTarget / tooExpensiveIntervalLength);
     }
 }
