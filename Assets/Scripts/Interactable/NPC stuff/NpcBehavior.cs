@@ -38,6 +38,7 @@ public class NpcBehavior : InteractableBehavior
     Animator animator;
     Quaternion defaultRotation;
     Coroutine _rotateCoroutine;
+    // This was causing errors I made bubbleScript in InteractableBehavior protected so extending classes can access it - Marcella
     // BubbleScript bubbleScript;
 
     protected override void Awake()
@@ -107,7 +108,17 @@ public class NpcBehavior : InteractableBehavior
 
         if (option.definition.label != DialogueLabel.Leave)
         {
-            UIManager.Ins.ShowDialogue(true, name, option.response, portrait);
+            // Hi Morgan I am passing purchase dialogue to InventoryDisplayManager to show in merchant stall UI
+            // in HandleInternalLogic, hence this if-else statement
+            // - Marcella
+            if (option.definition.label == DialogueLabel.Purchase)
+            {
+                InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall, name, option.response, portrait);
+            }
+            else
+            {
+                UIManager.Ins.ShowDialogue(true, name, option.response, portrait);
+            }
         }
         else
         {
@@ -130,8 +141,7 @@ public class NpcBehavior : InteractableBehavior
 
             case DialogueLabel.Purchase:
                 audioSource.Play();
-                UIManager.Ins.CloseDialogue();
-                InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall);
+                UIManager.Ins.CloseDialogue(); // dialogue shown in merchant stall display
                 break;
 
             case DialogueLabel.Leave:

@@ -9,7 +9,7 @@ public class MerchantBehavior : InteractableBehavior
     public override void Interact()
     {
         audioSource.Play();
-        InventoryDisplayManager.Ins.ShowMerchantStall(listings);
+        // InventoryDisplayManager.Ins.ShowMerchantStall(listings);
         base.Interact();
     }
 

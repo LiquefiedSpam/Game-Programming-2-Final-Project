@@ -8,7 +8,7 @@ public class InventoryDisplayManager : MonoBehaviour
     [SerializeField] SlotDetailsUI slotDetails;
     [SerializeField] SlotGroupUI inventoryUI;
     [SerializeField] SlotGroupUI stallInvUI;
-    [SerializeField] SlotGroupUI merchantUI;
+    [SerializeField] MerchantStallUI merchantUI;
     [SerializeField] SlotGroupUI playerStallUI;
     [Space]
     [SerializeField] RectTransform selectedSlot;
@@ -56,9 +56,10 @@ public class InventoryDisplayManager : MonoBehaviour
         Hide();
     }
 
-    public void ShowMerchantStall(MerchantStall merchantStall)
+    public void ShowMerchantStall(MerchantStall merchantStall, string merchantName, string merchantMessage, Sprite merchantPortrait)
     {
         merchantUI.ShowSlots(merchantStall);
+        merchantUI.ShowMerchantInfo(merchantPortrait, merchantName, merchantMessage);
         if (!inventoryUI.IsVisible) inventoryUI.ShowSlots(inventory);
         Show();
     }
