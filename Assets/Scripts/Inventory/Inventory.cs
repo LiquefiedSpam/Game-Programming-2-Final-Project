@@ -48,7 +48,7 @@ public class Inventory : SlotGroup
             if (TryGetEmptySlotIndex(out var idx))
             {
                 slots[idx] = new(purchase.item, remaining);
-                purchase.OnSlotChanged += InventoryChanged;
+                slots[idx].OnSlotChanged += InventoryChanged;
             }
             else Debug.LogWarning("Could not add item to inventory, no room");
         }

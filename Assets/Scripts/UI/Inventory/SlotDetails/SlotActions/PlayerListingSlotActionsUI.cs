@@ -112,6 +112,7 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
     {
         MoneyManager.Ins.AddMoney(listing.ListedPrice);
         Data.ClosestPlayerStall.Remove(listing);
+        InventoryDisplayManager.Ins.HideSelected();
         Hide();
     }
 
@@ -133,27 +134,5 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
 
             totalPriceText.text = listing.ListedPrice.ToString("F2");
         }
-    }
-
-    void OnSavePriceClicked()
-    {
-        if (float.TryParse(pricePerItemInput.text, out var price))
-        {
-            if (price >= PlayerListingSlot.MIN_PRICE_PER_ITEM)
-            {
-                listing.SetPricePerItem(price);
-                pricePerItemInput.text = price.ToString("F2");
-                return;
-            }
-            else
-            {
-                pricePerItemInput.text = listing.ListedPrice.ToString("F2");
-            }
-        }
-    }
-
-    void OnRevertPriceClicked()
-    {
-        pricePerItemInput.text = listing.ListedPrice.ToString("F2");
     }
 }

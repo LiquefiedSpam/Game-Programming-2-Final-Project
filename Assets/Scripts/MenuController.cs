@@ -42,17 +42,14 @@ public class MenuController : MonoBehaviour
     {
         if (InventoryDisplayManager.Ins.StallDisplayVisible)
         {
-            Debug.Log("stall display visible");
             return;
         }
         else if (InventoryDisplayManager.Ins.InventoryDisplayVisible)
         {
-            Debug.Log("Closing inventory");
             CloseInventory();
         }
         else
         {
-            Debug.Log("showing inventory");
             playerInputController.OnPlayerMove += CloseInventory;
             InventoryDisplayManager.Ins.SetInventoryVisibility(true);
         }

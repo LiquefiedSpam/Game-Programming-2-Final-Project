@@ -52533,7 +52533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1414324131779440035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59362,7 +59362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &4969962247665512859
 PrefabInstance:
   m_ObjectHideFlags: 0
