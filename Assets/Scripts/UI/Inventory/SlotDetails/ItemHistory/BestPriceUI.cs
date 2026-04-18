@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,37 +7,44 @@ public class BestPriceUI : MonoBehaviour
 {
     [SerializeField] EventTrigger eventTrigger;
     [SerializeField] TMP_Text priceText;
-    [Header("Info")]
     [SerializeField] string reactionAsString;
+    [SerializeField] string highestOrLowestString;
+    [Header("Info")]
     [SerializeField] GameObject infoParent;
     [SerializeField] TMP_Text neverReceivedText;
     [SerializeField] TMP_Text receivedExplanationText;
 
-    string townString;
+    string baseNeverReceivedStr;
+    string baseReceivedExplStr;
+
+    bool initialized = false;
 
     void Awake()
     {
-        SetEventTriggers();
+        if (!initialized) Init();
     }
 
     public void Show(float price, string town)
     {
+        if (!initialized)
+        {
+            Init();
+        }
+
         if (price < 0)
         {
             priceText.text = "--";
             receivedExplanationText.gameObject.SetActive(false);
-            neverReceivedText.text = NEVER_RECEIVED_TEXT.Replace("<reaction>", reactionAsString).Replace("<town>", town);
+            neverReceivedText.text = baseNeverReceivedStr.Replace("<town>", town);
             neverReceivedText.gameObject.SetActive(true);
         }
         else
         {
             priceText.text = "$" + price.ToString("F2");
             neverReceivedText.gameObject.SetActive(false);
-            receivedExplanationText.text = RECEIVED_EXPLANATION_TEXT.Replace("<reaction>", reactionAsString).Replace("<price>", priceText.text).Replace("<town>", town);
+            receivedExplanationText.text = baseReceivedExplStr.Replace("<price>", priceText.text).Replace("<town>", town);
             receivedExplanationText.gameObject.SetActive(true);
         }
-
-        townString = town;
     }
 
     void SetEventTriggers()
@@ -62,6 +70,14 @@ public class BestPriceUI : MonoBehaviour
         infoParent.SetActive(visible);
     }
 
+    void Init()
+    {
+        SetEventTriggers();
+        baseNeverReceivedStr = NEVER_RECEIVED_TEXT.Replace("<reaction>", reactionAsString);
+        baseReceivedExplStr = RECEIVED_EXPLANATION_TEXT.Replace("<reaction>", reactionAsString).Replace("<horl>", highestOrLowestString);
+        initialized = true;
+    }
+
     const string NEVER_RECEIVED_TEXT = "You've never set a price that received <reaction> in <town>.";
-    const string RECEIVED_EXPLANATION_TEXT = "<price> is the highest price that received <reaction> in <town>.";
+    const string RECEIVED_EXPLANATION_TEXT = "<price> is the <horl> price that received <reaction> in <town>.";
 }

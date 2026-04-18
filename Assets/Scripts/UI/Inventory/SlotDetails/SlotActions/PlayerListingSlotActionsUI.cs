@@ -56,7 +56,7 @@ public class PlayerListingSlotActionsUI : SlotActionsUI
         }
         else
         {
-            reactionText.text = "Sold for $" + listing.ListedPrice.ToString("F2") + "($" + listing.ListedPricePerItem.ToString("F2") + " / item)";
+            reactionText.text = "Sold for $" + listing.ListedPrice.ToString("F2") + " ($" + listing.ListedPricePerItem.ToString("F2") + " / item)";
             removeParent.SetActive(false);
             profitButton.gameObject.SetActive(true);
             profitButton.onClick.AddListener(OnProfitClicked);
