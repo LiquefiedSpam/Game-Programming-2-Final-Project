@@ -15415,6 +15415,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5107db1373f5ee847b50c8c05717dde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+--- !u!114 &645922493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8998212127606360373, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
+  m_PrefabInstance: {fileID: 2057660965628067608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645922489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2193fbb8951381542bd3acda32ac4816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
 --- !u!1 &692217801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4282887458101321195, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
@@ -58286,9 +58297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6bb4591a820c3469923a2a0ad94aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuController
+  playerInputController: {fileID: 645922493}
   menuAction: {fileID: 2025430264}
   mapAction: {fileID: 2003772141}
-  inventoryUI: {fileID: 0}
   mapUI: {fileID: 1573120820}
 --- !u!224 &4233663118311232971
 RectTransform:

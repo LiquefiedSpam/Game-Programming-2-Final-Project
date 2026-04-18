@@ -7,9 +7,12 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] InteractableMonitor _interactableMonitor;
     public Vector2 MovementInputVector { get; private set; }
 
+    public Action OnPlayerMove;
+
     private void OnMove(InputValue inputValue)
     {
         MovementInputVector = inputValue.Get<Vector2>();
+        OnPlayerMove?.Invoke();
     }
 
     private void OnInteract()

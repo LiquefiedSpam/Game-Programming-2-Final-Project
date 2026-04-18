@@ -15,6 +15,9 @@ public class InventoryDisplayManager : MonoBehaviour
 
     public static InventoryDisplayManager Ins;
 
+    public bool StallDisplayVisible => stallInvUI.IsVisible || merchantUI.IsVisible;
+    public bool InventoryDisplayVisible => inventoryUI.IsVisible;
+
     void Awake()
     {
         if (Ins != null && Ins != this)
@@ -37,7 +40,7 @@ public class InventoryDisplayManager : MonoBehaviour
         }
         else
         {
-            background.SetActive(false);
+            inventoryUI.HideSlots();
             Hide();
         }
     }
@@ -46,6 +49,10 @@ public class InventoryDisplayManager : MonoBehaviour
     {
         playerStallUI.ShowSlots(playerStall);
         stallInvUI.ShowSlots(inventory);
+        if (inventoryUI.IsVisible)
+        {
+            SetInventoryVisibility(false);
+        }
         Show();
     }
 
@@ -60,7 +67,10 @@ public class InventoryDisplayManager : MonoBehaviour
     {
         merchantUI.ShowSlots(merchantStall);
         merchantUI.ShowMerchantInfo(merchantPortrait, merchantName, merchantMessage);
-        if (!inventoryUI.IsVisible) inventoryUI.ShowSlots(inventory);
+        if (!inventoryUI.IsVisible)
+        {
+            inventoryUI.ShowSlots(inventory);
+        }
         Show();
     }
 
