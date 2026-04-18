@@ -17,8 +17,8 @@ MonoBehaviour:
   town: 1
   merchant: Stefan
   merchantSalePrice: 8
-  town1TargetPrice: 12
-  town2TargetPrice: 8
-  town3TargetPrice: 15
+  town1TargetPrice: 8
+  town2TargetPrice: 15
+  town3TargetPrice: 12
   consumable: 0
   healthIncrease: 0

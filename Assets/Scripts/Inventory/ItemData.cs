@@ -53,17 +53,11 @@ public class ItemData : ScriptableObject
 
     float GetSaleChance(float targetPrice, float pricePerItem)
     {
-        Debug.Log($"Get sale chance, target price: {targetPrice}, ppi: {pricePerItem}");
-        if (pricePerItem <= targetPrice) return 1f;
+        if (pricePerItem <= targetPrice) return 1f; // prices that are less than or equal to the target will always sell
 
-        float noSaleThreshold = targetPrice * 2f;
-        if (pricePerItem >= noSaleThreshold) return 0f;
+        float noSaleThreshold = targetPrice * 1.5f;
+        if (pricePerItem >= noSaleThreshold) return 0f; // prices that are bigger than 1.5x the target price will never sell
 
-        float priceAboveTarget = pricePerItem - targetPrice;
-        float tooExpensiveIntervalLength = noSaleThreshold - targetPrice;
-
-        Debug.Log($"GetSaleChance -- price above target: {priceAboveTarget}, too expensive interval length: {tooExpensiveIntervalLength}, price / length: {priceAboveTarget / tooExpensiveIntervalLength}, ret val: {1 - (priceAboveTarget / tooExpensiveIntervalLength)}");
-
-        return 1 - (priceAboveTarget / tooExpensiveIntervalLength);
+        return 0.3f; // prices between 1 and 1.5x target price have a 30% chance of selling
     }
 }
