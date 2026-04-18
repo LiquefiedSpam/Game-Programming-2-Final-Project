@@ -8,6 +8,7 @@ using System.Collections;
 public class NpcBehavior : InteractableBehavior
 {
     [Header("Assign if merchant")]
+    [SerializeField] bool isMerchant = false;
     [SerializeField] MerchantStall merchantStall;
     [SerializeField] AudioSource audioSource;
 
@@ -70,7 +71,6 @@ public class NpcBehavior : InteractableBehavior
 
     public override void Interact(Vector3 playerPos)
     {
-
         //setup
         if (!CanInteract)
             return;
@@ -95,8 +95,12 @@ public class NpcBehavior : InteractableBehavior
 
         //now, dialogue
         UIManager.Ins.ShowDialogue(false, name, fetchDialogue(), portrait, GetAbleOptions());
-        DayManager.Ins.ConsumeUnit(1);
         RapportManager.Ins.AddRapport(name, 1);
+        if (!isMerchant)
+        {
+            // consume now if not merchant
+            DayManager.Ins.ConsumeUnit(1);
+        }
     }
 
     public void HandleOptionSelected(DialogueOptionInstance option)
@@ -125,6 +129,12 @@ public class NpcBehavior : InteractableBehavior
 
         //outdated
         //option.action?.Execute(this);
+
+        if (isMerchant)
+        {
+            // consume after making choice if merchant
+            DayManager.Ins.ConsumeUnit(1);
+        }
 
         HandleInternalLogic(option.definition.label);
     }

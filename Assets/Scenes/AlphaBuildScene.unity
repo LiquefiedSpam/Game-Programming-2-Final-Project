@@ -25992,6 +25992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
   _hungerCost: 0
   interactableIcon: {fileID: 1181206611}
+  isMerchant: 0
   merchantStall: {fileID: 0}
   audioSource: {fileID: 0}
   name: Jimbo
@@ -59017,6 +59018,10 @@ PrefabInstance:
     - target: {fileID: 196661120224750658, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
       propertyPath: stallUI
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 196661120224750658, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
+      propertyPath: isMerchant
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 196661120224750658, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
       propertyPath: audioSource
