@@ -3,7 +3,7 @@ using UnityEngine;
 public class PathingManager : MonoBehaviour
 {
     [SerializeField] private GameObject signPrefab;
-    
+
     [Header("Path Settings")]
     [SerializeField] private GameObject topPath;
     [SerializeField] private GameObject bottomPath;
@@ -16,6 +16,7 @@ public class PathingManager : MonoBehaviour
     {
 
     }
+
     public void selectTopPath()
     {
         selectedPath = topPath;

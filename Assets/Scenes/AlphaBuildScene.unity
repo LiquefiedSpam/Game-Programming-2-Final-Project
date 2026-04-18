@@ -30020,7 +30020,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573120820}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30029,12 +30029,12 @@ RectTransform:
   - {fileID: 990082754}
   - {fileID: 581749276}
   - {fileID: 1065984431}
-  m_Father: {fileID: 6979904510759027371}
+  m_Father: {fileID: 2141826028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 3840, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1573120822
 MonoBehaviour:
@@ -49559,6 +49559,56 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2141826027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141826028}
+  - component: {fileID: 2141826029}
+  m_Layer: 5
+  m_Name: MapUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2141826028
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141826027}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1573120821}
+  m_Father: {fileID: 6979904510759027371}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2141826029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141826027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a21d1be718574526a2f6eaa8b910bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapDisplayManager
+  root: {fileID: 1573120820}
 --- !u!1001 &2144550551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58435,7 +58485,9 @@ MonoBehaviour:
   playerInputController: {fileID: 645922493}
   menuAction: {fileID: 2025430264}
   mapAction: {fileID: 2003772141}
-  mapUI: {fileID: 1573120820}
+  mapDisplay: {fileID: 2141826029}
+  inventoryDisplay: {fileID: 2467217195723317941}
+  uiManager: {fileID: 3842056310491018531}
 --- !u!224 &4233663118311232971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64242,7 +64294,7 @@ RectTransform:
   - {fileID: 1547644716}
   - {fileID: 5696199048871524789}
   - {fileID: 1247514683}
-  - {fileID: 1573120821}
+  - {fileID: 2141826028}
   - {fileID: 1359431458}
   - {fileID: 1967001212}
   m_Father: {fileID: 4571907394656368566}

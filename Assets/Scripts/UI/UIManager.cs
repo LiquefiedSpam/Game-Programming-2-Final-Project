@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Canvas _canvas;
-    [SerializeField] MenuController _menuController;
+    [SerializeField] DisplayController _menuController;
 
     [Header("Always Active")]
     [SerializeField] Slider _hungerSlider;
@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
     public bool Visible => _canvas.gameObject.activeInHierarchy;
     public bool Transitioning { get; private set; } = false;
 
-    public bool DisplayBlocksInventory => // cannot open inventory if true
+    public bool DisplayBlocksOthers => // cannot open inventory if true
         _dialogParent.activeInHierarchy
         || _signParent.activeInHierarchy
         || Transitioning;
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Ins => _instance;
     private static UIManager _instance;
 
-    public Action OnDisplayBlocksInventory;
+    public Action OnDisplayBlocksOthers;
 
     Coroutine statusFadeOutRoutine;
 
@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
     {
         if (show)
         {
-            OnDisplayBlocksInventory?.Invoke();
+            OnDisplayBlocksOthers?.Invoke();
             _signText.SetText(message);
         }
         _signParent.SetActive(show);
@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
     public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
     Sprite portrait = null)
     {
-        OnDisplayBlocksInventory?.Invoke();
+        OnDisplayBlocksOthers?.Invoke();
         ClearOptions();
         _dialogParent.SetActive(true);
         _dialogText.SetText(dialog);
@@ -221,7 +221,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator Fade(float start, float end)
     {
         Transitioning = true;
-        OnDisplayBlocksInventory?.Invoke();
+        OnDisplayBlocksOthers?.Invoke();
 
         float time = 0f;
         Color color = transitionImage.color;

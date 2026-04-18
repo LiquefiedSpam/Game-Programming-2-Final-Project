@@ -18,6 +18,7 @@ public class InventoryDisplayManager : MonoBehaviour
 
     public bool StallDisplayVisible => stallInvUI.IsVisible || merchantUI.IsVisible;
     public bool InventoryDisplayVisible => inventoryUI.IsVisible;
+    public bool DisplayBlocksOthers => StallDisplayVisible || InventoryDisplayVisible || slotDetails.IsVisible || stallInvUI.IsVisible;
 
     public Action OnStallUIShown;
     public Action OnInventoryUIShown;
@@ -37,12 +38,12 @@ public class InventoryDisplayManager : MonoBehaviour
 
     void Start()
     {
-        UIManager.Ins.OnDisplayBlocksInventory += HandleDisplayBlocksInventory;
+        UIManager.Ins.OnDisplayBlocksOthers += HandleDisplayBlocksInventory;
     }
 
     void OnDestroy()
     {
-        UIManager.Ins.OnDisplayBlocksInventory -= HandleDisplayBlocksInventory;
+        UIManager.Ins.OnDisplayBlocksOthers -= HandleDisplayBlocksInventory;
     }
 
     public void SetInventoryVisibility(bool visible)
