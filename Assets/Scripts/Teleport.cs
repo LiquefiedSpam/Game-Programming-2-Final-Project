@@ -27,8 +27,6 @@ public class Teleport : MonoBehaviour
         StoneToSand
     }
 
-    public static Action<int> OnTownChanged;
-
     public float speed = 2f;
 
     [SerializeField] private TravelPath currentPath;

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private bool _canMove = true;
 
+    public static Action<Town> OnForceNextDay;
 
     void Awake()
     {
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void ForceNextDay()
     {
-        Data.CurrentTown = InnBehavior.LastVisitedTown;
+        OnForceNextDay?.Invoke(InnBehavior.LastVisitedTown);
         MoneyManager.Ins.HalfMoney();
 
         Vector3 pos = InnBehavior.LastVisitedTeleportPoint.position;

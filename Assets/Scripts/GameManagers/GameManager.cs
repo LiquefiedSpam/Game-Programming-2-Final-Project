@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
-        currentTown = Town.TOWN_1;
+        currentTown = Town.WOODED_KEEP;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     //should be phased out to be a town member function or something
     Vector3 getTavernLoc()
     {
-        if (currentTown == Town.TOWN_1)
+        if (currentTown == Town.WOODED_KEEP)
         {
             return TavernPoint.transform.position;
         }

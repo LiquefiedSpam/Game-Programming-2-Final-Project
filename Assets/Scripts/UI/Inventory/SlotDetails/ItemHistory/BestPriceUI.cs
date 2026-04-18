@@ -24,7 +24,7 @@ public class BestPriceUI : MonoBehaviour
         if (!initialized) Init();
     }
 
-    public void Show(float price, string town)
+    public void Show(float price)
     {
         if (!initialized)
         {
@@ -35,14 +35,14 @@ public class BestPriceUI : MonoBehaviour
         {
             priceText.text = "--";
             receivedExplanationText.gameObject.SetActive(false);
-            neverReceivedText.text = baseNeverReceivedStr.Replace("<town>", town);
+            neverReceivedText.text = baseNeverReceivedStr.Replace("<town>", Data.CurrentTown.TownToString());
             neverReceivedText.gameObject.SetActive(true);
         }
         else
         {
             priceText.text = "$" + price.ToString("F2");
             neverReceivedText.gameObject.SetActive(false);
-            receivedExplanationText.text = baseReceivedExplStr.Replace("<price>", priceText.text).Replace("<town>", town);
+            receivedExplanationText.text = baseReceivedExplStr.Replace("<price>", priceText.text).Replace("<town>", Data.CurrentTown.TownToString());
             receivedExplanationText.gameObject.SetActive(true);
         }
     }

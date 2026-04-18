@@ -6,7 +6,7 @@ public class TeleportToTown : MonoBehaviour
 {
     [SerializeField] private string teleportLocation;
 
-    public static Action<int> OnTownChanged;
+    public static Action<Town> OnTownChanged;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,15 +29,15 @@ public class TeleportToTown : MonoBehaviour
         Vector3 target = GameObject.Find(teleportLocation).transform.position;
         if (teleportLocation == "Sand Teleport")
         {
-            OnTownChanged?.Invoke(2);
+            OnTownChanged?.Invoke(Town.SANDY_STALLS);
         }
         else if (teleportLocation == "Stone Teleport")
         {
-            OnTownChanged?.Invoke(3);
+            OnTownChanged?.Invoke(Town.STONE_SANCTUARY);
         }
         else
         {
-            OnTownChanged?.Invoke(1);
+            OnTownChanged?.Invoke(Town.WOODED_KEEP);
         }
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);

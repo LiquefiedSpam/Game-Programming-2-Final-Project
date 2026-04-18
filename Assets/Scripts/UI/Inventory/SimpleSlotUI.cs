@@ -14,6 +14,6 @@ public class SimpleSlotUI : MonoBehaviour
         slotImage.sprite = s.item.sprite;
         titleText.text = s.item.title;
         amountText.text = "x" + s.amount.ToString();
-        descriptionText.text = $"Purchase from {s.item.merchant} in {Util.TownToString(s.item.town)} for ${s.item.merchantSalePrice:F2} each.";
+        descriptionText.text = $"Purchase from {s.item.merchant} in {s.item.town.TownToString()} for ${s.item.merchantSalePrice:F2} each.";
     }
 }

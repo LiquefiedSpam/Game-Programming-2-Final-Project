@@ -13,9 +13,9 @@ public class ItemHistoryUI : MonoBehaviour
 
     public void Show(ItemData item)
     {
-        currentTownText.text = Util.TownToString(Data.CurrentTown);
+        currentTownText.text = Data.CurrentTown.TownToString();
 
-        if (!History.ItemTownHistory[Data.CurrentTown].ContainsKey(item))
+        if (!History.HistoryBySaleTown[Data.CurrentTown].ContainsKey(item))
         {
             priceParent.SetActive(false);
             noHistoryNotif.SetActive(true);
@@ -25,10 +25,10 @@ public class ItemHistoryUI : MonoBehaviour
         {
             noHistoryNotif.SetActive(false);
 
-            ItemHistory history = History.ItemTownHistory[Data.CurrentTown][item];
-            cheapPrice.Show(history.BestCheapPrice, currentTownText.text);
-            targetPrice.Show(history.BestTargetPrice, currentTownText.text);
-            expensivePrice.Show(history.BestExpensivePrice, currentTownText.text);
+            ItemHistory history = History.HistoryBySaleTown[Data.CurrentTown][item];
+            cheapPrice.Show(history.BestCheapPrice);
+            targetPrice.Show(history.BestTargetPrice);
+            expensivePrice.Show(history.BestExpensivePrice);
 
             priceParent.SetActive(true);
             gameObject.SetActive(true);

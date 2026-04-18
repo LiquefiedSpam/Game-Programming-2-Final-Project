@@ -7,7 +7,7 @@ public class PlayerStallUI : SlotGroupUI
 
     public override void ShowSlots(SlotGroup slots)
     {
-        stallTitle.text = $"Your Stall ({Util.TownToString(Data.CurrentTown)})";
+        stallTitle.text = $"Your Stall ({Data.CurrentTown.TownToString()})";
         base.ShowSlots(slots);
     }
 }

@@ -3,10 +3,14 @@ using UnityEngine;
 
 public static class History
 {
-    public static Dictionary<Town, Dictionary<ItemData, ItemHistory>> ItemTownHistory;
-    // public static List<PlayerListingSlot> ListingsByTime;
-    // public static Dictionary<ItemData, List<PlayerListingSlot>> ListingsByItem;
+    public static Dictionary<Town, Dictionary<ItemData, ItemHistory>> HistoryBySaleTown;
+    public static HashSet<ItemData> ObtainedItems;
     public static List<string> RecordedListingIDs;
+
+    public static void AddObtainedItem(ItemData item)
+    {
+        ObtainedItems.Add(item);
+    }
 
     public static void AddListing(PlayerListingSlot listing)
     {
@@ -19,22 +23,22 @@ public static class History
         if (RecordedListingIDs.Contains(listing.ID)) return;
         RecordedListingIDs.Add(listing.ID);
 
-        var dict = ItemTownHistory[listing.SoldInTown];
-        if (!dict.ContainsKey(listing.item))
+        var saleDict = HistoryBySaleTown[listing.SoldInTown];
+        if (!saleDict.ContainsKey(listing.item))
         {
-            dict[listing.item] = new ItemHistory(listing.item);
+            saleDict[listing.item] = new ItemHistory(listing.item);
         }
-        dict[listing.item].AddPrice(listing.ListedPricePerItem, listing.CustomerReaction);
+        saleDict[listing.item].AddPrice(listing.ListedPricePerItem, listing.CustomerReaction);
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Init()
     {
-        ItemTownHistory = new()
+        HistoryBySaleTown = new()
         {
-            [Town.TOWN_1] = new(),
-            [Town.TOWN_2] = new(),
-            [Town.TOWN_3] = new()
+            [Town.WOODED_KEEP] = new(),
+            [Town.SANDY_STALLS] = new(),
+            [Town.STONE_SANCTUARY] = new()
         };
         RecordedListingIDs = new();
     }

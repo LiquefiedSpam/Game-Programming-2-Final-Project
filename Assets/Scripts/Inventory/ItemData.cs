@@ -22,8 +22,8 @@ public class ItemData : ScriptableObject
     {
         return town switch
         {
-            Town.TOWN_1 => town1TargetPrice,
-            Town.TOWN_2 => town2TargetPrice,
+            Town.WOODED_KEEP => town1TargetPrice,
+            Town.SANDY_STALLS => town2TargetPrice,
             _ => town3TargetPrice
         };
     }

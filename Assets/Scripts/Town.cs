@@ -1,4 +1,4 @@
 public enum Town
 {
-    TOWN_1, TOWN_2, TOWN_3
+    WOODED_KEEP, SANDY_STALLS, STONE_SANCTUARY
 }

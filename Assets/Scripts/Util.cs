@@ -14,13 +14,13 @@ public static class Util
         }
     }
 
-    public static string TownToString(Town town)
+    public static string TownToString(this Town town)
     {
         return town switch
         {
-            Town.TOWN_1 => "Wooded Keep",
-            Town.TOWN_2 => "Sandy Stalls",
-            Town.TOWN_3 => "Stone Sanctuary",
+            Town.WOODED_KEEP => "Wooded Keep",
+            Town.SANDY_STALLS => "Sandy Stalls",
+            Town.STONE_SANCTUARY => "Stone Sanctuary",
             _ => ""
         };
     }

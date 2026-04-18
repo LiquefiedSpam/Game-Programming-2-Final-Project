@@ -3,12 +3,20 @@ using UnityEngine;
 
 public static class Data
 {
-    public static CustomerReactions CustomerReactions;
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
-    public static Town CurrentTown = Town.TOWN_1;
+    public static CustomerReactions CustomerReactions;
+
+    public static PlayerController Player;
+    public static Town CurrentTown { get; private set; } = Town.WOODED_KEEP;
     public static PlayerStall ClosestPlayerStall => TownPlayerStalls[CurrentTown];
 
+
+
+    static void SetCurrentTown(Town currentTown)
+    {
+        CurrentTown = currentTown;
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Init()
@@ -26,18 +34,23 @@ public static class Data
         TownTeleports = new();
         foreach (var t in tps)
         {
-            if (t.name.Contains("1"))
+            if (t.name.Contains("1") || t.name.ToLower().Contains("wood"))
             {
-                TownTeleports[Town.TOWN_1] = t.transform;
+                TownTeleports[Town.WOODED_KEEP] = t.transform;
             }
-            else if (t.name.Contains("2"))
+            else if (t.name.Contains("2") || t.name.ToLower().Contains("sand"))
             {
-                TownTeleports[Town.TOWN_2] = t.transform;
+                TownTeleports[Town.SANDY_STALLS] = t.transform;
             }
-            else if (t.name.Contains("3"))
+            else if (t.name.Contains("3") || t.name.ToLower().Contains("stone"))
             {
-                TownTeleports[Town.TOWN_3] = t.transform;
+                TownTeleports[Town.STONE_SANCTUARY] = t.transform;
             }
         }
+
+        Player = GameObject.FindFirstObjectByType<PlayerController>();
+
+        TeleportToTown.OnTownChanged += SetCurrentTown;
+        PlayerController.OnForceNextDay += SetCurrentTown;
     }
 }

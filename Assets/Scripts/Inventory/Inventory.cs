@@ -42,7 +42,6 @@ public class Inventory : SlotGroup
     public void Add(Slot purchase)
     {
         int remaining = TryAddToExisting(purchase);
-
         if (remaining > 0)
         {
             if (TryGetEmptySlotIndex(out var idx))
@@ -53,6 +52,7 @@ public class Inventory : SlotGroup
             else Debug.LogWarning("Could not add item to inventory, no room");
         }
 
+        History.AddObtainedItem(purchase.item);
         OnSlotGroupChanged?.Invoke();
     }
 
