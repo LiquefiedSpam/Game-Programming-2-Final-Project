@@ -32,7 +32,7 @@ public class BestPriceUI : MonoBehaviour
         {
             priceText.text = "$" + price.ToString("F2");
             neverReceivedText.gameObject.SetActive(false);
-            receivedExplanationText.text = RECEIVED_EXPLANATION_TEXT.Replace("<price>", priceText.text).Replace("<town>", town);
+            receivedExplanationText.text = RECEIVED_EXPLANATION_TEXT.Replace("<reaction>", reactionAsString).Replace("<price>", priceText.text).Replace("<town>", town);
             receivedExplanationText.gameObject.SetActive(true);
         }
 

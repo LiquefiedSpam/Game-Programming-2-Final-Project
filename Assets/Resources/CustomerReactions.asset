@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1116913c9b10143589ddd54a6f9d728f, type: 3}
   m_Name: CustomerReactions
   m_EditorClassIdentifier: Assembly-CSharp::CustomerReactions
-  angrySprite: {fileID: 21300000, guid: 1cae44a6528f74aad99ee12a49aee31f, type: 3}
-  annoyedSprite: {fileID: 21300000, guid: 4b7b25525b38746478ebc8eb933ba2e7, type: 3}
-  okaySprite: {fileID: 21300000, guid: 7efd42f09433f48f3b4bd69f3f6c1e58, type: 3}
-  amazingSprite: {fileID: 21300000, guid: 14f8a39a967e54a2fab86e80cc8446a0, type: 3}
+  angrySprite: {fileID: 21300000, guid: 4b7b25525b38746478ebc8eb933ba2e7, type: 3}
+  goodSprite: {fileID: 21300000, guid: 7efd42f09433f48f3b4bd69f3f6c1e58, type: 3}
+  greatSprite: {fileID: 21300000, guid: 14f8a39a967e54a2fab86e80cc8446a0, type: 3}
