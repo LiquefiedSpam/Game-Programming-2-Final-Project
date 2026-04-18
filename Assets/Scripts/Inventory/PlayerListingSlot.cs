@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerListingSlot : Slot
 {
     public const float MIN_PRICE_PER_ITEM = 0.5f;
-    public const float SALE_CHANCE_PER_TIME_UNIT = 0.5f; // listing has a 4% chance of being sold when 1 time unit passes
+    public const float SALE_CHANCE_PER_TIME_UNIT = 0.1f; // listing has a 10% chance of being sold when 1 time unit passes
 
     public float ListedPrice { get; private set; }
     public bool HasSaleResult { get; private set; }
@@ -51,7 +51,6 @@ public class PlayerListingSlot : Slot
 
     void OnUnitsConsumed(int units)
     {
-        Debug.Log($"On units consumed ({units})");
         if (HasSaleResult)
         {
             DayManager.Ins.OnUnitsConsumed -= OnUnitsConsumed;

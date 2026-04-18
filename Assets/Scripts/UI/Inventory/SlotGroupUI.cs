@@ -50,7 +50,7 @@ public class SlotGroupUI : MonoBehaviour
 
             // slotUI.OnHoverEnter += () => SlotHoverEnter(slot);
             // slotUI.OnHoverExit += () => SlotHoverExit();
-            slotUI.OnButtonClick += () => SlotClicked(slot);
+            slotUI.OnButtonClick += _ => SlotClicked(_, slot);
         }
 
         if (selectedSlot != null)
@@ -84,18 +84,20 @@ public class SlotGroupUI : MonoBehaviour
         }
     }
 
-    protected virtual void SlotClicked(Slot s)
+    protected virtual void SlotClicked(RectTransform selectionAnchor, Slot s)
     {
         Debug.Log("slot details clicked");
         selectedSlot = s;
         slotDetails.ShowSlotDetails(s, SlotType);
         slotDetails.OnCloseDetails += ExitDetails;
+        InventoryDisplayManager.Ins.SetSelected(selectionAnchor);
     }
 
     protected virtual void ExitDetails()
     {
         slotDetails.OnCloseDetails -= ExitDetails;
         selectedSlot = null;
+        InventoryDisplayManager.Ins.HideSelected();
     }
 
     protected virtual void DestroySlots()

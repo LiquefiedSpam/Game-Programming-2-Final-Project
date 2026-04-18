@@ -10,6 +10,8 @@ public class InventoryDisplayManager : MonoBehaviour
     [SerializeField] SlotGroupUI stallInvUI;
     [SerializeField] SlotGroupUI merchantUI;
     [SerializeField] SlotGroupUI playerStallUI;
+    [Space]
+    [SerializeField] RectTransform selectedSlot;
 
     public static InventoryDisplayManager Ins;
 
@@ -68,14 +70,26 @@ public class InventoryDisplayManager : MonoBehaviour
         Hide();
     }
 
+    public void SetSelected(RectTransform selectedSlotTransform)
+    {
+        selectedSlot.gameObject.SetActive(true);
+        selectedSlot.position = selectedSlotTransform.position;
+    }
+
+    public void HideSelected()
+    {
+        selectedSlot.gameObject.SetActive(false);
+    }
+
     void Show()
     {
-        background.SetActive(true);
+        // background.SetActive(true);
     }
 
     void Hide()
     {
         if (slotDetails.IsVisible) slotDetails.HideSlotDetails();
-        background.SetActive(false);
+        selectedSlot.gameObject.SetActive(false);
+        // background.SetActive(false);
     }
 }
