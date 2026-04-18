@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   title: Spruce Log
   sprite: {fileID: 21300000, guid: d9f5e356de64c4ea8b1877a7cc8b373a, type: 3}
-  town: 1
+  town: 0
   merchant: Stefan
   merchantSalePrice: 8
   town1TargetPrice: 8

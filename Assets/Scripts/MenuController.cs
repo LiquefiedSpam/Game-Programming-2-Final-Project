@@ -40,7 +40,7 @@ public class MenuController : MonoBehaviour
 
     private void OnInventoryPressed(InputAction.CallbackContext context)
     {
-        if (InventoryDisplayManager.Ins.StallDisplayVisible)
+        if (UIManager.Ins.DisplayBlocksInventory || InventoryDisplayManager.Ins.StallDisplayVisible)
         {
             return;
         }

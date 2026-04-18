@@ -5,12 +5,13 @@ public static class Data
 {
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
+    public static Dictionary<Town, InnBehavior> TownInns;
     public static CustomerReactions CustomerReactions;
 
     public static PlayerController Player;
     public static Town CurrentTown { get; private set; } = Town.WOODED_KEEP;
     public static PlayerStall ClosestPlayerStall => TownPlayerStalls[CurrentTown];
-
+    public static InnBehavior ClosestInn => TownInns[CurrentTown];
 
 
     static void SetCurrentTown(Town currentTown)
@@ -34,18 +35,25 @@ public static class Data
         TownTeleports = new();
         foreach (var t in tps)
         {
-            if (t.name.Contains("1") || t.name.ToLower().Contains("wood"))
+            if (t.name.ToLower().Contains("wood"))
             {
                 TownTeleports[Town.WOODED_KEEP] = t.transform;
             }
-            else if (t.name.Contains("2") || t.name.ToLower().Contains("sand"))
+            else if (t.name.ToLower().Contains("sand"))
             {
                 TownTeleports[Town.SANDY_STALLS] = t.transform;
             }
-            else if (t.name.Contains("3") || t.name.ToLower().Contains("stone"))
+            else if (t.name.ToLower().Contains("stone"))
             {
                 TownTeleports[Town.STONE_SANCTUARY] = t.transform;
             }
+        }
+
+        InnBehavior[] inns = Object.FindObjectsByType<InnBehavior>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        TownInns = new();
+        foreach (var inn in inns)
+        {
+            TownInns[inn.InnTown] = inn;
         }
 
         Player = GameObject.FindFirstObjectByType<PlayerController>();

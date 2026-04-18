@@ -40,6 +40,7 @@ public static class History
             [Town.SANDY_STALLS] = new(),
             [Town.STONE_SANCTUARY] = new()
         };
+        ObtainedItems = new();
         RecordedListingIDs = new();
     }
 }

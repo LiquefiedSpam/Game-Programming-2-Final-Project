@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,9 +50,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] float statusFadeOutTime = 5f;
 
     public bool Visible => _canvas.gameObject.activeInHierarchy;
+    public bool Transitioning { get; private set; } = false;
+
+    public bool DisplayBlocksInventory => // cannot open inventory if true
+        _dialogParent.activeInHierarchy
+        || _signParent.activeInHierarchy
+        || Transitioning;
 
     public static UIManager Ins => _instance;
     private static UIManager _instance;
+
+    public Action OnDisplayBlocksInventory;
+
+    Coroutine statusFadeOutRoutine;
 
     void Awake()
     {
@@ -64,15 +76,20 @@ public class UIManager : MonoBehaviour
         {
             _instance = this;
         }
-
-        // MoneyManager.Ins.OnMoneyChanged += UpdateMoneyUI;
     }
 
     void Start()
     {
         _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
         _hungerSlider.value = PlayerController.MAX_HUNGER;
+
+        InventoryDisplayManager.Ins.OnStallUIShown += HandleStallUIShown;
         //UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
+    }
+
+    void OnDestroy()
+    {
+        InventoryDisplayManager.Ins.OnStallUIShown -= HandleStallUIShown;
     }
 
     public void Show(bool show)
@@ -92,13 +109,18 @@ public class UIManager : MonoBehaviour
 
     public void ShowSign(bool show, string message = "")
     {
-        if (show) _signText.SetText(message);
+        if (show)
+        {
+            OnDisplayBlocksInventory?.Invoke();
+            _signText.SetText(message);
+        }
         _signParent.SetActive(show);
     }
 
     public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
     Sprite portrait = null)
     {
+        OnDisplayBlocksInventory?.Invoke();
         ClearOptions();
         _dialogParent.SetActive(true);
         _dialogText.SetText(dialog);
@@ -184,7 +206,7 @@ public class UIManager : MonoBehaviour
 
         travelStatusUI.SetActive(true);
 
-        StartCoroutine(StatusFadeOut());
+        statusFadeOutRoutine = StartCoroutine(StatusFadeOut());
     }
 
     public IEnumerator FadeOut()
@@ -198,6 +220,9 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator Fade(float start, float end)
     {
+        Transitioning = true;
+        OnDisplayBlocksInventory?.Invoke();
+
         float time = 0f;
         Color color = transitionImage.color;
 
@@ -212,6 +237,8 @@ public class UIManager : MonoBehaviour
 
         color.a = end;
         transitionImage.color = color;
+
+        Transitioning = false;
     }
 
     private IEnumerator StatusFadeOut()
@@ -235,5 +262,17 @@ public class UIManager : MonoBehaviour
         panelColor.a = 0f;
         travelStatusUI.GetComponent<Image>().color = panelColor;
         travelStatusUI.gameObject.SetActive(false);
+    }
+
+    void HandleStallUIShown()
+    {
+        if (statusFadeOutRoutine != null)
+        {
+            StopCoroutine(statusFadeOutRoutine);
+            Color panelColor = travelStatusUI.GetComponent<Image>().color;
+            panelColor.a = 0f;
+            travelStatusUI.GetComponent<Image>().color = panelColor;
+            travelStatusUI.gameObject.SetActive(false);
+        }
     }
 }

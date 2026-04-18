@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InventoryDisplayManager : MonoBehaviour
@@ -18,6 +19,9 @@ public class InventoryDisplayManager : MonoBehaviour
     public bool StallDisplayVisible => stallInvUI.IsVisible || merchantUI.IsVisible;
     public bool InventoryDisplayVisible => inventoryUI.IsVisible;
 
+    public Action OnStallUIShown;
+    public Action OnInventoryUIShown;
+
     void Awake()
     {
         if (Ins != null && Ins != this)
@@ -29,6 +33,16 @@ public class InventoryDisplayManager : MonoBehaviour
         {
             Ins = this;
         }
+    }
+
+    void Start()
+    {
+        UIManager.Ins.OnDisplayBlocksInventory += HandleDisplayBlocksInventory;
+    }
+
+    void OnDestroy()
+    {
+        UIManager.Ins.OnDisplayBlocksInventory -= HandleDisplayBlocksInventory;
     }
 
     public void SetInventoryVisibility(bool visible)
@@ -53,6 +67,7 @@ public class InventoryDisplayManager : MonoBehaviour
         {
             SetInventoryVisibility(false);
         }
+        OnStallUIShown?.Invoke();
         Show();
     }
 
@@ -71,6 +86,7 @@ public class InventoryDisplayManager : MonoBehaviour
         {
             inventoryUI.ShowSlots(inventory);
         }
+        OnStallUIShown?.Invoke();
         Show();
     }
 
@@ -102,5 +118,13 @@ public class InventoryDisplayManager : MonoBehaviour
         if (slotDetails.IsVisible) slotDetails.HideSlotDetails();
         selectedSlot.gameObject.SetActive(false);
         // background.SetActive(false);
+    }
+
+    void HandleDisplayBlocksInventory()
+    {
+        if (inventoryUI.IsVisible)
+        {
+            SetInventoryVisibility(false);
+        }
     }
 }

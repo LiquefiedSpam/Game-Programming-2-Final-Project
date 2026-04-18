@@ -11,6 +11,8 @@ public class InnBehavior : InteractableBehavior
     public static Transform LastVisitedTeleportPoint;
     public static Town LastVisitedTown;
 
+    public Town InnTown => _town;
+
     void Awake()
     {
         if (_defaultLastVisited)

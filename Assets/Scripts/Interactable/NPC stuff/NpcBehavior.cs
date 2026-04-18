@@ -38,8 +38,6 @@ public class NpcBehavior : InteractableBehavior
     Animator animator;
     Quaternion defaultRotation;
     Coroutine _rotateCoroutine;
-    // This was causing errors I made bubbleScript in InteractableBehavior protected so extending classes can access it - Marcella
-    // BubbleScript bubbleScript;
 
     protected override void Awake()
     {
