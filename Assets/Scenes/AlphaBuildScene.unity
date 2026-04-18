@@ -452,6 +452,11 @@ Transform:
   - {fileID: 748011537}
   m_Father: {fileID: 1737155044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &131466760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8070824492932894856, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+  m_PrefabInstance: {fileID: 3285991049381650033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &146456496
 GameObject:
   m_ObjectHideFlags: 0
@@ -13777,6 +13782,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 818205386562254276, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
   m_PrefabInstance: {fileID: 2057660965628067608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &645922491 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1675481332165786037, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
+  m_PrefabInstance: {fileID: 2057660965628067608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645922489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5107db1373f5ee847b50c8c05717dde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &692217801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4282887458101321195, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
@@ -23753,6 +23769,7 @@ GameObject:
   - component: {fileID: 1005867645}
   - component: {fileID: 1005867647}
   - component: {fileID: 1005867646}
+  - component: {fileID: 1005867648}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -23827,8 +23844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   slotAmount: 5
   startingInventory:
-  - item: {fileID: 11400000, guid: 419119606213848f6a8f408121944ab0, type: 2}
-    amount: 5
+  - {fileID: 0}
 --- !u!114 &1005867647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23842,6 +23858,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyManager
   startingMoney: 1000
+--- !u!114 &1005867648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005867641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4661fa9d407b246b51c51ee43800a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  player: {fileID: 645922491}
+  TavernPoint: {fileID: 1990785565}
 --- !u!1 &1014601629 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5555165881124124286, guid: 3ef885f42134049c9aca347537b5be8c, type: 3}
@@ -24292,8 +24322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStall
   slots:
-  - item: {fileID: 11400000, guid: 5c3afa4f3321c4d50bfe5656dd1acbb1, type: 2}
-    amount: 6
+  - {fileID: 0}
 --- !u!1 &1040294350
 GameObject:
   m_ObjectHideFlags: 0
@@ -24977,10 +25006,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStall
   slots:
-  - item: {fileID: 11400000, guid: b0bccea4c80114c428e42d32e53225fe, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: 909c462f088664d88bffaa44452f0bcb, type: 2}
-    amount: 10
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &1098393917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25219,17 +25246,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1963438896403508806, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
   m_PrefabInstance: {fileID: 1136614864}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1136614866 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6503145390163260120, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
-  m_PrefabInstance: {fileID: 1136614864}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b949d06cf0f4549ad4fc3f6f0848b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BubbleScript
 --- !u!1 &1145067837 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ad79ef358fc09d429e1ee9f92d36dc2, type: 3}
@@ -25531,6 +25547,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2814669050018466958, guid: 13f03016091dc2941892299f133a2062, type: 3}
+--- !u!1 &1181206611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8070824492932894856, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+  m_PrefabInstance: {fileID: 1136614864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1183348299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4856013435989713251, guid: 52a76c9489582b7428dc6fd1f9214df0, type: 3}
@@ -25549,7 +25570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
   _hungerCost: 0
-  interactableIcon: {fileID: 1136614866}
+  interactableIcon: {fileID: 1181206611}
   merchantStall: {fileID: 0}
   audioSource: {fileID: 0}
   name: Jimbo
@@ -25564,6 +25585,7 @@ MonoBehaviour:
     responseOverride: Woah! Am I even allowed to do that?
   - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
     responseOverride: Weeeee!
+  CanInteract: 1
 --- !u!1001 &1183737413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26635,6 +26657,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c0aa9e1109986784585f0d0463f4f830, type: 3}
   m_PrefabInstance: {fileID: 1325491455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1333356509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9161510587020934330, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
+  m_PrefabInstance: {fileID: 4593675458193163726}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1342241671
 PrefabInstance:
@@ -28835,10 +28862,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStall
   slots:
-  - item: {fileID: 11400000, guid: 7a80fb1167ec14c2ba8e8d070f0a9fa9, type: 2}
-    amount: 5
-  - item: {fileID: 11400000, guid: 419119606213848f6a8f408121944ab0, type: 2}
-    amount: 8
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1561839740
 GameObject:
   m_ObjectHideFlags: 0
@@ -49645,6 +49670,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: interactableIcon
+      value: 
+      objectReference: {fileID: 131466760}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -50174,6 +50203,10 @@ PrefabInstance:
       propertyPath: merchantStall
       value: 
       objectReference: {fileID: 1556512203}
+    - target: {fileID: 196661120224750658, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
+      propertyPath: interactableIcon
+      value: 
+      objectReference: {fileID: 1333356509}
     - target: {fileID: 853409602739813396, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
       propertyPath: m_Name
       value: Lumberjack

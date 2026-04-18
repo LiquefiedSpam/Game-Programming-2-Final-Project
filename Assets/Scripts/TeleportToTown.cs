@@ -21,7 +21,7 @@ public class TeleportToTown : MonoBehaviour
     {
 
         //turn off player controls here
-        player.SetMovementEnabled(false);
+        player.SetMovementDisable(true);
 
         //start fade to black sequence
         yield return StartCoroutine(UIManager.Ins.FadeOut());
@@ -41,11 +41,11 @@ public class TeleportToTown : MonoBehaviour
         }
 
         player.transform.position = new Vector3(target.x, player.transform.position.y, target.z);
-        
+
         //unfade to black
         yield return StartCoroutine(UIManager.Ins.FadeIn());
 
         //turn on player controls
-        player.SetMovementEnabled(true);
+        player.SetMovementDisable(false);
     }
 }

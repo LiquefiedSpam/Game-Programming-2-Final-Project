@@ -49,7 +49,7 @@ public class Teleport : MonoBehaviour
     {
 
         //turn off player controls here
-        player.SetMovementEnabled(false);
+        player.SetMovementDisable(true);
 
         //start fade to black sequence
         yield return StartCoroutine(UIManager.Ins.FadeOut());
@@ -99,7 +99,7 @@ public class Teleport : MonoBehaviour
         }
 
         StartCoroutine(TraverseBetweenTowns(player));
-        
+
     }
 
     private void SetInteractionZones()
@@ -127,26 +127,28 @@ public class Teleport : MonoBehaviour
     {
         yield return StartCoroutine(UIManager.Ins.FadeIn());
         //make the player move from where they are to next Interaction Zone
-        if (travelPath != null) {
+        if (travelPath != null)
+        {
             for (int i = 0; i < travelPath.Count; i++)
             {
                 Vector3 navgiationLocation = new Vector3(
                     travelPath[i].transform.position.x,
-                    player.transform.position.y, 
+                    player.transform.position.y,
                     travelPath[i].transform.position.z
                 );
 
                 //wait until we arrive at point
-                while (Vector3.Distance(player.transform.position, navgiationLocation) > 0.05f) {
+                while (Vector3.Distance(player.transform.position, navgiationLocation) > 0.05f)
+                {
                     player.transform.position = Vector3.MoveTowards(
-                        player.transform.position, 
-                        navgiationLocation, 
+                        player.transform.position,
+                        navgiationLocation,
                         speed * Time.deltaTime
                     );
 
                     yield return null;
                 }
-                
+
                 if (travelPath[i].GetComponentInChildren<PathingManager>())
                 {
                     PathingManager pathManager = travelPath[i].GetComponentInChildren<PathingManager>();

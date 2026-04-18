@@ -5,14 +5,20 @@ using UnityEngine;
 public class InteractableBehavior : MonoBehaviour
 {
     [SerializeField] private float _hungerCost;
-    [SerializeField] public BubbleScript interactableIcon;
+    [SerializeField] public GameObject interactableIcon;
+    private BubbleScript bubbleScript;
 
     public virtual InteractableType Type { get; protected set; }
     public virtual bool Instant { get; protected set; } = false;
 
     public static Action<float> OnInteract;
     public static Action OnEndInteract;
+    protected bool inCutscene = false;
 
+    protected virtual void Awake()
+    {
+        interactableIcon.GetComponent<BubbleScript>();
+    }
     public virtual void Interact()
     {
         if (_hungerCost > 0) OnInteract?.Invoke(_hungerCost);
@@ -31,13 +37,13 @@ public class InteractableBehavior : MonoBehaviour
     public void TriggerIconExpand(bool inRange)
     {
         if (interactableIcon != null)
-            interactableIcon.Expand(inRange);
+            bubbleScript.Expand(inRange);
     }
 
     public virtual void TriggerIconPopAndShrink()
     {
         if (interactableIcon != null)
-            interactableIcon.StartCoroutine(interactableIcon.PopAndShrink());
+            bubbleScript.StartCoroutine(bubbleScript.PopAndShrink());
     }
 }
 

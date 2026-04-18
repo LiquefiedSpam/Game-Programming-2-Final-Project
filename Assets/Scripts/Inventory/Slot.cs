@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Slot
+public class Slot : MonoBehaviour
 {
     public const int STACK_SIZE = 16;
 

@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(Animator))]
 
 //NPC behavior script for NPCs in the towns.
 public class NpcBehavior : InteractableBehavior
 {
-
     [Header("Assign if merchant")]
     [SerializeField] MerchantStall merchantStall;
     [SerializeField] AudioSource audioSource;
@@ -30,26 +28,50 @@ public class NpcBehavior : InteractableBehavior
     public override InteractableType Type => InteractableType.NPC;
     public static NpcBehavior InteractingWith;
 
+    public bool CanInteract = true;
+    float speed = 2f;
+    Vector3 defaultPos;
+    Vector3 defaultRot;
+
+
+
     Animator animator;
     Quaternion defaultRotation;
     Coroutine _rotateCoroutine;
     BubbleScript bubbleScript;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        DefaultLocation();
         SyncOverrides();
         BuildRuntimeOptions();
         animator = GetComponent<Animator>();
         defaultRotation = transform.rotation;
+        GameManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
 
         if (interactableIcon != null)
             bubbleScript = interactableIcon.GetComponent<BubbleScript>();
+    }
+
+    void OnDisable()
+    {
+        GameManager.Ins.OnEnterExitCutscene -= EnterExitCutscene;
+    }
+
+    public void DefaultLocation()
+    {
+        defaultPos = transform.position;
+        defaultRot = transform.rotation.eulerAngles;
     }
 
     public override void Interact(Vector3 playerPos)
     {
 
         //setup
+        if (!CanInteract)
+            return;
+
         if (InteractingWith != null)
         {
             Debug.LogError($"Already interacting with {InteractingWith.gameObject.name}");
@@ -88,7 +110,8 @@ public class NpcBehavior : InteractableBehavior
             UIManager.Ins.ShowDialogue(false, name, option.response, portrait);
         }
 
-        option.action?.Execute(this);
+        //outdated
+        //option.action?.Execute(this);
 
         HandleInternalLogic(option.definition.label);
     }
@@ -98,7 +121,7 @@ public class NpcBehavior : InteractableBehavior
         switch (label)
         {
             case DialogueLabel.Drink:
-                Debug.Log("Drink logic");
+                GameManager.Ins.GoToTavernAction(this);
                 break;
 
             case DialogueLabel.Purchase:
@@ -137,19 +160,21 @@ public class NpcBehavior : InteractableBehavior
             audioSource.Stop();
             InventoryDisplayManager.Ins.HideMerchantStall();
         }
+        InteractingWith = null;
+
+        if (inCutscene) return;
 
         StartRotate(defaultRotation, "isIdle");
-        InteractingWith = null;
     }
 
     public override void TriggerIconPopAndShrink()
     {
         if (interactableIcon != null)
-            interactableIcon.StartCoroutine(interactableIcon.PopAndShrink());
+            bubbleScript.StartCoroutine(bubbleScript.PopAndShrink());
 
-        if (!interactableIcon.IsExhausted())
+        if (!bubbleScript.IsExhausted())
         {
-            interactableIcon.StartCoroutine(interactableIcon.SpawnHeart());
+            bubbleScript.StartCoroutine(bubbleScript.SpawnHeart());
         }
     }
 
@@ -258,7 +283,8 @@ public class NpcBehavior : InteractableBehavior
     *ANIMATION HANDLING
     */
 
-    //set the provided string's animation bool to true; turn off all others
+    //set the provided string's animation bool to true; turn off all others. isTurning is the same animation
+    //for walking.
     void SetAnimation(string anim)
     {
         animator.SetBool("isIdle", false);
@@ -292,4 +318,35 @@ public class NpcBehavior : InteractableBehavior
         SetAnimation(targetAnim);
     }
 
+
+    //triggered movement stuff
+    public IEnumerator MoveToLocation(Vector3 dest)
+    {
+        dest.y = transform.position.y;
+
+        Vector3 dir = (dest - transform.position).normalized;
+        Quaternion targetRot = dir != Vector3.zero ? Quaternion.LookRotation(dir) : transform.rotation;
+        yield return StartCoroutine(RotateCoroutine(targetRot, "isTurning"));
+
+        while (Vector3.Distance(transform.position, dest) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, dest, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = dest;
+        SetAnimation("isIdle");
+    }
+
+    void EnterExitCutscene(bool enter)
+    {
+        interactableIcon.SetActive(!enter);
+        CanInteract = !enter;
+        inCutscene = enter;
+
+        if (!enter)
+        {
+            DefaultLocation();
+        }
+    }
 }

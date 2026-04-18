@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputController _playerInputController;
 
-    private bool _canMove = true;
+    [SerializeField] private bool _canMove = true;
 
 
     void Awake()
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
         _playerInputController = GetComponent<PlayerInputController>();
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
+        GameManager.Ins.OnEnterExitCutscene += SetMovementDisable;
     }
 
     void Start()
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         InteractableBehavior.OnInteract -= Interact;
         InteractableBehavior.OnEndInteract -= EndInteract;
+        GameManager.Ins.OnEnterExitCutscene -= SetMovementDisable;
         if (HungerManager.Ins != null)
             HungerManager.Ins.OnHungerKnockedOut -= Knockout;
     }
@@ -82,13 +85,40 @@ public class PlayerController : MonoBehaviour
         DayManager.Ins.NextDay();
     }
 
-    public void SetMovementEnabled(bool enabled)
+    public void SetMovementDisable(bool disabled)
     {
-        _canMove = enabled;
+        _canMove = !disabled;
 
-        if (!enabled)
+        if (disabled)
         {
             _playerInputController.ResetMovement();
         }
+    }
+
+    public void FollowDirection(Vector3 dir)
+    {
+        StartCoroutine(MoveInDirection(dir));
+    }
+
+    private IEnumerator MoveInDirection(Vector3 dir)
+    {
+        float elapsed = 0f;
+        float duration = 2f;
+
+        //face the direction of travel and start walk anim
+        transform.rotation = Quaternion.LookRotation(dir);
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isWalking", true);
+
+        while (elapsed < duration)
+        {
+            transform.position += dir * (_speed * 0.4f) * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        //return to idle when done
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isIdle", true);
     }
 }
