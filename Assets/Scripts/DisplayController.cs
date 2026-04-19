@@ -48,18 +48,18 @@ public class DisplayController : MonoBehaviour
 
     private void OnMapPressed(InputAction.CallbackContext context)
     {
-        if (!CanDisplayMap()) return;
-
+        if (!CanDisplayMap())
+        {
+            return;
+        }
         if (mapDisplay.IsVisible)
         {
             CloseMap();
-            EnableDisplayInventory();
         }
         else
         {
             playerInputController.OnPlayerMove += CloseMap;
             mapDisplay.Show();
-            DisableDisplayInventory();
         }
     }
 
@@ -73,18 +73,17 @@ public class DisplayController : MonoBehaviour
     {
         if (!CanDisplayInventory())
         {
+            Debug.Log("Apparently cannot display inventory");
             return;
         }
         else if (inventoryDisplay.InventoryDisplayVisible)
         {
             CloseInventory();
-            EnableDisplayMap();
         }
         else
         {
             playerInputController.OnPlayerMove += CloseInventory;
             inventoryDisplay.SetInventoryVisibility(true);
-            DisableDisplayMap();
         }
     }
 

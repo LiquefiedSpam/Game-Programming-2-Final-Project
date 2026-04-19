@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6103d29688b7415e84a882fb0040b59, type: 3}
+  m_Name: AllTileData
+  m_EditorClassIdentifier: Assembly-CSharp::TilePrefabs
+  grassTiles:
+  - Prefab: {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
+    Sprite: {fileID: 21300000, guid: 7cba3302d703b4a07bfe2fee38b88dbc, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.5, y: 0.8}
+    NormalizedDownPoint: {x: 0.5, y: 0.2}
+  - Prefab: {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
+    Sprite: {fileID: 21300000, guid: 562ef9460162e42989994eac9297dfe2, type: 3}
+    ChoiceTile: 0
+    NormalizedUpPoint: {x: 0.5, y: 0.5}
+    NormalizedDownPoint: {x: 0.5, y: 0.5}
+  - Prefab: {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
+    Sprite: {fileID: 21300000, guid: 51e3cb09333784d4f8d753cff7956d3c, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.4, y: 0.8}
+    NormalizedDownPoint: {x: 0.6, y: 0.2}
+  sandTiles:
+  - Prefab: {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
+    Sprite: {fileID: 21300000, guid: c3b0cb34b12414ad2a7b3e106986b3c5, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.5, y: 0.8}
+    NormalizedDownPoint: {x: 0.5, y: 0.2}
+  - Prefab: {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
+    Sprite: {fileID: 21300000, guid: 6296af46238bf4cbea2e4ef25ecf4a67, type: 3}
+    ChoiceTile: 0
+    NormalizedUpPoint: {x: 0.5, y: 0.5}
+    NormalizedDownPoint: {x: 0.5, y: 0.5}
+  - Prefab: {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
+    Sprite: {fileID: 21300000, guid: 74e489873b5fb4417b3bdcf0285a3096, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.4, y: 0.8}
+    NormalizedDownPoint: {x: 0.6, y: 0.2}
+  stoneTiles:
+  - Prefab: {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
+    Sprite: {fileID: 21300000, guid: 1da31c06189ce4ee39d8456e9ef3556f, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.5, y: 0.8}
+    NormalizedDownPoint: {x: 0.5, y: 0.2}
+  - Prefab: {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
+    Sprite: {fileID: 21300000, guid: 3e9a72da3ab014c0e83b1a3b08da31d8, type: 3}
+    ChoiceTile: 0
+    NormalizedUpPoint: {x: 0.5, y: 0.5}
+    NormalizedDownPoint: {x: 0.5, y: 0.5}
+  - Prefab: {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
+    Sprite: {fileID: 21300000, guid: d5c26016394f5422e907ecc70e8f2ee4, type: 3}
+    ChoiceTile: 1
+    NormalizedUpPoint: {x: 0.4, y: 0.8}
+    NormalizedDownPoint: {x: 0.6, y: 0.2}

@@ -159,19 +159,46 @@ public class Inventory : SlotGroup
 
     public void RemoveRandomItems(int amount)
     {
-        randomIndices.Shuffle();
+        List<(Slot, int)> occupiedSlots = GetOccupiedSlotsAndIndices();
 
-        int remainingToRemove = amount;
+        int remaining = amount;
+        while (remaining > 0 && occupiedSlots.Count > 0)
+        {
+            int randomIdx = UnityEngine.Random.Range(0, occupiedSlots.Count);
+            if (occupiedSlots[randomIdx].Item1.SubtractAmount(1) == 0)
+            {
+                slots[occupiedSlots[randomIdx].Item2] = null;
+                occupiedSlots.RemoveAt(randomIdx);
+            }
+            remaining--;
+        }
+    }
+
+    public int GetTotalItemCount()
+    {
+        int total = 0;
 
         for (int i = 0; i < slotAmount; i++)
         {
-            int randomIdx = randomIndices[i];
-            if (slots[randomIdx] != null && slots[randomIdx].item != null)
+            if (slots[i] != null && slots[i].item != null)
             {
-                slots[randomIdx] = null;
-                remainingToRemove--;
-                if (remainingToRemove <= 0) break;
+                total += slots[i].amount;
             }
         }
+
+        return total;
+    }
+
+    List<(Slot, int)> GetOccupiedSlotsAndIndices()
+    {
+        List<(Slot, int)> occupiedSlots = new();
+        for (int i = 0; i < slotAmount; i++)
+        {
+            if (slots[i] != null && slots[i].item != null)
+            {
+                occupiedSlots.Add((slots[i], i));
+            }
+        }
+        return occupiedSlots;
     }
 }

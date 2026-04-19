@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class Util
 {
@@ -23,5 +24,12 @@ public static class Util
             Town.STONE_SANCTUARY => "Stone Sanctuary",
             _ => ""
         };
+    }
+
+    public static void SetAlpha(this Image i, float alpha)
+    {
+        Color c = i.color;
+        c.a = alpha;
+        i.color = c;
     }
 }

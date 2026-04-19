@@ -1,33 +1,84 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapDisplayManager : MonoBehaviour
 {
     [SerializeField] GameObject root;
+    [SerializeField] Button exitButton;
+    [Header("Entire Map")]
+    [SerializeField] GameObject entireMapParent;
+    [SerializeField] Button woodSandButton;
+    [SerializeField] Button woodStoneButton;
+    [SerializeField] Button stoneSandButton;
+    [Header("Path Details")]
+    [SerializeField] GameObject pathDetailsParent;
+    [SerializeField] Button backButton;
+    [SerializeField] TMP_Text townAText;
+    [SerializeField] TMP_Text townBText;
+    [SerializeField] TileUI[] townATileUI;
+    [SerializeField] TileUI[] townBTileUI;
+    [Header("References")]
+    [SerializeField] PathManager pathManager;
 
     public bool IsVisible => root.activeInHierarchy;
 
     void Start()
     {
-        UIManager.Ins.OnDisplayBlocksOthers += HandleDisplayBlocksOthers;
+        UIManager.Ins.OnDisplayBlocksOthers += Hide;
     }
 
     void OnDestroy()
     {
-        if (UIManager.Ins != null) UIManager.Ins.OnDisplayBlocksOthers -= HandleDisplayBlocksOthers;
+        if (UIManager.Ins != null) UIManager.Ins.OnDisplayBlocksOthers -= Hide;
     }
 
     public void Show()
     {
-        root.gameObject.SetActive(true);
+        exitButton.onClick.AddListener(Hide);
+        woodSandButton.onClick.AddListener(() => ShowDetailsFor(Town.WOODED_KEEP, Town.SANDY_STALLS));
+        woodStoneButton.onClick.AddListener(() => ShowDetailsFor(Town.WOODED_KEEP, Town.STONE_SANCTUARY));
+        stoneSandButton.onClick.AddListener(() => ShowDetailsFor(Town.STONE_SANCTUARY, Town.SANDY_STALLS));
+        backButton.onClick.AddListener(ShowEntireMap);
+
+        pathDetailsParent.SetActive(false);
+        entireMapParent.SetActive(true);
+        root.SetActive(true);
     }
 
     public void Hide()
     {
-        root.gameObject.SetActive(false);
+        exitButton.onClick.RemoveAllListeners();
+        woodSandButton.onClick.RemoveAllListeners();
+        woodStoneButton.onClick.RemoveAllListeners();
+        stoneSandButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
+
+        entireMapParent.SetActive(false);
+        pathDetailsParent.SetActive(false);
+        root.SetActive(false);
     }
 
-    void HandleDisplayBlocksOthers()
+    void ShowDetailsFor(Town townA, Town townB)
     {
-        Hide();
+        entireMapParent.SetActive(false);
+
+        PathTileInfo info = pathManager.Tiles[townA][townB];
+
+        for (int i = 0; i < PathTileInfo.TILES_PER_TOWN; i++)
+        {
+            townATileUI[i].ShowTile(info.townATiles[i]);
+            townBTileUI[i].ShowTile(info.townBTiles[i]);
+        }
+        townAText.text = townA.TownToString();
+        townBText.text = townB.TownToString();
+
+        pathDetailsParent.SetActive(true);
+    }
+
+    void ShowEntireMap()
+    {
+        entireMapParent.SetActive(true);
+        pathDetailsParent.SetActive(false);
     }
 }

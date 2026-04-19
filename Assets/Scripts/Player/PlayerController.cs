@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
@@ -121,5 +122,10 @@ public class PlayerController : MonoBehaviour
         //return to idle when done
         animator.SetBool("isWalking", false);
         animator.SetBool("isIdle", true);
+    }
+
+    public void SetLocation(Vector3 worldPos)
+    {
+        transform.SetPositionAndRotation(worldPos, Quaternion.identity);
     }
 }

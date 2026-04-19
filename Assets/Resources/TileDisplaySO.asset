@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28a8a793655940dd80cc87c7868d58b, type: 3}
+  m_Name: TileDisplaySO
+  m_EditorClassIdentifier: Assembly-CSharp::TileDisplaySO
+  normSingleInteractionPos: {x: 0.5, y: 0.5}
+  normUpInteractionPos: {x: 0.5, y: 0.8}
+  normDownInteractionPos: {x: 0.5, y: 0.2}
+  unknownSprite: {fileID: 21300000, guid: ceb78c4cdd42f4f05947c87c258e6586, type: 3}
+  safeSprite: {fileID: 21300000, guid: 577dbe814f603bc4db2949e59acd10b3, type: 3}
+  maraudersSprite: {fileID: 21300000, guid: 03cc646099041924aa1dab42d6b964cb, type: 3}
+  dangerColor: {r: 0.6792453, g: 0.16981132, b: 0.16981132, a: 1}
+  safetyColor: {r: 0.3737985, g: 0.754717, b: 0.3754266, a: 1}
+  level1: {fileID: 21300000, guid: 2476c0024e54a4ef3ad81e40c171f7ee, type: 3}
+  level2: {fileID: 21300000, guid: e933cd6015dba4b4dbb7bac1915c4d25, type: 3}
+  level3: {fileID: 21300000, guid: 37a39ca5ede6543309d147658d3e9469, type: 3}
+  level4: {fileID: 21300000, guid: 0fd601abfbe6f4f7090fdf8bcb9af8d7, type: 3}
+  level5: {fileID: 21300000, guid: 3c35f996eae354419a377e3babd9fedd, type: 3}

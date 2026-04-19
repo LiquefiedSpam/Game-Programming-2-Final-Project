@@ -3,12 +3,15 @@ using UnityEngine;
 
 public static class Data
 {
+    public static Vector2Int MarauderStealRange = new(1, 5); // max exclusive
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
     public static Dictionary<Town, InnBehavior> TownInns;
     public static CustomerReactions CustomerReactions;
+    public static TileDisplaySO TileDisplaySO;
 
     public static PlayerController Player;
+    public static MockPlayerController MockPlayer;
     public static Town CurrentTown { get; private set; } = Town.WOODED_KEEP;
     public static PlayerStall ClosestPlayerStall => TownPlayerStalls[CurrentTown];
     public static InnBehavior ClosestInn => TownInns[CurrentTown];
@@ -23,6 +26,7 @@ public static class Data
     static void Init()
     {
         CustomerReactions = Resources.Load<CustomerReactions>("CustomerReactions");
+        TileDisplaySO = Resources.Load<TileDisplaySO>("TileDisplaySO");
 
         PlayerStall[] playerStalls = Object.FindObjectsByType<PlayerStall>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         TownPlayerStalls = new();
@@ -58,7 +62,7 @@ public static class Data
 
         Player = GameObject.FindFirstObjectByType<PlayerController>();
 
-        TeleportToTown.OnTownChanged += SetCurrentTown;
+        PathManager.OnTownChanged += SetCurrentTown;
         PlayerController.OnForceNextDay += SetCurrentTown;
     }
 }
