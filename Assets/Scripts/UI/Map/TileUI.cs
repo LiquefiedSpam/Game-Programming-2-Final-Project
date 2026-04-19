@@ -13,15 +13,16 @@ public class TileUI : MonoBehaviour
         tileImage.sprite = tileInfo.Data.Sprite;
 
         float width = parentRectTransform.rect.width;
+        Vector2 halfWidth = new(width / 2f, width / 2f);
 
         Data.TileDisplaySO.SetInteractionSymbols(upPoint.symbolImage, upPoint.levelImage, tileInfo.UpInteractionInfo);
-        upPoint.parent.localPosition = tileInfo.Data.NormalizedUpPoint * width;
+        upPoint.parent.localPosition = (tileInfo.Data.NormalizedUpPoint * width) - halfWidth;
         upPoint.parent.gameObject.SetActive(true);
 
         if (tileInfo.Data.ChoiceTile)
         {
             Data.TileDisplaySO.SetInteractionSymbols(downPoint.symbolImage, downPoint.levelImage, tileInfo.DownInteractionInfo);
-            downPoint.parent.localPosition = tileInfo.Data.NormalizedDownPoint * width;
+            downPoint.parent.localPosition = (tileInfo.Data.NormalizedDownPoint * width) - halfWidth;
             downPoint.parent.gameObject.SetActive(true);
         }
         else

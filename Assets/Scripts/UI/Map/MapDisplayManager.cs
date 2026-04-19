@@ -35,7 +35,6 @@ public class MapDisplayManager : MonoBehaviour
 
     public void Show()
     {
-        Debug.Log("Show map called");
         exitButton.onClick.AddListener(Hide);
         woodSandButton.onClick.AddListener(() => ShowDetailsFor(Town.WOODED_KEEP, Town.SANDY_STALLS));
         woodStoneButton.onClick.AddListener(() => ShowDetailsFor(Town.WOODED_KEEP, Town.STONE_SANCTUARY));
@@ -71,6 +70,8 @@ public class MapDisplayManager : MonoBehaviour
             townATileUI[i].ShowTile(info.townATiles[i]);
             townBTileUI[i].ShowTile(info.townBTiles[i]);
         }
+        townAText.text = townA.TownToString();
+        townBText.text = townB.TownToString();
 
         pathDetailsParent.SetActive(true);
     }
