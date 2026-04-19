@@ -7,6 +7,7 @@ public static class Data
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
     public static Dictionary<Town, InnBehavior> TownInns;
     public static CustomerReactions CustomerReactions;
+    public static TileDisplaySO TileDisplaySO;
 
     public static PlayerController Player;
     public static MockPlayerController MockPlayer;
@@ -24,6 +25,7 @@ public static class Data
     static void Init()
     {
         CustomerReactions = Resources.Load<CustomerReactions>("CustomerReactions");
+        TileDisplaySO = Resources.Load<TileDisplaySO>("TileDisplaySO");
 
         PlayerStall[] playerStalls = Object.FindObjectsByType<PlayerStall>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         TownPlayerStalls = new();

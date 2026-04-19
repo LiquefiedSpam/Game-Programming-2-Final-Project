@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PathManager : MonoBehaviour
 {
-    [SerializeField] TilePrefabs tilePrefabs;
+    [SerializeField] AllTileData tilePrefabs;
     [SerializeField] Transform playerStart;
     [SerializeField] Transform tile1Parent;
     [SerializeField] Transform tile2Parent;
@@ -86,7 +86,7 @@ public class PathManager : MonoBehaviour
 
     Tile CreateTile(TileInfo tileInfo, Transform parent)
     {
-        GameObject tileObj = Instantiate(tileInfo.Prefab, parent);
+        GameObject tileObj = Instantiate(tileInfo.Data.Prefab, parent);
         tileObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         if (tileObj.TryGetComponent<Tile>(out var tile))

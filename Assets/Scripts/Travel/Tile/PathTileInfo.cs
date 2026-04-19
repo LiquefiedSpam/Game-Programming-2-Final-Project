@@ -8,28 +8,26 @@ public class PathTileInfo
     public readonly Town TownA;
     public readonly Town TownB;
 
-    readonly TileInfo[] townATiles;
-    readonly TileInfo[] townBTiles;
+    public readonly TileInfo[] townATiles;
+    public readonly TileInfo[] townBTiles;
 
-    public PathTileInfo(Town townA, Town townB, TilePrefabs prefabs)
+    public PathTileInfo(Town townA, Town townB, AllTileData prefabs)
     {
         TownA = townA;
         TownB = townB;
 
-        GameObject[] townATilePrefabs = prefabs.GetPrefabsFor(townA);
+        ScriptableTileData[] townATileData = prefabs.GetTilesFor(townA);
         townATiles = new TileInfo[TILES_PER_TOWN];
         for (int i = 0; i < TILES_PER_TOWN; i++)
         {
-            GameObject prefab = townATilePrefabs[i];
-            townATiles[i] = new(prefab);
+            townATiles[i] = new(townATileData[i]);
         }
 
-        GameObject[] townBTilePrefabs = prefabs.GetPrefabsFor(townB);
+        ScriptableTileData[] townBTileData = prefabs.GetTilesFor(townB);
         townBTiles = new TileInfo[TILES_PER_TOWN];
         for (int i = 0; i < TILES_PER_TOWN; i++)
         {
-            GameObject prefab = townBTilePrefabs[i];
-            townBTiles[i] = new(prefab);
+            townBTiles[i] = new(townBTileData[i]);
         }
     }
 

@@ -5,11 +5,11 @@ public class TileInfo
 {
     public InteractionInfo UpInteractionInfo;
     public InteractionInfo DownInteractionInfo; // will be null if only 1 interaction point
-    public GameObject Prefab { get; private set; }
+    public ScriptableTileData Data { get; private set; }
 
-    public TileInfo(GameObject prefab)
+    public TileInfo(ScriptableTileData tileData)
     {
-        Prefab = prefab;
+        Data = tileData;
         UpInteractionInfo = new();
         DownInteractionInfo = new();
     }

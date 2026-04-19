@@ -48,7 +48,11 @@ public class DisplayController : MonoBehaviour
 
     private void OnMapPressed(InputAction.CallbackContext context)
     {
-        if (!CanDisplayMap()) return;
+        if (!CanDisplayMap())
+        {
+            Debug.Log("Apparently cannot display map");
+            return;
+        }
 
         if (mapDisplay.IsVisible)
         {
@@ -73,6 +77,7 @@ public class DisplayController : MonoBehaviour
     {
         if (!CanDisplayInventory())
         {
+            Debug.Log("Apparently cannot display inventory");
             return;
         }
         else if (inventoryDisplay.InventoryDisplayVisible)
