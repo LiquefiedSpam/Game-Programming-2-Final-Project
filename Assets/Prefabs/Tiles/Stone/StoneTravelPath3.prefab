@@ -1385,8 +1385,8 @@ MonoBehaviour:
   town: 2
   start: {fileID: 7138561468656692459}
   end: {fileID: 4138692763879356716}
-  upInteraction: {fileID: 8855416912029717486}
-  downInteraction: {fileID: 180593232606936529}
+  upInteraction: {fileID: 180593232606936529}
+  downInteraction: {fileID: 8855416912029717486}
   choicePoint: {fileID: 4142873570693899844}
   convergePoint: {fileID: 1142606754991171426}
 --- !u!1 &6213628825209111688
@@ -1848,7 +1848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2682426836512832221, guid: b322830ed56114ee69db2900910ba5b4, type: 3}
       propertyPath: m_Name
-      value: DownInteraction
+      value: Up
       objectReference: {fileID: 0}
     - target: {fileID: 5320416678680330963, guid: b322830ed56114ee69db2900910ba5b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1961,7 +1961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8057544605213894560, guid: 219656c0b6d19489288183dd341c9e13, type: 3}
       propertyPath: m_Name
-      value: UpInteraction
+      value: Down
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
