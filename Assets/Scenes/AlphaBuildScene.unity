@@ -44196,12 +44196,10 @@ MonoBehaviour:
   downButton: {fileID: 55743076}
   interactionCanvasGroup: {fileID: 1988030289}
   interactionMessageText: {fileID: 507815572}
-  maraudersMessage: Marauders strike! They relieve you of a few items before you
-    escape.
-  safetyMessage: Peace and quiet -- no marauders here.\nYou leave with your inventory
-    (and dignity) intact.
-  messageHoldDuration: 3
-  messageFadeDuration: 2
+  maraudersMessage: Marauders strike!
+  safetyMessage: Peace and quiet -- no marauders here.
+  messageHoldDuration: 2
+  messageFadeDuration: 1
 --- !u!1 &1775116530
 GameObject:
   m_ObjectHideFlags: 0

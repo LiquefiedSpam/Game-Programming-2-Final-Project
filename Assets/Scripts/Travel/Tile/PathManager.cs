@@ -19,8 +19,9 @@ public class PathManager : MonoBehaviour
     Town activeDestination;
 
     public Vector3 PlayerStart => playerStart.position;
-
     public Dictionary<Town, Dictionary<Town, PathTileInfo>> Tiles;
+
+    public static Action<Town> OnTownChanged;
 
     void Start()
     {
@@ -66,6 +67,8 @@ public class PathManager : MonoBehaviour
         }
 
         await UIManager.Ins.FadeAlpha(FADE_TIME, 1f);
+
+        OnTownChanged?.Invoke(activeDestination);
 
         Data.MockPlayer.gameObject.SetActive(false);
         Data.Player.SetLocation(Data.TownTeleports[activeDestination].position);

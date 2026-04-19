@@ -36,13 +36,25 @@ public class TravelUIManager : MonoBehaviour
         }
     }
 
-    public void ShowInteractionResult(InteractionResult interactionResult)
+    public void ShowSafeResult()
     {
-        interactionMessageText.text = interactionResult == InteractionResult.SAFE
-            ? safetyMessage
-            : maraudersMessage;
-        interactionCanvasGroup.alpha = 1f;
-        interactionCanvasGroup.gameObject.SetActive(true);
+        interactionMessageText.text = safetyMessage;
+
+        if (interactionResultRoutine != null) StopCoroutine(interactionResultRoutine);
+        interactionResultRoutine = StartCoroutine(FadeInteractionResult());
+    }
+
+    public void ShowMarauderResult(int stolenItems)
+    {
+        if (stolenItems > 0)
+        {
+            string itemStr = stolenItems > 1 ? "items" : "item";
+            interactionMessageText.text = maraudersMessage + $"\nYou were relieved of {stolenItems} {itemStr}.";
+        }
+        else
+        {
+            interactionMessageText.text = maraudersMessage + $"\nLuckily, you weren't carrying any items.";
+        }
 
         if (interactionResultRoutine != null) StopCoroutine(interactionResultRoutine);
         interactionResultRoutine = StartCoroutine(FadeInteractionResult());
@@ -80,6 +92,9 @@ public class TravelUIManager : MonoBehaviour
 
     IEnumerator FadeInteractionResult()
     {
+        interactionCanvasGroup.alpha = 1f;
+        interactionCanvasGroup.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(messageHoldDuration);
 
         float timePassed = 0f;

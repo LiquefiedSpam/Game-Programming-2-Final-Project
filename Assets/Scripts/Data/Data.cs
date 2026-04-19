@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class Data
 {
+    public static Vector2Int MarauderStealRange = new(1, 5); // max exclusive
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
     public static Dictionary<Town, InnBehavior> TownInns;
@@ -61,7 +62,7 @@ public static class Data
 
         Player = GameObject.FindFirstObjectByType<PlayerController>();
 
-        TeleportToTown.OnTownChanged += SetCurrentTown;
+        PathManager.OnTownChanged += SetCurrentTown;
         PlayerController.OnForceNextDay += SetCurrentTown;
     }
 }

@@ -19,7 +19,7 @@ public class ChoiceTile : Tile
         chosenPoint.SpawnPrefab(result);
 
         await Data.MockPlayer.MoveTo(chosenPoint.PlayerDestination);
-        TravelUIManager.Ins.ShowInteractionResult(result);
+        HandleInteractionResult(result);
 
         await Data.MockPlayer.MoveTo(convergePoint.position);
 
