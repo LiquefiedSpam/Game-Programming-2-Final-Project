@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GrassTravelPath3
   m_EditorClassIdentifier: Assembly-CSharp::TileData
   mysteryIcon: {fileID: 0}
-  tileIcon: {fileID: 0}
+  tileIcon: {fileID: 21300000, guid: 771b42c03aa173f4c981f38fafd77443, type: 3}
+  interactionPoints: []
