@@ -12,7 +12,9 @@ public class MarauderCampData : ScriptableObject
     [SerializeField] private Image safeIcon;
     [SerializeField] private Image fillUI;
 
-    private Image currentIcon;
+    private Image currentIcon; //get ref to this for UI
+    
+    public bool marauderActuallyThere;
 
     public float GetChanceToAppear => chanceToAppear;
     public int GetDangerLevel => dangerLevel;

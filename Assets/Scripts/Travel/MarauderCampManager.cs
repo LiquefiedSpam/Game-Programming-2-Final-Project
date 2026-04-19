@@ -7,6 +7,9 @@ public class MarauderCampManager : MonoBehaviour
 
     private float percentForEncounter;
     private string travelStatus;
+    private bool marauderPresent = false;
+
+    public MarauderCampData CampData => campData; 
 
     public void spawnHut()
     {
@@ -16,23 +19,22 @@ public class MarauderCampManager : MonoBehaviour
             //spawn game object for hut
         }
     }
-    private bool MarauderChance()
+    public bool MarauderChance()
     {
         if (percentForEncounter >= campData.GetChanceToAppear)
         {
-            return true;
+            marauderPresent = true;
         }
         else
         {
-            return false;
+            marauderPresent = false;
         }
+        return marauderPresent;
     }
 
-    public string EncounterDetails()
+    public string EncounterDetails(bool marauderChance)
     {
-        percentForEncounter = Random.Range(0f, 1f);
-
-        if (MarauderChance())
+        if (marauderChance)
         {
             campData.EncounteredMarauder();
             //perform ability of depleting items from inventory slots
