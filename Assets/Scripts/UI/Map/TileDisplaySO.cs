@@ -20,17 +20,17 @@ public class TileDisplaySO : ScriptableObject
 
     public void SetInteractionSymbols(Image symbolImg, Image levelImg, InteractionInfo interactionInfo)
     {
-        if (interactionInfo.MarauderChance < 0.5f)
+        if (interactionInfo.MarauderChance < 5)
         {
             symbolImg.sprite = safeSprite;
-            levelImg.sprite = GetLevelSprite(0.5f - interactionInfo.MarauderChance);
+            levelImg.sprite = GetLevelSprite(5 - interactionInfo.MarauderChance);
             levelImg.color = safetyColor;
             levelImg.gameObject.SetActive(true);
         }
-        else if (interactionInfo.MarauderChance > 0.5f)
+        else if (interactionInfo.MarauderChance > 5)
         {
             symbolImg.sprite = maraudersSprite;
-            levelImg.sprite = GetLevelSprite(interactionInfo.MarauderChance - 0.5f);
+            levelImg.sprite = GetLevelSprite(interactionInfo.MarauderChance - 5);
             levelImg.color = dangerColor;
             levelImg.gameObject.SetActive(true);
         }
@@ -41,15 +41,16 @@ public class TileDisplaySO : ScriptableObject
         }
     }
 
-    Sprite GetLevelSprite(float distanceFromPointFive)
+    Sprite GetLevelSprite(int level)
     {
-        return distanceFromPointFive switch
+        return level switch
         {
-            0.1f => level1,
-            0.2f => level2,
-            0.3f => level3,
-            0.4f => level4,
-            _ => level5
+            1 => level1,
+            2 => level2,
+            3 => level3,
+            4 => level4,
+            5 => level5,
+            _ => unknownSprite
         };
     }
 }

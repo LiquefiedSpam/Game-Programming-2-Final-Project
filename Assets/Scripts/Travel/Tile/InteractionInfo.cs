@@ -2,43 +2,46 @@ using UnityEngine;
 
 public class InteractionInfo
 {
-    const float CHANCE_PARTITION = 0.1f;
-    public float MarauderChance;
+    public int MarauderChance; // 10 = 100% chance, 0 = 0% chance;
 
     public InteractionInfo()
     {
-        MarauderChance = 0.5f;
+        MarauderChance = 5;
         DayManager.Ins.OnDayChanged += HandleDayChanged;
     }
 
-    public void SetMarauderChance(float chance)
+    /// <summary>
+    /// 10 = 100% chance, 0 = 0% chance.
+    /// </summary>
+    /// <param name="chance"></param>
+    public void SetMarauderChance(int chance)
     {
-        MarauderChance = chance;
+        MarauderChance = Mathf.Clamp(chance, 0, 10);
     }
 
     public InteractionResult PassInteraction()
     {
-        if (Random.value < MarauderChance)
+        if ((Random.value * 10f) < MarauderChance)
         {
-            MarauderChance = 1f;
+            MarauderChance = 10;
             return InteractionResult.MARAUDERS;
         }
         else
         {
-            MarauderChance = 0f;
+            MarauderChance = 0;
             return InteractionResult.SAFE;
         }
     }
 
     void HandleDayChanged()
     {
-        if (MarauderChance < 0.5f)
+        if (MarauderChance < 5)
         {
-            MarauderChance += CHANCE_PARTITION;
+            MarauderChance++;
         }
-        else if (MarauderChance > 0.5f)
+        else if (MarauderChance > 5)
         {
-            MarauderChance -= CHANCE_PARTITION;
+            MarauderChance--;
         }
     }
 }
