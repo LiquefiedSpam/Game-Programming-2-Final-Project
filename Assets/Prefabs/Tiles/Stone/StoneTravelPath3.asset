@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: StoneTravelPath3
   m_EditorClassIdentifier: Assembly-CSharp::TileData
   mysteryIcon: {fileID: 0}
-  tileIcon: {fileID: 0}
+  tileIcon: {fileID: 21300000, guid: a8505fea90ba6bb409673c0e86123e04, type: 3}
+  interactionPoints:
+  - normalizePosition: {x: 400, y: 640}
+    size: 10
+  - normalizePosition: {x: 400, y: 160}
+    size: 10

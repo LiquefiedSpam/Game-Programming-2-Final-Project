@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: SandTravelPath2
   m_EditorClassIdentifier: Assembly-CSharp::TileData
   mysteryIcon: {fileID: 0}
-  tileIcon: {fileID: 0}
+  tileIcon: {fileID: 21300000, guid: acfb3283e6ce32145901332cdc00a107, type: 3}
+  interactionPoints:
+  - normalizePosition: {x: 400, y: 640}
+    size: 10
+  - normalizePosition: {x: 400, y: 160}
+    size: 10
