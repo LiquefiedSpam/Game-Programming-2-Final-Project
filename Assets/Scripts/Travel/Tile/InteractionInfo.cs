@@ -7,6 +7,7 @@ public class InteractionInfo
 
     public InteractionInfo()
     {
+        MarauderChance = 0.5f;
         DayManager.Ins.OnDayChanged += HandleDayChanged;
     }
 

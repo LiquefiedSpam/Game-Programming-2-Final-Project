@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class ChoiceTile : Tile
@@ -11,26 +10,16 @@ public class ChoiceTile : Tile
     {
         await Data.MockPlayer.MoveTo(choicePoint.position);
 
-        // TODO await choice UI
-        // for now we pick randomly
-        InteractionPoint chosenPoint;
-        InteractionResult result;
-        if (Random.value < 0.5f)
-        {
-            chosenPoint = upInteraction;
-            result = tileInfo.UpInteractionInfo.PassInteraction();
-            upInteraction.SpawnPrefab(result);
-        }
-        else
-        {
-            chosenPoint = downInteraction;
-            result = tileInfo.DownInteractionInfo.PassInteraction();
-            downInteraction.SpawnPrefab(result);
-        }
+        ChoiceResult choice = await TravelUIManager.Ins.AwaitChoiceResult(tileInfo.UpInteractionInfo, tileInfo.DownInteractionInfo);
+
+        InteractionPoint chosenPoint = choice == ChoiceResult.UP ? upInteraction : downInteraction;
+        InteractionInfo chosenInfo = choice == ChoiceResult.UP ? tileInfo.UpInteractionInfo : tileInfo.DownInteractionInfo;
+
+        InteractionResult result = chosenInfo.PassInteraction();
+        chosenPoint.SpawnPrefab(result);
 
         await Data.MockPlayer.MoveTo(chosenPoint.PlayerDestination);
-
-        // TODO result UI
+        TravelUIManager.Ins.ShowInteractionResult(result);
 
         await Data.MockPlayer.MoveTo(convergePoint.position);
         await Data.MockPlayer.MoveTo(end.position);

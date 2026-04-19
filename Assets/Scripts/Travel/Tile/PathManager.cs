@@ -47,6 +47,7 @@ public class PathManager : MonoBehaviour
         // TODO: TP player to start, fade UI
         Data.Player.SetMovementDisable(true);
         Data.MockPlayer.gameObject.SetActive(true);
+        Data.MockPlayer.SetPos(PlayerStart);
         camFollow.FollowMockPlayer();
 
         activeTiles[0].OnTileComplete += () => activeTiles[1].TraverseTile();

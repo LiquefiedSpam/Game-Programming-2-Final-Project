@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -20,8 +19,7 @@ public class Tile : MonoBehaviour
         upInteraction.SpawnPrefab(result);
 
         await Data.MockPlayer.MoveTo(upInteraction.PlayerDestination);
-
-        // TODO result UI
+        TravelUIManager.Ins.ShowInteractionResult(result);
 
         await Data.MockPlayer.MoveTo(end.position);
 
@@ -30,7 +28,6 @@ public class Tile : MonoBehaviour
 
     public void LinkTileInfo(TileInfo info)
     {
-        Debug.Log("Linked tile info");
         tileInfo = info;
     }
 
