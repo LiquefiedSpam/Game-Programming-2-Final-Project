@@ -4582,7 +4582,7 @@ GameObject:
   - component: {fileID: 398159492}
   - component: {fileID: 398159491}
   - component: {fileID: 398159490}
-  - component: {fileID: 398159489}
+  - component: {fileID: 398159493}
   m_Layer: 0
   m_Name: Left Teleport Area
   m_TagString: Untagged
@@ -4605,34 +4605,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1609519802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &398159489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 398159487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
-  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
-  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
-  sandTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
-  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
-  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
-  stoneTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
-  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
-  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
-  teleportLocation: {fileID: 2069322082}
-  mapImage: {fileID: 1881379450}
-  speed: 2
-  currentPath: 2
 --- !u!65 &398159490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4711,6 +4683,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398159487}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &398159493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398159487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dde793d1c3b415e82c8ada8c9de529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
+  fromTown: 1
+  toTown: 0
+  pathManager: {fileID: 349971795}
 --- !u!1 &441828627
 GameObject:
   m_ObjectHideFlags: 0
@@ -16557,7 +16544,7 @@ GameObject:
   - component: {fileID: 643258613}
   - component: {fileID: 643258612}
   - component: {fileID: 643258611}
-  - component: {fileID: 643258610}
+  - component: {fileID: 643258614}
   m_Layer: 0
   m_Name: Right Teleport Area
   m_TagString: Untagged
@@ -16580,34 +16567,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1609519802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &643258610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643258608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
-  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
-  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
-  sandTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
-  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
-  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
-  stoneTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
-  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
-  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
-  teleportLocation: {fileID: 2069322082}
-  mapImage: {fileID: 1881379450}
-  speed: 2
-  currentPath: 3
 --- !u!65 &643258611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16686,6 +16645,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643258608}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &643258614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643258608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dde793d1c3b415e82c8ada8c9de529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
+  fromTown: 1
+  toTown: 2
+  pathManager: {fileID: 349971795}
 --- !u!1001 &643336522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17717,25 +17691,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 748011533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
+  m_Script: {fileID: 11500000, guid: a5dde793d1c3b415e82c8ada8c9de529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
-  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
-  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
-  sandTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
-  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
-  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
-  stoneTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
-  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
-  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
-  teleportLocation: {fileID: 2069322082}
-  mapImage: {fileID: 1881379450}
-  speed: 2
-  currentPath: 1
+  m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
+  fromTown: 0
+  toTown: 1
+  pathManager: {fileID: 349971795}
 --- !u!1 &750494454
 GameObject:
   m_ObjectHideFlags: 0
@@ -30327,7 +30288,7 @@ GameObject:
   - component: {fileID: 1416148980}
   - component: {fileID: 1416148979}
   - component: {fileID: 1416148978}
-  - component: {fileID: 1416148977}
+  - component: {fileID: 1416148981}
   m_Layer: 0
   m_Name: Left Teleport Area
   m_TagString: Untagged
@@ -30350,34 +30311,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 304255955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1416148977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416148975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
-  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
-  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
-  sandTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
-  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
-  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
-  stoneTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
-  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
-  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
-  teleportLocation: {fileID: 2069322082}
-  mapImage: {fileID: 1881379450}
-  speed: 2
-  currentPath: 5
 --- !u!65 &1416148978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30456,6 +30389,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416148975}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1416148981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416148975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dde793d1c3b415e82c8ada8c9de529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
+  fromTown: 2
+  toTown: 1
+  pathManager: {fileID: 349971795}
 --- !u!1 &1417793540
 GameObject:
   m_ObjectHideFlags: 0
@@ -46008,7 +45956,7 @@ GameObject:
   - component: {fileID: 1882578946}
   - component: {fileID: 1882578945}
   - component: {fileID: 1882578944}
-  - component: {fileID: 1882578943}
+  - component: {fileID: 1882578947}
   m_Layer: 0
   m_Name: Right Teleport Area
   m_TagString: Untagged
@@ -46031,34 +45979,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 304255955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1882578943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882578941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2461ec4874d3e4da8f850309084e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teleport
-  grassTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
-  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
-  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
-  sandTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
-  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
-  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
-  stoneTilePrefabs:
-  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
-  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
-  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}
-  teleportLocation: {fileID: 2069322082}
-  mapImage: {fileID: 1881379450}
-  speed: 2
-  currentPath: 4
 --- !u!65 &1882578944
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46137,6 +46057,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882578941}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1882578947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882578941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dde793d1c3b415e82c8ada8c9de529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
+  fromTown: 2
+  toTown: 0
+  pathManager: {fileID: 349971795}
 --- !u!1 &1885326050
 GameObject:
   m_ObjectHideFlags: 0
@@ -52889,53 +52824,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061205886}
   m_CullTransparentMesh: 1
---- !u!1 &2069322082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2069322083}
-  - component: {fileID: 2069322084}
-  m_Layer: 0
-  m_Name: TravelPath
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2069322083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069322082}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -125, y: 0, z: -275}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2069322084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069322082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab47d8bbf21f4f24d86f075b11dfc1cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TileManager
-  travelPathLength: 3
-  travelPathObject: {fileID: 2069322083}
-  nextSpawnPoint: {x: -125, y: 0, z: -275}
 --- !u!1 &2083929229
 GameObject:
   m_ObjectHideFlags: 0
@@ -73234,6 +73122,5 @@ SceneRoots:
   - {fileID: 304255955}
   - {fileID: 2057660965628067608}
   - {fileID: 36665319}
-  - {fileID: 2069322083}
   - {fileID: 1005867644}
   - {fileID: 349971794}
