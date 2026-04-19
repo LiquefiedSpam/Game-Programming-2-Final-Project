@@ -4,10 +4,6 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "TileDisplaySO", menuName = "Scriptable Objects/TileDisplaySO")]
 public class TileDisplaySO : ScriptableObject
 {
-    [Header("UI")]
-    [SerializeField] Vector2 normSingleInteractionPos;
-    [SerializeField] Vector2 normUpInteractionPos;
-    [SerializeField] Vector2 normDownInteractionPos;
     [Header("Symbols")]
     [SerializeField] Sprite unknownSprite;
     [SerializeField] Sprite safeSprite;
@@ -43,21 +39,6 @@ public class TileDisplaySO : ScriptableObject
             symbolImg.sprite = unknownSprite;
             levelImg.gameObject.SetActive(false);
         }
-    }
-
-    public Vector2 GetUpInteractionLocalPosition(float parentWidth)
-    {
-        return normUpInteractionPos * parentWidth;
-    }
-
-    public Vector2 GetDownInteractionLocalPosition(float parentWidth)
-    {
-        return normDownInteractionPos * parentWidth;
-    }
-
-    public Vector2 GetSingleInteractionLocalPosition(float parentWidth)
-    {
-        return normSingleInteractionPos * parentWidth;
     }
 
     Sprite GetLevelSprite(float distanceFromPointFive)

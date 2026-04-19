@@ -9,7 +9,9 @@ public class TravelUIManager : MonoBehaviour
     [Header("Choice UI")]
     [SerializeField] GameObject choiceParent;
     [SerializeField] Button upButton;
+    [SerializeField] InteractionPointUI upInteractionUI;
     [SerializeField] Button downButton;
+    [SerializeField] InteractionPointUI downInteractionUI;
     [Header("Interaction Point UI")]
     [SerializeField] CanvasGroup interactionCanvasGroup;
     [SerializeField] TMP_Text interactionMessageText;
@@ -69,6 +71,9 @@ public class TravelUIManager : MonoBehaviour
         }
 
         TaskCompletionSource<ChoiceResult> resultTask = new();
+
+        Data.TileDisplaySO.SetInteractionSymbols(upInteractionUI.symbolImage, upInteractionUI.levelImage, upInteraction);
+        Data.TileDisplaySO.SetInteractionSymbols(downInteractionUI.symbolImage, downInteractionUI.levelImage, downInteraction);
 
         choiceParent.SetActive(true);
         upButton.onClick.AddListener(() => ButtonClicked(ChoiceResult.UP));

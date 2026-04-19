@@ -30,12 +30,12 @@ public class TileUI : MonoBehaviour
             downPoint.parent.gameObject.SetActive(false);
         }
     }
+}
 
-    [System.Serializable]
-    struct InteractionPointUI
-    {
-        [SerializeField] public Image symbolImage;
-        [SerializeField] public Image levelImage;
-        [SerializeField] public RectTransform parent;
-    }
+[System.Serializable]
+public struct InteractionPointUI
+{
+    [SerializeField] public Image symbolImage;
+    [SerializeField] public Image levelImage;
+    [SerializeField] public RectTransform parent;
 }

@@ -32,8 +32,6 @@ public class PathManager : MonoBehaviour
 
     public async Task BuildPath(Town fromTown, Town toTown)
     {
-        DestroyCurrentTiles();
-
         PathTileInfo pathInfo = Tiles[fromTown][toTown];
         activeTileInfo = pathInfo.GetRandomPathTiles(fromTown, toTown);
 
@@ -76,6 +74,7 @@ public class PathManager : MonoBehaviour
         camFollow.FollowPlayer();
 
         _ = UIManager.Ins.FadeAlpha(FADE_TIME, 0f);
+        DestroyCurrentTilesAfter(1f);
     }
 
     public InteractionInfo GetRandomInteraction(Town town)
@@ -113,17 +112,12 @@ public class PathManager : MonoBehaviour
         }
     }
 
-    void DestroyCurrentTiles()
+    void DestroyCurrentTilesAfter(float delay)
     {
-        for (int i = 0; i < activeTiles.Length; i++)
-        {
-            if (activeTiles[i] != null)
-            {
-                var obj = activeTiles[i];
-                activeTiles[i] = null;
-                Destroy(obj);
-            }
-        }
+        for (int i = tile1Parent.childCount - 1; i >= 0; i--) Destroy(tile1Parent.GetChild(i).gameObject, delay);
+        for (int i = tile2Parent.childCount - 1; i >= 0; i--) Destroy(tile2Parent.GetChild(i).gameObject, delay);
+        for (int i = tile3Parent.childCount - 1; i >= 0; i--) Destroy(tile3Parent.GetChild(i).gameObject, delay);
+        for (int i = 0; i < activeTiles.Length; i++) activeTiles[i] = null;
     }
 
     void InitTiles()
