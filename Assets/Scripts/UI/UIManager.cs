@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -207,6 +209,54 @@ public class UIManager : MonoBehaviour
         travelStatusUI.SetActive(true);
 
         statusFadeOutRoutine = StartCoroutine(StatusFadeOut());
+    }
+
+    public async Task FadeInOut(float inTime = 0.5f, float holdTime = 0.5f, float outTime = 0.5f)
+    {
+        Transitioning = true;
+        OnDisplayBlocksOthers?.Invoke();
+
+        float elapsed = 0f;
+        while (elapsed < inTime)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            transitionImage.SetAlpha(elapsed / inTime);
+        }
+
+        int msWait = Mathf.CeilToInt(holdTime * 1000);
+        await Task.Delay(msWait);
+
+        elapsed = 0f;
+        while (elapsed < outTime)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            transitionImage.SetAlpha(1 - (elapsed / inTime));
+        }
+
+        Transitioning = false;
+    }
+
+    public async Task FadeAlpha(float duration, float targetAlpha)
+    {
+        Transitioning = true;
+        OnDisplayBlocksOthers?.Invoke();
+
+        float startAlpha = transitionImage.color.a;
+        float currentAlpha;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+            transitionImage.SetAlpha(currentAlpha);
+        }
+        transitionImage.SetAlpha(targetAlpha);
+
+        Transitioning = false;
     }
 
     public IEnumerator FadeOut()

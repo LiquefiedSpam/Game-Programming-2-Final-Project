@@ -127,6 +127,6 @@ public class PlayerController : MonoBehaviour
 
     public void SetLocation(Vector3 worldPos)
     {
-        transform.position = worldPos;
+        transform.SetPositionAndRotation(worldPos, Quaternion.identity);
     }
 }

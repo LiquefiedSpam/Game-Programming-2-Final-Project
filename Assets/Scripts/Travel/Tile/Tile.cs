@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public const float LAST_TILE_X_OFFSET = 20f;
+
     [SerializeField] protected Town town;
     [SerializeField] protected Transform start;
     [SerializeField] protected Transform end;
@@ -13,7 +15,7 @@ public class Tile : MonoBehaviour
     public Town Town => town;
     protected TileInfo tileInfo;
 
-    public virtual async void TraverseTile()
+    public virtual async void TraverseTile(bool lastTile = false)
     {
         InteractionResult result = tileInfo.UpInteractionInfo.PassInteraction();
         upInteraction.SpawnPrefab(result);
@@ -21,7 +23,9 @@ public class Tile : MonoBehaviour
         await Data.MockPlayer.MoveTo(upInteraction.PlayerDestination);
         TravelUIManager.Ins.ShowInteractionResult(result);
 
-        await Data.MockPlayer.MoveTo(end.position);
+        Vector3 endPos = end.position;
+        if (lastTile) endPos -= new Vector3(LAST_TILE_X_OFFSET, 0f, 0f);
+        await Data.MockPlayer.MoveTo(endPos);
 
         OnTileComplete?.Invoke();
     }

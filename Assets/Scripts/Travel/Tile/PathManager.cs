@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PathManager : MonoBehaviour
 {
+    const float FADE_TIME = 0.4f;
+
     [SerializeField] AllTileData tilePrefabs;
     [SerializeField] Transform playerStart;
     [SerializeField] Transform tile1Parent;
@@ -17,7 +19,6 @@ public class PathManager : MonoBehaviour
     Town activeDestination;
 
     public Vector3 PlayerStart => playerStart.position;
-    public Action OnPathCompleted;
 
     public Dictionary<Town, Dictionary<Town, PathTileInfo>> Tiles;
 
@@ -44,27 +45,34 @@ public class PathManager : MonoBehaviour
 
     public void StartPlayerOnPath()
     {
-        // TODO: TP player to start, fade UI
-        Data.Player.SetMovementDisable(true);
         Data.MockPlayer.gameObject.SetActive(true);
         Data.MockPlayer.SetPos(PlayerStart);
         camFollow.FollowMockPlayer();
 
         activeTiles[0].OnTileComplete += () => activeTiles[1].TraverseTile();
-        activeTiles[1].OnTileComplete += () => activeTiles[2].TraverseTile();
+        activeTiles[1].OnTileComplete += () => activeTiles[2].TraverseTile(true);
         activeTiles[2].OnTileComplete += EndPlayerOnPath;
+
+        _ = UIManager.Ins.FadeAlpha(FADE_TIME, 0f);
+
         activeTiles[0].TraverseTile();
     }
 
-    public void EndPlayerOnPath()
+    public async void EndPlayerOnPath()
     {
-        // TODO: TP player to town, fade UI
-        OnPathCompleted?.Invoke();
+        if (activeTiles[2] != null)
+        {
+            activeTiles[2].OnTileComplete -= EndPlayerOnPath;
+        }
+
+        await UIManager.Ins.FadeAlpha(FADE_TIME, 1f);
 
         Data.MockPlayer.gameObject.SetActive(false);
         Data.Player.SetLocation(Data.TownTeleports[activeDestination].position);
         Data.Player.SetMovementDisable(false);
         camFollow.FollowPlayer();
+
+        _ = UIManager.Ins.FadeAlpha(FADE_TIME, 0f);
     }
 
     public InteractionInfo GetRandomInteraction(Town town)
