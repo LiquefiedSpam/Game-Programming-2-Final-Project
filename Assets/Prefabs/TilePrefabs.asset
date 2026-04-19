@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6103d29688b7415e84a882fb0040b59, type: 3}
+  m_Name: TilePrefabs
+  m_EditorClassIdentifier: Assembly-CSharp::TilePrefabs
+  grassPaths:
+  - {fileID: 5934850960889100223, guid: 270b0f73507de2048b40a4ac67cd0d1f, type: 3}
+  - {fileID: 5934850960889100223, guid: 3d58206717d5c074687dc6cb103c1007, type: 3}
+  - {fileID: 5934850960889100223, guid: 2d3b5c0a9f23fb94293af216f5a4c298, type: 3}
+  sandPaths:
+  - {fileID: 5934850960889100223, guid: 9e29a3e31a969774493c6bc1bf34be67, type: 3}
+  - {fileID: 5934850960889100223, guid: 78b06761477e3e7438e52b9306b9d9cf, type: 3}
+  - {fileID: 5934850960889100223, guid: 1f69d46b7b18c9245b9f78fcd47f2e5a, type: 3}
+  stonePaths:
+  - {fileID: 5934850960889100223, guid: 2d2f128b206e61447906abf7163b8b77, type: 3}
+  - {fileID: 5934850960889100223, guid: 448165fc1f5e3cd40853712b9433f2f6, type: 3}
+  - {fileID: 5934850960889100223, guid: 6de5cc45c7f8440468fd8c0fb68ae2ad, type: 3}

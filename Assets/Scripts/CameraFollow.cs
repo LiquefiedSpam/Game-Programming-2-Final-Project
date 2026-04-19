@@ -5,15 +5,32 @@ public class CameraFollow : MonoBehaviour
     Vector3 offset;
     Vector3 newPos;
     public GameObject player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject mockPlayer;
+
+    Transform target;
+
+    void Awake()
+    {
+        target = player.transform;
+    }
+
     void Start()
     {
         offset = player.transform.position - transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position - offset;
+        transform.position = target.position - offset;
+    }
+
+    public void FollowPlayer()
+    {
+        target = player.transform;
+    }
+
+    public void FollowMockPlayer()
+    {
+        target = mockPlayer.transform;
     }
 }

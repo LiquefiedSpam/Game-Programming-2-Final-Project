@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
     public const int MAX_HUNGER = 100;
 
     [SerializeField] private float _speed;
+    [SerializeField] private float travelSpeed = 20f;
     private Animator animator;
 
     private PlayerInputController _playerInputController;
@@ -121,5 +123,10 @@ public class PlayerController : MonoBehaviour
         //return to idle when done
         animator.SetBool("isWalking", false);
         animator.SetBool("isIdle", true);
+    }
+
+    public void SetLocation(Vector3 worldPos)
+    {
+        transform.position = worldPos;
     }
 }

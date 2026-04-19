@@ -9,6 +9,7 @@ public static class Data
     public static CustomerReactions CustomerReactions;
 
     public static PlayerController Player;
+    public static MockPlayerController MockPlayer;
     public static Town CurrentTown { get; private set; } = Town.WOODED_KEEP;
     public static PlayerStall ClosestPlayerStall => TownPlayerStalls[CurrentTown];
     public static InnBehavior ClosestInn => TownInns[CurrentTown];
