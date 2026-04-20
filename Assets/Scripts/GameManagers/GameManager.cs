@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     bool inCutscene = false;
     public Action<bool> OnEnterExitCutscene;
 
+    private Vector3 tavernPlayerSpawnPt;
+    private Vector3 tavernNpcSpawnPt;
+
     [SerializeField] private PlayerController player;
     [SerializeField] Transform TavernPoint; // this should probably be folded into a town scriptable object / data,
     //this is just here rn to continue my work
@@ -31,6 +34,8 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
         currentTown = Town.WOODED_KEEP;
+        tavernPlayerSpawnPt = new Vector3(-75, 0, -75);
+        tavernNpcSpawnPt = new Vector3(-74, 0, -74);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,13 +75,31 @@ public class GameManager : MonoBehaviour
 
             if (npcDeparted && !playerFollowing && distToPlayer >= followDist)
             {
+                UIManager.Ins.CloseDialogue();
                 playerFollowing = true;
                 player.FollowDirection(dir);
-                //UIManager.Ins.FadeToBlack();
+                Debug.Log("got here too");
+                yield return TeleportRoutine(npc);
+                TavernInteraction(npc);
             }
 
             yield return null;
         }
+    }
+
+    private IEnumerator TeleportRoutine(NpcBehavior npc)
+    {
+        Debug.Log("got here");
+        yield return StartCoroutine(UIManager.Ins.FadeOut());
+        player.StopMoveInDirection();
+        player.SetLocation(tavernPlayerSpawnPt);
+        npc.SetLocation(tavernNpcSpawnPt);
+        yield return StartCoroutine(UIManager.Ins.FadeIn());
+    }
+
+    private void TavernInteraction(NpcBehavior npc)
+    {
+        UIManager.Ins.ShowDialogue(false, "test man", "this is a test", null);
     }
 
     public void SetTown(Town town)

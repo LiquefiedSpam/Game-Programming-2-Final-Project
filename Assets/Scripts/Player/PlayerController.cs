@@ -124,6 +124,13 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isIdle", true);
     }
 
+    public void StopMoveInDirection()
+    {
+        StopAllCoroutines();
+        animator.SetBool("isIdle", true);
+        animator.SetBool("isWalking", false);
+    }
+
     public void SetLocation(Vector3 worldPos)
     {
         transform.SetPositionAndRotation(worldPos, Quaternion.identity);

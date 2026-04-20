@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.UI;
 
 public class BubbleScript : MonoBehaviour
 {
@@ -85,6 +86,9 @@ public class BubbleScript : MonoBehaviour
 
     public void Expand(bool inRange)
     {
+        if (!isActiveAndEnabled)
+            return;
+
         Vector3 target = inRange ? defaultScale * expandSize : defaultScale;
         StartCoroutine(UIAnimations.ScaleTo(transform, target, 0.1f));
     }

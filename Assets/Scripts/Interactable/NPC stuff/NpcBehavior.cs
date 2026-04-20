@@ -26,6 +26,11 @@ public class NpcBehavior : InteractableBehavior
     [SerializeField] List<DialogueTextOverride> overrides; //override the default flavor text response for options.
     List<DialogueOptionInstance> runtimeOptions; //the specific set of option instances this NPC has.
 
+    [Header("Tavern Dialogue")]
+    [TextArea(2, 10)][SerializeField] string beer1Dialogue;
+    [TextArea(2, 10)][SerializeField] string beer2Dialogue;
+    [TextArea(2, 10)][SerializeField] string beer3Dialogue;
+    [TextArea(2, 10)][SerializeField] string returnFromTavernDialogue;
     public override InteractableType Type => InteractableType.NPC;
     public static NpcBehavior InteractingWith;
 
@@ -371,5 +376,12 @@ public class NpcBehavior : InteractableBehavior
         {
             DefaultLocation();
         }
+    }
+
+    public void SetLocation(Vector3 worldPos)
+    {
+        StopAllCoroutines();
+        transform.SetPositionAndRotation(worldPos, Quaternion.identity);
+        SetAnimation("isIdle");
     }
 }
