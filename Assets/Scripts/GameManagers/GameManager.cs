@@ -4,7 +4,8 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 
 
-//this is honestly more like 'Tavern Beer Event Manager'
+//this is honestly more like 'Tavern Beer Event Manager' but like whatever that's for future me to fix
+//if I keep working on this
 public class GameManager : MonoBehaviour
 {
 
@@ -172,12 +173,14 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(UIManager.Ins.FadeIn());
 
         // closing dialogue
+        beerNpc.TurnAndTalk(player.transform.position);
         UIManager.Ins.ShowDialogue(false, beerNpc.name, beerNpc.returnFromTavernDialogue, beerNpc.portrait);
 
         confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
         while (!confirmed) yield return null;
 
+        beerNpc.FlushTally();
         UIManager.Ins.CloseDialogue();
         OnEnterExitCutscene?.Invoke(false);
     }

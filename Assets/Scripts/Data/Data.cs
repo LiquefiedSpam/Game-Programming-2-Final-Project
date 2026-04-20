@@ -7,6 +7,8 @@ public static class Data
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
     public static Dictionary<Town, InnBehavior> TownInns;
+
+    public static Dictionary<NpcBehavior, bool> NpcsBeeredToday;
     public static CustomerReactions CustomerReactions;
     public static TileDisplaySO TileDisplaySO;
 

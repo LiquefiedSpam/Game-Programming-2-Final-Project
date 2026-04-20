@@ -14,6 +14,7 @@ public class InteractableBehavior : MonoBehaviour
     public static Action<float> OnInteract;
     public static Action OnEndInteract;
     protected bool inCutscene = false;
+    public bool InCutscene => inCutscene;
 
     protected virtual void Awake()
     {

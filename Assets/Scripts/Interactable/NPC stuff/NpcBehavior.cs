@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Animator))]
 
@@ -40,6 +41,10 @@ public class NpcBehavior : InteractableBehavior
     Vector3 defaultRot;
     DialogueLabel? _pendingLabel;
 
+    int timeUnitTally = 0;
+    bool suppressTimeFlush = false;
+    bool alreadyBeered = false;
+
 
 
     Animator animator;
@@ -61,11 +66,13 @@ public class NpcBehavior : InteractableBehavior
 
     void Start()
     {
+        DayManager.Ins.OnDayChanged += BeerRefresh;
         GameManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
     }
 
     void OnDisable()
     {
+        DayManager.Ins.OnDayChanged -= BeerRefresh;
         GameManager.Ins.OnEnterExitCutscene -= EnterExitCutscene;
     }
 
@@ -92,27 +99,36 @@ public class NpcBehavior : InteractableBehavior
             Debug.LogError($"Already interacting with {InteractingWith.gameObject.name}");
             return;
         }
+
+        //always consume 1 time unit for speaking with NPC
+        timeUnitTally++;
+
         base.Interact(playerPos);
         InteractingWith = this;
 
         if (bubbleScript != null)
             bubbleScript.SetExhausted();
 
+        TurnAndTalk(playerPos);
+
+        //now, dialogue
+        UIManager.Ins.ShowDialogue(false, name, fetchDialogue(), portrait, GetAbleOptions());
+        RapportManager.Ins.AddRapport(name, 1);
+        // if (!isMerchant)
+        // {
+        //     // consume now if not merchant
+        //     DayManager.Ins.ConsumeUnit(1);
+        // }
+    }
+
+    public void TurnAndTalk(Vector3 playerPos)
+    {
         //turn to face player
         SetAnimation("isTurning");
         Vector3 direction = playerPos - transform.position;
         direction.y = 0f;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         StartRotate(targetRotation, "isTalking");
-
-        //now, dialogue
-        UIManager.Ins.ShowDialogue(false, name, fetchDialogue(), portrait, GetAbleOptions());
-        RapportManager.Ins.AddRapport(name, 1);
-        if (!isMerchant)
-        {
-            // consume now if not merchant
-            DayManager.Ins.ConsumeUnit(1);
-        }
     }
 
     public void HandleOptionSelected(DialogueOptionInstance option)
@@ -142,11 +158,11 @@ public class NpcBehavior : InteractableBehavior
         //outdated
         //option.action?.Execute(this);
 
-        if (isMerchant)
-        {
-            // consume after making choice if merchant
-            DayManager.Ins.ConsumeUnit(1);
-        }
+        // if (isMerchant)
+        // {
+        //     // consume after making choice if merchant
+        //     DayManager.Ins.ConsumeUnit(1);
+        // }
 
         HandleInternalLogic(option.definition.label);
     }
@@ -203,19 +219,23 @@ public class NpcBehavior : InteractableBehavior
         {
             var label = _pendingLabel.Value;
             _pendingLabel = null;
+            suppressTimeFlush = true;
             ExecutePendingLogic(label);
         }
         else
         {
+            FlushTally();
             StartRotate(defaultRotation, "isIdle");
         }
     }
-
     private void ExecutePendingLogic(DialogueLabel label)
     {
         switch (label)
         {
             case DialogueLabel.Drink:
+                timeUnitTally++;
+                suppressTimeFlush = true;
+                alreadyBeered = true;
                 GameManager.Ins.GoToTavernAction(this);
                 break;
         }
@@ -311,7 +331,7 @@ public class NpcBehavior : InteractableBehavior
         switch (label)
         {
             case DialogueLabel.Drink:
-                return DayManager.Ins.DayInterval == DayInterval.Evening;
+                return DayManager.Ins.DayInterval == DayInterval.Evening && !alreadyBeered;
 
             case DialogueLabel.Purchase:
                 if (DayManager.Ins.DayInterval == DayInterval.Night
@@ -409,5 +429,22 @@ public class NpcBehavior : InteractableBehavior
         StopAllCoroutines();
         transform.SetPositionAndRotation(worldPos, Quaternion.identity);
         SetAnimation("isIdle");
+    }
+
+    void BeerRefresh()
+    {
+        alreadyBeered = false;
+    }
+
+    public void AddToTally(int amount)
+    {
+        timeUnitTally += amount;
+    }
+
+    public void FlushTally()
+    {
+        DayManager.Ins.ConsumeUnit(timeUnitTally);
+        timeUnitTally = 0;
+        suppressTimeFlush = false;
     }
 }

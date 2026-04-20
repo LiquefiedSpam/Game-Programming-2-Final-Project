@@ -47,18 +47,24 @@ public class InteractableMonitor : MonoBehaviour
         if (!other.CompareTag("Interactable")) return;
         if (other.TryGetComponent<InteractableBehavior>(out var interactable))
         {
+            if (Interacting)
+            {
+                Interacting = false;
+                Debug.Log($"OnTriggerExit Quit — inCutscene: {interactable.InCutscene}");
+                Interactable.Quit();
+            }
+
             if (!interactable == Interactable) return;
             if (Interacting)
             {
                 Interacting = false;
-                Interactable.Quit();
+                if (!interactable.InCutscene)
+                    Interactable.Quit();
             }
             else
             {
                 if (Interactable.interactableIcon != null)
-                {
                     Interactable.TriggerIconExpand(false);
-                }
             }
             Interactable = null;
         }
