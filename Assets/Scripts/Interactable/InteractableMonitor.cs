@@ -14,7 +14,7 @@ public class InteractableMonitor : MonoBehaviour
             return;
         }
 
-        if (Interactable.interactableIcon != null && interacting == true)
+        if (Interactable.interactableIcon != null && Interactable.interactableIcon.activeInHierarchy && interacting == true)
             Interactable.TriggerIconPopAndShrink();
 
         Interacting = interacting;
@@ -43,6 +43,7 @@ public class InteractableMonitor : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        UIManager.Ins.Confirm();
         if (!other.CompareTag("Interactable")) return;
         if (other.TryGetComponent<InteractableBehavior>(out var interactable))
         {

@@ -93,48 +93,15 @@ public class BubbleScript : MonoBehaviour
         StartCoroutine(UIAnimations.ScaleTo(transform, target, 0.1f));
     }
 
-    IEnumerator ScaleTo(Vector3 targetScale, float duration)
-    {
-        Vector3 startScale = transform.localScale;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(startScale, targetScale, elapsed / duration);
-            yield return null;
-        }
-
-        transform.localScale = targetScale;
-    }
-
     public IEnumerator PopAndShrink()
     {
         yield return UIAnimations.PopAndShrink(transform, defaultScale, 1.6f);
     }
 
-    public IEnumerator SpawnHeart()
+    public void SpawnHeart()
     {
         GameObject heartObj = Instantiate(heartPrefab, heartSpawnPoint.position, Quaternion.identity);
         SpriteRenderer heart = heartObj.GetComponent<SpriteRenderer>();
-
-        Vector3 startPos = heartObj.transform.position;
-        Vector3 endPos = startPos + new Vector3(Random.Range(-0.3f, 0.3f), 1.5f, 0f);
-        float duration = 1f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-
-            heartObj.transform.position = Vector3.Lerp(startPos, endPos, t);
-            heart.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0f, t));
-            heartObj.transform.forward = Camera.main.transform.forward;
-
-            yield return null;
-        }
-
-        Destroy(heartObj);
+        StartCoroutine(UIAnimations.FloatUpAndFade(heart));
     }
 }

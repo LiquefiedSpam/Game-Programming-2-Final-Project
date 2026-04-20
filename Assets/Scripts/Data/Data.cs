@@ -16,6 +16,8 @@ public static class Data
     public static PlayerStall ClosestPlayerStall => TownPlayerStalls[CurrentTown];
     public static InnBehavior ClosestInn => TownInns[CurrentTown];
 
+    public static BeerData[] Beers;
+    public static Dictionary<BeerSize, BeerData> BeersBySize;
 
     static void SetCurrentTown(Town currentTown)
     {
@@ -27,6 +29,7 @@ public static class Data
     {
         CustomerReactions = Resources.Load<CustomerReactions>("CustomerReactions");
         TileDisplaySO = Resources.Load<TileDisplaySO>("TileDisplaySO");
+        Beers = Resources.LoadAll<BeerData>("Beers");
 
         PlayerStall[] playerStalls = Object.FindObjectsByType<PlayerStall>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         TownPlayerStalls = new();
@@ -59,6 +62,10 @@ public static class Data
         {
             TownInns[inn.InnTown] = inn;
         }
+
+        BeersBySize = new();
+        foreach (var beer in Beers)
+            BeersBySize[beer.size] = beer;
 
         Player = GameObject.FindFirstObjectByType<PlayerController>();
 

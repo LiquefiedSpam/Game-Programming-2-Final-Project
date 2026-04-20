@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
+using UnityEngine.UI;
 
 public static class UIAnimations
 {
@@ -22,5 +24,46 @@ public static class UIAnimations
     {
         yield return ScaleTo(t, defaultScale * popAmt, 0.1f);
         yield return ScaleTo(t, defaultScale, 0.2f);
+    }
+
+    public static IEnumerator FloatUpAndFade(TextMeshProUGUI text, float distance = 50f, float duration = 1f)
+    {
+        Vector3 startPos = text.rectTransform.anchoredPosition;
+        Vector3 endPos = startPos + new Vector3(0f, distance, 0f);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            text.rectTransform.anchoredPosition = Vector3.Lerp(startPos, endPos, t);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Lerp(1f, 0f, t));
+
+            yield return null;
+        }
+
+        Object.Destroy(text.gameObject);
+    }
+
+    public static IEnumerator FloatUpAndFade(SpriteRenderer sprite, float distance = 1.5f, float duration = 1f)
+    {
+        Vector3 startPos = sprite.transform.position;
+        Vector3 endPos = startPos + new Vector3(Random.Range(-0.3f, 0.3f), distance, 0f);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            sprite.transform.forward = Camera.main.transform.forward;
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            sprite.transform.position = Vector3.Lerp(startPos, endPos, t);
+            sprite.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0f, t));
+
+            yield return null;
+        }
+
+        Object.Destroy(sprite.gameObject);
     }
 }

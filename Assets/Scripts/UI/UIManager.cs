@@ -7,6 +7,7 @@ using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -51,6 +52,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI travelStatusText;
     [SerializeField] float statusFadeOutTime = 5f;
 
+    [Header("Tavern")]
+    [SerializeField] private GameObject tavernUI;
+    [SerializeField] private TextMeshProUGUI tavernQueryText;
+    [SerializeField] private Button smallBeerButton;
+    [SerializeField] private Button mediumBeerButton;
+    [SerializeField] private Button largeBeerButton;
+    [SerializeField] private TextMeshProUGUI smallBeerPriceText;
+    [SerializeField] private TextMeshProUGUI mediumBeerPriceText;
+    [SerializeField] private TextMeshProUGUI largeBeerPriceText;
+    [SerializeField] private Button tavernQuitButton;
+
+    [Header("Misc")]
+    [SerializeField] private TextMeshProUGUI errorMsgPrefab;
+
     public bool Visible => _canvas.gameObject.activeInHierarchy;
     public bool Transitioning { get; private set; } = false;
 
@@ -63,8 +78,10 @@ public class UIManager : MonoBehaviour
     private static UIManager _instance;
 
     public Action OnDisplayBlocksOthers;
+    Action _onConfirm;
 
     Coroutine statusFadeOutRoutine;
+
 
     void Awake()
     {
@@ -84,10 +101,24 @@ public class UIManager : MonoBehaviour
     {
         _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
         _hungerSlider.value = PlayerController.MAX_HUNGER;
+        if (tavernUI.activeSelf)
+            tavernUI.SetActive(false);
 
         InventoryDisplayManager.Ins.OnStallUIShown += HandleStallUIShown;
         //UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
+
+        smallBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.SMALL])));
+        mediumBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.MEDIUM])));
+        largeBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.LARGE])));
+        tavernQuitButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleTavernQuitButton()));
     }
+
+    void Update()
+    {
+        if (_onConfirm != null && Keyboard.current.eKey.wasPressedThisFrame)
+            Confirm();
+    }
+
 
     void OnDestroy()
     {
@@ -325,4 +356,62 @@ public class UIManager : MonoBehaviour
             travelStatusUI.gameObject.SetActive(false);
         }
     }
+
+    public void DisplayError(string errorMsg)
+    {
+        var txt = Instantiate(errorMsgPrefab, _canvas.transform);
+        txt.text = errorMsg;
+        txt.rectTransform.position = Input.mousePosition;
+        StartCoroutine(UIAnimations.FloatUpAndFade(txt));
+    }
+
+    public void WaitForConfirm(Action onConfirm)
+    {
+        _onConfirm = onConfirm;
+    }
+
+    public void Confirm()
+    {
+        _onConfirm?.Invoke();
+        _onConfirm = null;
+    }
+
+
+    //Tavern UI
+    public void EnableTavernUI(string npcName)
+    {
+        smallBeerButton.interactable = true;
+        mediumBeerButton.interactable = true;
+        largeBeerButton.interactable = true;
+        tavernQueryText.text = $"What'll you get {npcName}?";
+        tavernUI.SetActive(true);
+    }
+
+    public void HideTavernUI()
+    {
+        tavernUI.SetActive(false);
+    }
+
+    public void DisableBeerButtons()
+    {
+        smallBeerButton.interactable = false;
+        mediumBeerButton.interactable = false;
+        largeBeerButton.interactable = false;
+    }
+
+    public IEnumerator WaitForBeerButtonAnim()
+    {
+        bool done = false;
+        void onDone() => done = true;
+        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+
+        while (!done) yield return null;
+
+        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+    }
+
 }

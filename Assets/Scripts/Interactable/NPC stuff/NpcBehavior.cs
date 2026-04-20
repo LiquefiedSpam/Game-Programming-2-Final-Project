@@ -15,7 +15,7 @@ public class NpcBehavior : InteractableBehavior
 
     [Header("Identity")]
     [SerializeField] string name;
-    [SerializeField] Sprite portrait;
+    [SerializeField] public Sprite portrait;
 
     [Header("Dialogue")]
     [TextArea(2, 10)][SerializeField] string morningDialogue;
@@ -27,10 +27,10 @@ public class NpcBehavior : InteractableBehavior
     List<DialogueOptionInstance> runtimeOptions; //the specific set of option instances this NPC has.
 
     [Header("Tavern Dialogue")]
-    [TextArea(2, 10)][SerializeField] string beer1Dialogue;
-    [TextArea(2, 10)][SerializeField] string beer2Dialogue;
-    [TextArea(2, 10)][SerializeField] string beer3Dialogue;
-    [TextArea(2, 10)][SerializeField] string returnFromTavernDialogue;
+    [TextArea(2, 10)][SerializeField] public string smallBeerDialogue;
+    [TextArea(2, 10)][SerializeField] public string mediumBeerDialogue;
+    [TextArea(2, 10)][SerializeField] public string largeBeerDialogue;
+    [TextArea(2, 10)][SerializeField] public string returnFromTavernDialogue;
     public override InteractableType Type => InteractableType.NPC;
     public static NpcBehavior InteractingWith;
 
@@ -38,6 +38,7 @@ public class NpcBehavior : InteractableBehavior
     float speed = 2f;
     Vector3 defaultPos;
     Vector3 defaultRot;
+    DialogueLabel? _pendingLabel;
 
 
 
@@ -72,6 +73,12 @@ public class NpcBehavior : InteractableBehavior
     {
         defaultPos = transform.position;
         defaultRot = transform.rotation.eulerAngles;
+    }
+
+    public void GoToDefaultLocation()
+    {
+        transform.position = defaultPos;
+        transform.rotation = Quaternion.Euler(defaultRot);
     }
 
     public override void Interact(Vector3 playerPos)
@@ -149,12 +156,12 @@ public class NpcBehavior : InteractableBehavior
         switch (label)
         {
             case DialogueLabel.Drink:
-                GameManager.Ins.GoToTavernAction(this);
+                _pendingLabel = label;
                 break;
 
             case DialogueLabel.Purchase:
                 audioSource.Play();
-                UIManager.Ins.CloseDialogue(); // dialogue shown in merchant stall display
+                UIManager.Ins.CloseDialogue();
                 break;
 
             case DialogueLabel.Leave:
@@ -192,7 +199,26 @@ public class NpcBehavior : InteractableBehavior
 
         if (inCutscene) return;
 
-        StartRotate(defaultRotation, "isIdle");
+        if (_pendingLabel.HasValue)
+        {
+            var label = _pendingLabel.Value;
+            _pendingLabel = null;
+            ExecutePendingLogic(label);
+        }
+        else
+        {
+            StartRotate(defaultRotation, "isIdle");
+        }
+    }
+
+    private void ExecutePendingLogic(DialogueLabel label)
+    {
+        switch (label)
+        {
+            case DialogueLabel.Drink:
+                GameManager.Ins.GoToTavernAction(this);
+                break;
+        }
     }
 
     public override void TriggerIconPopAndShrink()
@@ -202,7 +228,7 @@ public class NpcBehavior : InteractableBehavior
 
         if (!bubbleScript.IsExhausted())
         {
-            bubbleScript.StartCoroutine(bubbleScript.SpawnHeart());
+            bubbleScript.SpawnHeart();
         }
     }
 
