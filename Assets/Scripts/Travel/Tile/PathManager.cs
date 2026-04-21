@@ -91,7 +91,7 @@ public class PathManager : MonoBehaviour
         DestroyCurrentTilesAfter(1f);
     }
 
-    //returns a random neutral or positive interaction from the passed in town's path units.
+    //returns a random neutral or positive interaction from the passed in town's path
     public InteractionInfo GetRandomInteraction(Town townFrom, Town townTo)
     {
         List<TileInfo> allTiles = new();
@@ -101,7 +101,7 @@ public class PathManager : MonoBehaviour
         List<InteractionInfo> allInteractions = new();
         foreach (var tileInfo in allTiles)
         {
-            tileInfo.TryAddRandomInteractionToList(ref allInteractions);
+            tileInfo.AddRandomInteractionToList(ref allInteractions);
         }
 
         return allInteractions[UnityEngine.Random.Range(0, allInteractions.Count)];
@@ -153,15 +153,5 @@ public class PathManager : MonoBehaviour
         PathTileInfo town_1_3_info = new(Town.WOODED_KEEP, Town.STONE_SANCTUARY, tilePrefabs);
         Tiles[Town.WOODED_KEEP][Town.STONE_SANCTUARY] = town_1_3_info;
         Tiles[Town.STONE_SANCTUARY][Town.WOODED_KEEP] = town_1_3_info;
-    }
-
-    (Town, Town) GetOtherTowns(Town town)
-    {
-        return town switch
-        {
-            Town.SANDY_STALLS => (Town.STONE_SANCTUARY, Town.WOODED_KEEP),
-            Town.WOODED_KEEP => (Town.SANDY_STALLS, Town.STONE_SANCTUARY),
-            _ => (Town.WOODED_KEEP, Town.SANDY_STALLS)
-        };
     }
 }

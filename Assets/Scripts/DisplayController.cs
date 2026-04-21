@@ -9,7 +9,6 @@ public class DisplayController : MonoBehaviour
     [SerializeField] PlayerInputController playerInputController;
     [SerializeField] private InputActionReference menuAction;
     [SerializeField] private InputActionReference mapAction;
-    [SerializeField] MapDisplayManager mapDisplay;
     [SerializeField] InventoryDisplayManager inventoryDisplay;
     [SerializeField] UIManager uiManager;
 
@@ -18,6 +17,8 @@ public class DisplayController : MonoBehaviour
 
     public static DisplayController Ins => instance;
     static DisplayController instance;
+
+    bool inCutscene = false;
 
     void Awake()
     {
@@ -36,6 +37,8 @@ public class DisplayController : MonoBehaviour
 
         mapAction.action.started += OnMapPressed;
         mapAction.action.Enable();
+
+        GameManager.Ins.OnEnterExitCutscene += OnEnterExitCutscene;
     }
 
     void OnDestroy()
@@ -44,6 +47,16 @@ public class DisplayController : MonoBehaviour
         mapAction.action.started -= OnMapPressed;
         playerInputController.OnPlayerMove -= CloseInventory;
         playerInputController.OnPlayerMove -= CloseMap;
+        GameManager.Ins.OnEnterExitCutscene -= OnEnterExitCutscene;
+    }
+
+    void OnEnterExitCutscene(bool enter)
+    {
+        if (enter)
+            inCutscene = true;
+
+        if (enter == false)
+            inCutscene = false;
     }
 
     private void OnMapPressed(InputAction.CallbackContext context)
@@ -52,21 +65,21 @@ public class DisplayController : MonoBehaviour
         {
             return;
         }
-        if (mapDisplay.IsVisible)
+        if (MapDisplayManager.Ins.IsVisible)
         {
             CloseMap();
         }
         else
         {
             playerInputController.OnPlayerMove += CloseMap;
-            mapDisplay.Show();
+            MapDisplayManager.Ins.Show();
         }
     }
 
     void CloseMap()
     {
         playerInputController.OnPlayerMove -= CloseMap;
-        mapDisplay.Hide();
+        MapDisplayManager.Ins.Hide();
     }
 
     private void OnInventoryPressed(InputAction.CallbackContext context)
@@ -95,12 +108,12 @@ public class DisplayController : MonoBehaviour
 
     public bool CanDisplayMap()
     {
-        return DisplayMapEnabled && !uiManager.DisplayBlocksOthers && !inventoryDisplay.DisplayBlocksOthers;
+        return DisplayMapEnabled && !uiManager.DisplayBlocksOthers && !inventoryDisplay.DisplayBlocksOthers && !inCutscene;
     }
 
     public bool CanDisplayInventory()
     {
-        return DisplayInventoryEnabled && !uiManager.DisplayBlocksOthers && !mapDisplay.IsVisible;
+        return DisplayInventoryEnabled && !uiManager.DisplayBlocksOthers && !MapDisplayManager.Ins.IsVisible && !inCutscene;
     }
 
     public void EnableDisplayInventory()

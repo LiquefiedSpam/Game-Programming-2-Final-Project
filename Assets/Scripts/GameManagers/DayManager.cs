@@ -91,4 +91,10 @@ public class DayManager : MonoBehaviour
             OnUnitsConsumed?.Invoke(unitsToConsume);
         }
     }
+
+    //for debugging
+    public void FireDayChanged()
+    {
+        OnDayChanged?.Invoke();
+    }
 }

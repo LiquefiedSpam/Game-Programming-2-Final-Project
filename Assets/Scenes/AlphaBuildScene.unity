@@ -948,8 +948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonAnimator
   hoverScale: 1.05
   popAmt: 1.2
-  hoverText: {fileID: 0}
-  hoverString: 
+  hoverText: {fileID: 2061444687}
+  hoverString: $5
 --- !u!1 &72941557
 GameObject:
   m_ObjectHideFlags: 0
@@ -5047,8 +5047,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1920, y: -1080}
-  m_SizeDelta: {x: 3840, y: 2160}
+  m_AnchoredPosition: {x: 2565, y: -1080}
+  m_SizeDelta: {x: 2550, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456656265
 MonoBehaviour:
@@ -16433,7 +16433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 645
+      value: 1275
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -17790,7 +17790,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278235391
-  m_fontColor: {r: 1, g: 0.6901961, b: 0, a: 1}
+  m_fontColor: {r: 0.002695322, g: 0.002695322, b: 0.002695322, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -26269,7 +26269,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278235391
-  m_fontColor: {r: 1, g: 0.6901961, b: 0, a: 1}
+  m_fontColor: {r: 0.002695322, g: 0.002695322, b: 0.002695322, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -29268,8 +29268,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonAnimator
   hoverScale: 1.05
   popAmt: 1.2
-  hoverText: {fileID: 0}
-  hoverString: 
+  hoverText: {fileID: 717075304}
+  hoverString: $7
 --- !u!4 &1183348299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4856013435989713251, guid: 52a76c9489582b7428dc6fd1f9214df0, type: 3}
@@ -29308,6 +29308,8 @@ MonoBehaviour:
   mediumBeerDialogue: 
   largeBeerDialogue: 
   returnFromTavernDialogue: 
+  normalDialogueSound: {fileID: 0}
+  shopDialogueSound: {fileID: 0}
   CanInteract: 1
 --- !u!1001 &1183737413
 PrefabInstance:
@@ -31048,7 +31050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1495
+      value: 1275
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -33886,7 +33888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2345
+      value: 2125
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -35148,7 +35150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1495
+      value: 2125
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -47810,7 +47812,7 @@ MonoBehaviour:
   hoverScale: 1.05
   popAmt: 1.2
   hoverText: {fileID: 992589270}
-  hoverString: $15
+  hoverString: $3
 --- !u!1001 &1839739638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47933,11 +47935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3195
+      value: 425
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -655
+      value: -1505
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -55732,7 +55734,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278235391
-  m_fontColor: {r: 1, g: 0.6901961, b: 0, a: 1}
+  m_fontColor: {r: 0.002695322, g: 0.002695322, b: 0.002695322, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -64675,8 +64677,8 @@ MonoBehaviour:
   travelStatusText: {fileID: 936901801}
   statusFadeOutTime: 5
   tavernUI: {fileID: 1832929037}
-  tavernBeerUI: {fileID: 0}
-  tavernBeerQueryText: {fileID: 0}
+  tavernBeerUI: {fileID: 1906084630}
+  tavernBeerQueryText: {fileID: 977201822}
   smallBeerButton: {fileID: 1837111736}
   mediumBeerButton: {fileID: 59938201}
   largeBeerButton: {fileID: 1182796784}
@@ -65716,7 +65718,6 @@ MonoBehaviour:
   playerInputController: {fileID: 645922493}
   menuAction: {fileID: 2025430264}
   mapAction: {fileID: 2003772141}
-  mapDisplay: {fileID: 2141826029}
   inventoryDisplay: {fileID: 2467217195723317941}
   uiManager: {fileID: 3842056310491018531}
 --- !u!224 &4233663118311232971
@@ -68947,7 +68948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 645
+      value: 425
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y

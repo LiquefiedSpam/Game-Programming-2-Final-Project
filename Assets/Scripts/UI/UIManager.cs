@@ -406,6 +406,12 @@ public class UIManager : MonoBehaviour
         tavernBeerUI.SetActive(true);
     }
 
+    public void DisableTavernUI()
+    {
+        tavernDestUI.SetActive(false);
+        tavernUI.SetActive(false);
+    }
+
     public void EnableTavernDestUI(Town dest1, Town dest2)
     {
         tavernDestUI.SetActive(true);
@@ -451,6 +457,12 @@ public class UIManager : MonoBehaviour
     {
         townDestButton1.interactable = false;
         townDestButton2.interactable = false;
+        DisableTavernUI();
+    }
+
+    public void forceMapUI()
+    {
+
     }
 
     public IEnumerator WaitForDestButtonAnim()

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,23 @@ public class MapDisplayManager : MonoBehaviour
     [SerializeField] PathManager pathManager;
 
     public bool IsVisible => root.activeInHierarchy;
+    public static MapDisplayManager Ins => _instance;
+    private static MapDisplayManager _instance;
+    public Action OnMapQuit;
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Debug.LogError($"Multiple instances of MapDisplayManager in scene, destroying component on {gameObject.name}");
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     void Start()
     {
@@ -57,9 +75,23 @@ public class MapDisplayManager : MonoBehaviour
         entireMapParent.SetActive(false);
         pathDetailsParent.SetActive(false);
         root.SetActive(false);
+        OnMapQuit?.Invoke();
     }
 
-    void ShowDetailsFor(Town townA, Town townB)
+    //specific instructions for showing based on the tavern cutscene
+    public void CutsceneShow(Town townA, Town townB)
+    {
+        root.SetActive(true);
+        ShowDetailsFor(townA, townB);
+    }
+
+    //also used in cutscene stuff
+    public void AddExitButton()
+    {
+        exitButton.onClick.AddListener(Hide);
+    }
+
+    public void ShowDetailsFor(Town townA, Town townB)
     {
         entireMapParent.SetActive(false);
 

@@ -48,7 +48,12 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //MapDisplayManager.Ins.OnMapQuit += ResumeAfterMap;
+    }
 
+    void OnDisable()
+    {
+        // MapDisplayManager.Ins.OnMapQuit -= ResumeAfterMap;
     }
 
     // Update is called once per frame
@@ -137,7 +142,7 @@ public class GameManager : MonoBehaviour
         UIManager.Ins.HideBeerUI();
 
         //show npc-specific beer dialogue
-        UIManager.Ins.ShowDialogue(false, beerNpc.name, beerNpc.largeBeerDialogue, beerNpc.portrait);
+        UIManager.Ins.ShowDialogue(true, beerNpc.name, beerNpc.largeBeerDialogue, beerNpc.portrait);
 
         bool confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
@@ -149,33 +154,61 @@ public class GameManager : MonoBehaviour
 
         numBars = GenerateBars(beer);
 
-        (Town, Town) towns = Data.CurrentTown.GetOtherTowns();
-        //UIManager.Ins.EnableTavernDestUI(towns.Item1, towns.Item2);
-
         confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
         while (!confirmed) yield return null;
+
+        UIManager.Ins.CloseDialogue();
+        (Town, Town) towns = Data.CurrentTown.GetOtherTowns();
+        UIManager.Ins.EnableTavernDestUI(towns.Item1, towns.Item2);
     }
 
     public IEnumerator HandleDestSelected(Town town)
     {
-        //LOGIC STUFF HERE
+        Debug.Log(numBars);
+        yield return StartCoroutine(UIManager.Ins.WaitForDestButtonAnim());
+        UIManager.Ins.DisableTavernUI();
+
         InteractionInfo pt = PathManager.Ins.GetRandomInteraction(Data.CurrentTown, town);
 
-        //successfully found interaction to add bars to
-        pt.ModifyMarauderChance(-numBars);
+        MapDisplayManager.Ins.CutsceneShow(Data.CurrentTown, town);
+        yield return StartCoroutine(WaitAndPlaceBars(pt));
 
-        bool confirmed = false;
-        confirmed = false;
-        UIManager.Ins.WaitForConfirm(() => confirmed = true);
-        while (!confirmed) yield return null;
+        MapDisplayManager.Ins.AddExitButton();
+        MapDisplayManager.Ins.ShowDetailsFor(Data.CurrentTown, town);
+
+        // wait for the player to quit the map
+        bool mapQuit = false;
+        MapDisplayManager.Ins.OnMapQuit += onQuit;
+        while (!mapQuit) yield return null;
+        MapDisplayManager.Ins.OnMapQuit -= onQuit;
+
+        StartCoroutine(HeadBack());
+
+        void onQuit() => mapQuit = true;
+    }
+
+    IEnumerator WaitAndPlaceBars(InteractionInfo pt)
+    {
+        Debug.Log(pt.MarauderChance);
+        yield return new WaitForSeconds(1f);
+        pt.ModifyMarauderChance(-numBars);
+        Debug.Log(pt.MarauderChance);
     }
 
     public IEnumerator HandleTavernQuitButton()
     {
         Debug.Log("tavern quit");
-        yield return null;
+        yield return StartCoroutine(HeadBack());
+    }
 
+    public void ResumeAfterMap()
+    {
+        if (!inCutscene)
+            return;
+
+        Debug.Log("heading back");
+        StartCoroutine(HeadBack());
     }
 
     public IEnumerator HeadBack()
