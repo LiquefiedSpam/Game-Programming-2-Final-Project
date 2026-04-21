@@ -406,19 +406,19 @@ public class UIManager : MonoBehaviour
         tavernBeerUI.SetActive(true);
     }
 
-    // public void EnableTavernDestUI(Town dest1, Town dest2)
-    // {
-    //     tavernDestUI.SetActive(true);
-    //     townDestButton1.interactable = true;
-    //     townDestButton2.interactable = true;
-    //     townDestButton1Text.text = dest1.TownToString();
-    //     townDestButton2Text.text = dest2.TownToString();
+    public void EnableTavernDestUI(Town dest1, Town dest2)
+    {
+        tavernDestUI.SetActive(true);
+        townDestButton1.interactable = true;
+        townDestButton2.interactable = true;
+        townDestButton1Text.text = dest1.TownToString();
+        townDestButton2Text.text = dest2.TownToString();
 
-    //     townDestButton1.onClick.RemoveAllListeners();
-    //     townDestButton2.onClick.RemoveAllListeners();
-    //     townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
-    //     townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
-    // }
+        townDestButton1.onClick.RemoveAllListeners();
+        townDestButton2.onClick.RemoveAllListeners();
+        townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
+        townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
+    }
 
     public void HideBeerUI()
     {

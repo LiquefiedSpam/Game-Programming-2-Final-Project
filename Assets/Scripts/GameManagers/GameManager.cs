@@ -157,29 +157,19 @@ public class GameManager : MonoBehaviour
         while (!confirmed) yield return null;
     }
 
-    // public IEnumerator HandleTownSelected(Town town)
-    // {
-    //     //LOGIC STUFF HERE
-    //     InteractionInfo pt = PathManager.Ins.GetRandomInteraction(Data.CurrentTown, town);
+    public IEnumerator HandleDestSelected(Town town)
+    {
+        //LOGIC STUFF HERE
+        InteractionInfo pt = PathManager.Ins.GetRandomInteraction(Data.CurrentTown, town);
 
-    //     //if all paths in this town are just full of marauders for some reason, tough noogies
-    //     if (pt == null)
-    //     {
-    //         UIManager.Ins.ShowDialogue(true, beerNpc.name,
-    //         "W-wait a minute! All paths around here have marauders??", beerNpc.portrait);
-    //         //confirmed = false;
-    //         //UIManager.Ins.WaitForConfirm(() => confirmed = true);
-    //         //while (!confirmed) yield return null;
+        //successfully found interaction to add bars to
+        pt.ModifyMarauderChance(-numBars);
 
-    //         HeadBack();
-    //     }
-
-    //     //successfully found interaction to add bars to
-    //     else
-    //     {
-    //         pt.ModifyMarauderChance(-numBars);
-    //     }
-    // }
+        bool confirmed = false;
+        confirmed = false;
+        UIManager.Ins.WaitForConfirm(() => confirmed = true);
+        while (!confirmed) yield return null;
+    }
 
     public IEnumerator HandleTavernQuitButton()
     {
