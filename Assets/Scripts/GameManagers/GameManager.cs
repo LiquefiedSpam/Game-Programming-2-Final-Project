@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
         tavernPlayerSpawnPt = new Vector3(-75, 0, -75);
-        tavernNpcSpawnPt = new Vector3(-74, 0, -74);
+        tavernNpcSpawnPt = new Vector3(-74, 0, -75);
         playerPositionBeforeCutscene = Vector3.zero;
         beerNpc = null;
     }
@@ -137,6 +137,8 @@ public class GameManager : MonoBehaviour
             UIManager.Ins.DisplayError("not enough money!");
             yield break;
         }
+
+        MoneyManager.Ins.AddMoney(-beer.price);
 
         yield return StartCoroutine(UIManager.Ins.WaitForBeerButtonAnim());
         UIManager.Ins.HideBeerUI();

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853409602739813396}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.34, y: 0, z: 21.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -387,8 +387,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
   _hungerCost: 3
-  interactableIcon: {fileID: 3103688106124949148}
-  stallUI: {fileID: 0}
+  interactableIcon: {fileID: 9161510587020934330}
+  isMerchant: 1
+  merchantStall: {fileID: 0}
   audioSource: {fileID: 0}
   name: Stefan
   portrait: {fileID: 21300000, guid: 6c5acea75cbee41c7983f640353e6031, type: 3}
@@ -405,6 +406,15 @@ MonoBehaviour:
     responseOverride: Take a gander at my luscious specimens.
   - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
     responseOverride: Don't be a stranger, now.
+  smallBeerDialogue: I've seen better, but a free drink is a free drink.
+  mediumBeerDialogue: Ha! Don't get me too sloshed for work tomorrow!
+  largeBeerDialogue: Oh, what a doozy! Maybe I can afford to set up shop *later*
+    tomorrow...
+  returnFromTavernDialogue: I had a good time. I know I'm the stall guy, but stall
+    guys are people too. Let's go drinking  again sometime.
+  normalDialogueSound: {fileID: 0}
+  shopDialogueSound: {fileID: 0}
+  CanInteract: 1
 --- !u!4 &9108109998590792980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aa25f810c0ad6d7448b6701e89334011, type: 3}

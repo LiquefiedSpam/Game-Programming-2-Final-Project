@@ -19,6 +19,7 @@ public class TransitionToTravel : MonoBehaviour
 
     async void StartPath()
     {
+        DayManager.Ins.ConsumeUnit(1);
         Data.Player.SetMovementDisable(true);
         await Task.WhenAll(UIManager.Ins.FadeAlpha(FADE_TIME, 1f), PathManager.Ins.BuildPath(fromTown, toTown));
         PathManager.Ins.StartPlayerOnPath(); // path manager handles fade out

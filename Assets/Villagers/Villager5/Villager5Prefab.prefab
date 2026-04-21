@@ -1,5 +1,230 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1407903531721710635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5366722203881687249}
+  - component: {fileID: 6215757787583310625}
+  - component: {fileID: 7191492372429982685}
+  - component: {fileID: 2876143296485783209}
+  - component: {fileID: 9179000836803764402}
+  m_Layer: 0
+  m_Name: Bubble
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5366722203881687249
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407903531721710635}
+  m_LocalRotation: {x: 0.02090915, y: -0.08822915, z: -0.038518846, w: 0.99513555}
+  m_LocalPosition: {x: 0, y: 0, z: -0.038211197}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4429285969936678195}
+  m_Father: {fileID: 5735554110395065288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.3517332, y: 2.0675762}
+  m_SizeDelta: {x: 1196.25, y: 344.75012}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &6215757787583310625
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407903531721710635}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &7191492372429982685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407903531721710635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &2876143296485783209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407903531721710635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &9179000836803764402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407903531721710635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b949d06cf0f4549ad4fc3f6f0848b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleScript
+  bubble: {fileID: 6671261714644971627}
+  heartPrefab: {fileID: 2946165384501945219, guid: 17635b7c4e3ca644bbfbd965854a189c, type: 3}
+  heartSpawnPoint: {fileID: 1364127838044824020}
+  isSpecial: 1
+--- !u!1 &1821163851796528608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4429285969936678195}
+  - component: {fileID: 7443129466005523940}
+  - component: {fileID: 6671261714644971627}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4429285969936678195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821163851796528608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5366722203881687249}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7443129466005523940
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821163851796528608}
+  m_CullTransparentMesh: 1
+--- !u!114 &6671261714644971627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821163851796528608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 28f0c6e5accef6c48b632a9aa9fb5163, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4328877709496551068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1364127838044824020}
+  m_Layer: 0
+  m_Name: HeartSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1364127838044824020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4328877709496551068}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.02090915, y: -0.08822915, z: -0.038518846, w: 0.99513555}
+  m_LocalPosition: {x: 0.503558, y: 1.0766857, z: -0.6051324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5735554110395065288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5193338038689481763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
       propertyPath: m_Name
-      value: T2Villager1
+      value: Villager5Prefab
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
       propertyPath: m_TagString
@@ -70,14 +295,20 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 68996657b0eff5c4cbfea3e957fe02ca, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5366722203881687249}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1364127838044824020}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7127035505848970174}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7612763569497285847}
+      addedObject: {fileID: 2095636388795946848}
   m_SourcePrefab: {fileID: 100100000, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
 --- !u!1 &4959334826077419890 stripped
 GameObject:
@@ -107,7 +338,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &7612763569497285847
+--- !u!114 &2095636388795946848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,10 +347,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 4959334826077419890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2015ed3e4e3474b81df59314951f09, type: 3}
+  m_Script: {fileID: 11500000, guid: 1204cb198c937da4c9c8ae5554a70914, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogBehavior
-  _hungerCost: 1
-  _name: Kaldo
-  _dialog: All I do is yap a bit and drain your time.
-  _portrait: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
+  _hungerCost: 2
+  interactableIcon: {fileID: 0}
+  isMerchant: 0
+  merchantStall: {fileID: 0}
+  audioSource: {fileID: 0}
+  name: Pie
+  portrait: {fileID: 21300000, guid: 6495d487ba8ef450caf11ef7620bff12, type: 3}
+  morningDialogue: Name's Pie. Can you guess what I like to eat in the morning?
+  dayDialogue: I'd ask you to get me a pie, but I don't think that's an item in the
+    game.
+  eveningDialogue: What if you made a pie that could do anything?
+  nightDialogue: I can't go to sleep. I'm thinking too much about pie.
+  template: {fileID: 0}
+  overrides:
+  - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
+    responseOverride: If you find pie paradise, please let me know.
+  - definition: {fileID: 11400000, guid: 12e3962eca40d1a4c8eec9d46806f104, type: 2}
+    responseOverride: I'd love to go out. I wish they made liquid pie, though. Doesn't
+      even need to be alcoholic.
+  smallBeerDialogue: It may be small, but it's enough to wash down a good pie. Now
+    all I need is the pie.
+  mediumBeerDialogue: Lookit that-- a good sized beer! If you poured it into a pie
+    pan, how high would it fill to?
+  largeBeerDialogue: Looks like we're getting rowdy tonight! This might loosen my
+    tongue too much... you don't wanna hear about *that* pie story.
+  returnFromTavernDialogue: Almost as good as a fresh pie! Let's talk again sometime.
+  normalDialogueSound: {fileID: 0}
+  shopDialogueSound: {fileID: 0}
+  CanInteract: 1
+--- !u!4 &5735554110395065288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: da7804855f7016b43b3efedf8cea762f, type: 3}
+  m_PrefabInstance: {fileID: 5193338038689481763}
+  m_PrefabAsset: {fileID: 0}

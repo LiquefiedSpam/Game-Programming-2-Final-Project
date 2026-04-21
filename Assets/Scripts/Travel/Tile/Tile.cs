@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
         if (lastTile) endPos -= new Vector3(LAST_TILE_X_OFFSET, 0f, 0f);
         await Data.MockPlayer.MoveTo(endPos);
 
+        DayManager.Ins.ConsumeUnit(1);
         OnTileComplete?.Invoke();
     }
 

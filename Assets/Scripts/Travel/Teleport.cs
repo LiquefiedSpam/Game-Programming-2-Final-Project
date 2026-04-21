@@ -46,7 +46,8 @@ public class Teleport : MonoBehaviour
 
     private IEnumerator TeleportRoutine(PlayerController player)
     {
-
+        Debug.Log("got here!");
+        DayManager.Ins.ConsumeUnit(1);
         //turn off player controls here
         player.SetMovementDisable(true);
 
@@ -171,7 +172,7 @@ public class Teleport : MonoBehaviour
                 else if (travelPath[i].GetComponentInChildren<MarauderCampManager>())
                 {
                     MarauderCampManager marauderCamp = interactionZones[i].GetComponentInChildren<MarauderCampManager>();
-                    
+
                     //check to see if marauder camp is there (yes, lose items and change map icon, no change map icon and continue)
                     //display status of encountered area
                     UIManager.Ins.ShowTravelStatus(marauderCamp.EncounterDetails(marauderCamp.CampData.marauderActuallyThere));

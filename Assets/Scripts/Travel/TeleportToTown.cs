@@ -47,5 +47,6 @@ public class TeleportToTown : MonoBehaviour
 
         //turn on player controls
         player.SetMovementDisable(false);
+        DayManager.Ins.ConsumeUnit(1);
     }
 }
