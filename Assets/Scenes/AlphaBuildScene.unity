@@ -4914,7 +4914,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 1
   toTown: 0
-  pathManager: {fileID: 349971795}
 --- !u!1 &441828627
 GameObject:
   m_ObjectHideFlags: 0
@@ -16937,7 +16936,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 1
   toTown: 2
-  pathManager: {fileID: 349971795}
 --- !u!1001 &643336522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18186,7 +18184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 0
   toTown: 1
-  pathManager: {fileID: 349971795}
 --- !u!1 &750494454
 GameObject:
   m_ObjectHideFlags: 0
@@ -25370,7 +25367,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 0
   toTown: 2
-  pathManager: {fileID: 349971795}
 --- !u!1001 &967480896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32109,7 +32105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 2
   toTown: 1
-  pathManager: {fileID: 349971795}
 --- !u!1 &1417793540
 GameObject:
   m_ObjectHideFlags: 0
@@ -48170,7 +48165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransitionToTravel
   fromTown: 2
   toTown: 0
-  pathManager: {fileID: 349971795}
 --- !u!1 &1885326050
 GameObject:
   m_ObjectHideFlags: 0
@@ -53970,7 +53964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1979001407
 RectTransform:
   m_ObjectHideFlags: 0
