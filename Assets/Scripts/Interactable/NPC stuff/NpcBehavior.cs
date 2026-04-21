@@ -32,6 +32,10 @@ public class NpcBehavior : InteractableBehavior
     [TextArea(2, 10)][SerializeField] public string mediumBeerDialogue;
     [TextArea(2, 10)][SerializeField] public string largeBeerDialogue;
     [TextArea(2, 10)][SerializeField] public string returnFromTavernDialogue;
+
+    [Header("Audio Stuff")]
+    [SerializeField] private AudioClip normalDialogueSound;
+    [SerializeField] private AudioClip shopDialogueSound;
     public override InteractableType Type => InteractableType.NPC;
     public static NpcBehavior InteractingWith;
 
@@ -144,15 +148,18 @@ public class NpcBehavior : InteractableBehavior
             if (option.definition.label == DialogueLabel.Purchase)
             {
                 InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall, name, option.response, portrait);
+                UIManager.Ins.playAudio(shopDialogueSound); //tree fall audioclip here
             }
             else
             {
                 UIManager.Ins.ShowDialogue(true, name, option.response, portrait);
+                UIManager.Ins.playAudio(normalDialogueSound);
             }
         }
         else
         {
             UIManager.Ins.ShowDialogue(false, name, option.response, portrait);
+            UIManager.Ins.playAudio(normalDialogueSound);
         }
 
         //outdated

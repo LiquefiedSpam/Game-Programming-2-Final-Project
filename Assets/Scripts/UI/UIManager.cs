@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -76,6 +77,8 @@ public class UIManager : MonoBehaviour
     [Header("Misc")]
     [SerializeField] private TextMeshProUGUI errorMsgPrefab;
 
+    AudioSource audioSource;
+
     public bool Visible => _canvas.gameObject.activeInHierarchy;
     public bool Transitioning { get; private set; } = false;
 
@@ -124,6 +127,8 @@ public class UIManager : MonoBehaviour
 
         // townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
         // townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
+
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -459,6 +464,12 @@ public class UIManager : MonoBehaviour
 
         townDestButton1.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
         townDestButton2.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+    }
+
+    public void playAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
 }
