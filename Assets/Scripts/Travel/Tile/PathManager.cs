@@ -92,13 +92,11 @@ public class PathManager : MonoBehaviour
     }
 
     //returns a random neutral or positive interaction from the passed in town's path units.
-    public InteractionInfo? TryGetRandomInteraction(Town town)
+    public InteractionInfo GetRandomInteraction(Town townFrom, Town townTo)
     {
         List<TileInfo> allTiles = new();
 
-        (Town, Town) otherTowns = GetOtherTowns(town);
-        Tiles[town][otherTowns.Item1].TryAddTileInfosForTownToList(town, ref allTiles);
-        Tiles[town][otherTowns.Item2].TryAddTileInfosForTownToList(town, ref allTiles);
+        Tiles[townFrom][townTo].TryAddTileInfosForTownToList(townFrom, ref allTiles);
 
         List<InteractionInfo> allInteractions = new();
         foreach (var tileInfo in allTiles)

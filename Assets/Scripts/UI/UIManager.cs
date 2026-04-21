@@ -54,7 +54,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Tavern")]
     [SerializeField] private GameObject tavernUI;
-    [SerializeField] private TextMeshProUGUI tavernQueryText;
+    [SerializeField] private GameObject tavernBeerUI;
+    [SerializeField] private TextMeshProUGUI tavernBeerQueryText;
     [SerializeField] private Button smallBeerButton;
     [SerializeField] private Button mediumBeerButton;
     [SerializeField] private Button largeBeerButton;
@@ -62,6 +63,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mediumBeerPriceText;
     [SerializeField] private TextMeshProUGUI largeBeerPriceText;
     [SerializeField] private Button tavernQuitButton;
+
+    [SerializeField] private GameObject tavernDestUI;
+    [SerializeField] private Button townDestButton1;
+    [SerializeField] private Button townDestButton2;
+    [SerializeField] private TextMeshProUGUI townDestButton1Text;
+    [SerializeField] private TextMeshProUGUI townDestButton2Text;
+
+    [SerializeField] private TextMeshProUGUI tavernDestQueryText;
+
 
     [Header("Misc")]
     [SerializeField] private TextMeshProUGUI errorMsgPrefab;
@@ -111,6 +121,9 @@ public class UIManager : MonoBehaviour
         mediumBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.MEDIUM])));
         largeBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.LARGE])));
         tavernQuitButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleTavernQuitButton()));
+
+        // townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
+        // townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
     }
 
     void Update()
@@ -383,13 +396,28 @@ public class UIManager : MonoBehaviour
         smallBeerButton.interactable = true;
         mediumBeerButton.interactable = true;
         largeBeerButton.interactable = true;
-        tavernQueryText.text = $"What'll you get {npcName}?";
+        tavernBeerQueryText.text = $"What'll you get {npcName}?";
         tavernUI.SetActive(true);
+        tavernBeerUI.SetActive(true);
     }
 
-    public void HideTavernUI()
+    // public void EnableTavernDestUI(Town dest1, Town dest2)
+    // {
+    //     tavernDestUI.SetActive(true);
+    //     townDestButton1.interactable = true;
+    //     townDestButton2.interactable = true;
+    //     townDestButton1Text.text = dest1.TownToString();
+    //     townDestButton2Text.text = dest2.TownToString();
+
+    //     townDestButton1.onClick.RemoveAllListeners();
+    //     townDestButton2.onClick.RemoveAllListeners();
+    //     townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
+    //     townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
+    // }
+
+    public void HideBeerUI()
     {
-        tavernUI.SetActive(false);
+        tavernBeerUI.SetActive(false);
     }
 
     public void DisableBeerButtons()
@@ -412,6 +440,25 @@ public class UIManager : MonoBehaviour
         smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
         mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
         largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+    }
+
+    public void DisableDestButtons()
+    {
+        townDestButton1.interactable = false;
+        townDestButton2.interactable = false;
+    }
+
+    public IEnumerator WaitForDestButtonAnim()
+    {
+        bool done = false;
+        void onDone() => done = true;
+        townDestButton1.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        townDestButton2.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+
+        while (!done) yield return null;
+
+        townDestButton1.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+        townDestButton2.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
     }
 
 }

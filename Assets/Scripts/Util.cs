@@ -32,4 +32,14 @@ public static class Util
         c.a = alpha;
         i.color = c;
     }
+
+    public static (Town, Town) GetOtherTowns(this Town town)
+    {
+        return town switch
+        {
+            Town.SANDY_STALLS => (Town.STONE_SANCTUARY, Town.WOODED_KEEP),
+            Town.WOODED_KEEP => (Town.SANDY_STALLS, Town.STONE_SANCTUARY),
+            _ => (Town.WOODED_KEEP, Town.SANDY_STALLS)
+        };
+    }
 }

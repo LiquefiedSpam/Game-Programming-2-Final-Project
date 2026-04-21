@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Diagnostics;
+using Unity.VisualScripting;
 
 
 //this is honestly more like 'Tavern Beer Event Manager' but like whatever that's for future me to fix
@@ -13,11 +15,8 @@ public class GameManager : MonoBehaviour
                                             //this is just here rn to continue my work
 
     //private Enum currentTownEnum;
-    private Town currentTown;
     public static GameManager Ins => _instance;
     private static GameManager _instance;
-
-    public Town CurrentTown => currentTown;
     bool inCutscene = false;
     public Action<bool> OnEnterExitCutscene;
 
@@ -25,6 +24,8 @@ public class GameManager : MonoBehaviour
     private Vector3 tavernNpcSpawnPt;
     private NpcBehavior beerNpc;
     private Vector3 playerPositionBeforeCutscene;
+
+    private int numBars = 0;
 
 
     void Awake()
@@ -39,7 +40,6 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
-        currentTown = Town.WOODED_KEEP;
         tavernPlayerSpawnPt = new Vector3(-75, 0, -75);
         tavernNpcSpawnPt = new Vector3(-74, 0, -74);
         playerPositionBeforeCutscene = Vector3.zero;
@@ -119,19 +119,10 @@ public class GameManager : MonoBehaviour
         UIManager.Ins.EnableTavernUI(beerNpc.name);
     }
 
-    public void SetTown(Town town)
-    {
-        currentTown = town;
-    }
-
     //should be phased out to be a town member function or something
     Vector3 getTavernLoc()
     {
-        if (currentTown == Town.WOODED_KEEP)
-        {
-            return TavernPoint.transform.position;
-        }
-        return Vector3.zero;
+        return Data.ClosestInn.transform.position;
     }
 
     public IEnumerator HandleBeerSelected(BeerData beer)
@@ -143,7 +134,7 @@ public class GameManager : MonoBehaviour
         }
 
         yield return StartCoroutine(UIManager.Ins.WaitForBeerButtonAnim());
-        UIManager.Ins.HideTavernUI();
+        UIManager.Ins.HideBeerUI();
 
         //show npc-specific beer dialogue
         UIManager.Ins.ShowDialogue(false, beerNpc.name, beerNpc.largeBeerDialogue, beerNpc.portrait);
@@ -154,34 +145,41 @@ public class GameManager : MonoBehaviour
 
         //show generic follow-up dialogue
         UIManager.Ins.ShowDialogue(true, beerNpc.name, "By the way, since you're a traveling merchant,"
-        + "I think you should know about this safe path!", beerNpc.portrait);
+        + "I got some info on safe paths from this town!", beerNpc.portrait);
+
+        numBars = GenerateBars(beer);
+
+        (Town, Town) towns = Data.CurrentTown.GetOtherTowns();
+        //UIManager.Ins.EnableTavernDestUI(towns.Item1, towns.Item2);
 
         confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
         while (!confirmed) yield return null;
-
-        //LOGIC STUFF HERE
-        int numBars = GenerateBars(beer);
-        var result = PathManager.Ins.TryGetRandomInteraction(Data.CurrentTown);
-
-        //if all paths in this town are just full of marauders for some reason, tough noogies
-        if (result == null)
-        {
-            UIManager.Ins.ShowDialogue(true, beerNpc.name,
-            "W-wait a minute! All paths around here have marauders??", beerNpc.portrait);
-            confirmed = false;
-            UIManager.Ins.WaitForConfirm(() => confirmed = true);
-            while (!confirmed) yield return null;
-
-            HeadBack();
-        }
-
-        //successfully found interaction to add bars to
-        // else
-        // {
-        //     result.SetMarauderChance
-        // }
     }
+
+    // public IEnumerator HandleTownSelected(Town town)
+    // {
+    //     //LOGIC STUFF HERE
+    //     InteractionInfo pt = PathManager.Ins.GetRandomInteraction(Data.CurrentTown, town);
+
+    //     //if all paths in this town are just full of marauders for some reason, tough noogies
+    //     if (pt == null)
+    //     {
+    //         UIManager.Ins.ShowDialogue(true, beerNpc.name,
+    //         "W-wait a minute! All paths around here have marauders??", beerNpc.portrait);
+    //         //confirmed = false;
+    //         //UIManager.Ins.WaitForConfirm(() => confirmed = true);
+    //         //while (!confirmed) yield return null;
+
+    //         HeadBack();
+    //     }
+
+    //     //successfully found interaction to add bars to
+    //     else
+    //     {
+    //         pt.ModifyMarauderChance(-numBars);
+    //     }
+    // }
 
     public IEnumerator HandleTavernQuitButton()
     {
