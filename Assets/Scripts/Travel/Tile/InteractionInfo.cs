@@ -19,6 +19,11 @@ public class InteractionInfo
         MarauderChance = Mathf.Clamp(chance, 0, 10);
     }
 
+    public void ModifyMarauderChance(int amt)
+    {
+        MarauderChance = MarauderChance = Mathf.Clamp(MarauderChance + amt, 0, 10);
+    }
+
     public InteractionResult PassInteraction()
     {
         if ((Random.value * 10f) < MarauderChance)
