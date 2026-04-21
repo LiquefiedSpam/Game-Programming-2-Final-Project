@@ -177,10 +177,10 @@ public class GameManager : MonoBehaviour
         }
 
         //successfully found interaction to add bars to
-        else
-        {
-            result.SetMarauderChance
-        }
+        // else
+        // {
+        //     result.SetMarauderChance
+        // }
     }
 
     public IEnumerator HandleTavernQuitButton()
