@@ -55,7 +55,7 @@ public class RapportManager : MonoBehaviour
         return rapportCooldownList.Contains(name);
     }
 
-    int GetRapportLevel(string name)
+    public int GetRapportLevel(string name)
     {
         if (!rapportMap.ContainsKey(name))
         {

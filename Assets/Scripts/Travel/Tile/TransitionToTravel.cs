@@ -8,7 +8,6 @@ public class TransitionToTravel : MonoBehaviour
 
     [SerializeField] Town fromTown;
     [SerializeField] Town toTown;
-    [SerializeField] PathManager pathManager;
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,7 +20,7 @@ public class TransitionToTravel : MonoBehaviour
     async void StartPath()
     {
         Data.Player.SetMovementDisable(true);
-        await Task.WhenAll(UIManager.Ins.FadeAlpha(FADE_TIME, 1f), pathManager.BuildPath(fromTown, toTown));
-        pathManager.StartPlayerOnPath(); // path manager handles fade out
+        await Task.WhenAll(UIManager.Ins.FadeAlpha(FADE_TIME, 1f), PathManager.Ins.BuildPath(fromTown, toTown));
+        PathManager.Ins.StartPlayerOnPath(); // path manager handles fade out
     }
 }

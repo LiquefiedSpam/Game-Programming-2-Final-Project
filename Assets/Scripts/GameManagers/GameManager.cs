@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections;
-using System.Runtime.CompilerServices;
 
 
 //this is honestly more like 'Tavern Beer Event Manager' but like whatever that's for future me to fix
@@ -24,9 +23,6 @@ public class GameManager : MonoBehaviour
 
     private Vector3 tavernPlayerSpawnPt;
     private Vector3 tavernNpcSpawnPt;
-
-    private float tavernLuck = 0f;
-
     private NpcBehavior beerNpc;
     private Vector3 playerPositionBeforeCutscene;
 
@@ -157,7 +153,7 @@ public class GameManager : MonoBehaviour
         while (!confirmed) yield return null;
 
         //show generic follow-up dialogue
-        UIManager.Ins.ShowDialogue(false, beerNpc.name, "By the way, since you're a traveling merchant,"
+        UIManager.Ins.ShowDialogue(true, beerNpc.name, "By the way, since you're a traveling merchant,"
         + "I think you should know about this safe path!", beerNpc.portrait);
 
         confirmed = false;
@@ -165,6 +161,36 @@ public class GameManager : MonoBehaviour
         while (!confirmed) yield return null;
 
         //LOGIC STUFF HERE
+        int numBars = GenerateBars(beer);
+        var result = PathManager.Ins.TryGetRandomInteraction(Data.CurrentTown);
+
+        //if all paths in this town are just full of marauders for some reason, tough noogies
+        if (result == null)
+        {
+            UIManager.Ins.ShowDialogue(true, beerNpc.name,
+            "W-wait a minute! All paths around here have marauders??", beerNpc.portrait);
+            confirmed = false;
+            UIManager.Ins.WaitForConfirm(() => confirmed = true);
+            while (!confirmed) yield return null;
+
+            HeadBack();
+        }
+
+        //successfully found interaction to add bars to
+
+
+    }
+
+    public IEnumerator HandleTavernQuitButton()
+    {
+        Debug.Log("tavern quit");
+        yield return null;
+
+    }
+
+    public IEnumerator HeadBack()
+    {
+        bool confirmed = false;
 
         //heading back
         yield return StartCoroutine(UIManager.Ins.FadeOut());
@@ -185,10 +211,46 @@ public class GameManager : MonoBehaviour
         OnEnterExitCutscene?.Invoke(false);
     }
 
-    public IEnumerator HandleTavernQuitButton()
+    //generate number of bars the NPC adds to a space
+    int GenerateBars(BeerData beer)
     {
-        Debug.Log("tavern quit");
-        yield return null;
+        int bars = 0;
+        int roll = UnityEngine.Random.Range(1, 101);
+        int rapportTier = RapportManager.Ins.GetRapportLevel(beerNpc.name);
+        int rapportModifier = 0;
 
+        if (rapportTier == 1)
+            rapportModifier = 3;
+
+        if (rapportTier == 2)
+            rapportModifier = 8;
+
+        if (rapportTier == 1)
+            rapportModifier = 15;
+
+        if (rapportTier == 1)
+            rapportModifier = 25;
+
+        if (rapportTier == 6)
+            rapportModifier = 100;
+
+
+        roll = Mathf.Min(roll += rapportModifier, 100);
+
+
+        if (roll < 51)
+        {
+            bars = beer.baseBars;
+        }
+        else if (roll < 86)
+        {
+            bars = beer.midBars;
+        }
+        else
+        {
+            bars = beer.highBars;
+        }
+
+        return bars;
     }
 }

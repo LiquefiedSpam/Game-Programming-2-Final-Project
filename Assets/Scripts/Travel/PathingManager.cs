@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PathingManager : MonoBehaviour
 {
+    public static PathingManager Instance { get; private set; }
     [SerializeField] private GameObject signPrefab;
 
     [Header("Path Settings")]
@@ -11,6 +12,18 @@ public class PathingManager : MonoBehaviour
     private GameObject selectedPath;
 
     public bool HasSelectedPath => selectedPath != null;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     public void spawnSign()
     {

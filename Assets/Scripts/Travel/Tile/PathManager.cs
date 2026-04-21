@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PathManager : MonoBehaviour
 {
+
+    public static PathManager Ins { get; private set; }
     const float FADE_TIME = 0.4f;
 
     [SerializeField] AllTileData tilePrefabs;
@@ -22,6 +24,18 @@ public class PathManager : MonoBehaviour
     public Dictionary<Town, Dictionary<Town, PathTileInfo>> Tiles;
 
     public static Action<Town> OnTownChanged;
+
+    private void Awake()
+    {
+        if (Ins != null && Ins != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Ins = this;
+        }
+    }
 
     void Start()
     {
@@ -77,7 +91,8 @@ public class PathManager : MonoBehaviour
         DestroyCurrentTilesAfter(1f);
     }
 
-    public InteractionInfo GetRandomInteraction(Town town)
+    //returns a random neutral or positive interaction from the passed in town's path units.
+    public InteractionInfo? TryGetRandomInteraction(Town town)
     {
         List<TileInfo> allTiles = new();
 

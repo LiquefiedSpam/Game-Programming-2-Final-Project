@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MediumBeer
   m_EditorClassIdentifier: Assembly-CSharp::BeerData
   size: 1
-  baseLuck: 2
+  baseBars: 3
+  midBars: 3
+  highBars: 4
   price: 10

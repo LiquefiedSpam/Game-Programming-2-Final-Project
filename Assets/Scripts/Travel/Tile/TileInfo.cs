@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,19 +15,40 @@ public class TileInfo
         DownInteractionInfo = new();
     }
 
+    //try to get a random interaction below 60% chance.
     public bool TryAddRandomInteractionToList(ref List<InteractionInfo> list)
     {
-        if (Random.value < 0.5f)
+        bool success = false;
+
+        List<InteractionInfo> eligibleInteractions = new List<InteractionInfo>();
+        if (UpInteractionInfo.MarauderChance < 6)
+            eligibleInteractions.Add(UpInteractionInfo);
+
+        if (DownInteractionInfo != null)
         {
-            if (UpInteractionInfo == null) return false;
-            list.Add(UpInteractionInfo);
-            return true;
+            if (DownInteractionInfo.MarauderChance < 6)
+                eligibleInteractions.Add(DownInteractionInfo);
+        }
+
+        if (eligibleInteractions.Count == 0)
+            return success;
+
+        success = true;
+        if (eligibleInteractions.Count == 1)
+        {
+            list.Add(eligibleInteractions[0]);
         }
         else
         {
-            if (DownInteractionInfo == null) return false;
-            list.Add(DownInteractionInfo);
-            return true;
+            if (UnityEngine.Random.value < 0.5f)
+            {
+                list.Add(eligibleInteractions[0]);
+            }
+            else
+            {
+                list.Add(eligibleInteractions[1]);
+            }
         }
+        return success;
     }
 }
