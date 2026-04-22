@@ -21,4 +21,4 @@ MonoBehaviour:
   town2TargetPrice: 2
   town3TargetPrice: 6
   consumable: 1
-  healthIncrease: 1
+  healthIncrease: 15
