@@ -250,13 +250,12 @@ public class NpcBehavior : InteractableBehavior
 
     public override void TriggerIconPopAndShrink()
     {
-        if (interactableIcon != null)
-            bubbleScript.StartCoroutine(bubbleScript.PopAndShrink());
+        if (bubbleScript == null) return;
+
+        bubbleScript.StartCoroutine(bubbleScript.PopAndShrink());
 
         if (!bubbleScript.IsExhausted())
-        {
             bubbleScript.SpawnHeart();
-        }
     }
 
 
@@ -421,14 +420,14 @@ public class NpcBehavior : InteractableBehavior
 
     void EnterExitCutscene(bool enter)
     {
-        interactableIcon.SetActive(!enter);
+        if (interactableIcon != null)
+            interactableIcon.SetActive(!enter);
+
         CanInteract = !enter;
         inCutscene = enter;
 
         if (!enter)
-        {
             DefaultLocation();
-        }
     }
 
     public void SetLocation(Vector3 worldPos)

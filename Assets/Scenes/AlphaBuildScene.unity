@@ -18197,7 +18197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2183595934526927793, guid: b92d43d896b5fd343bf812a8357c6fb2, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6910511190419384875, guid: b92d43d896b5fd343bf812a8357c6fb2, type: 3}
       propertyPath: m_LocalScale.x
@@ -33808,6 +33808,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368888202}
   m_CullTransparentMesh: 1
+--- !u!1 &1373486271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8070824492932894856, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+  m_PrefabInstance: {fileID: 2036024690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1378489694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34235,6 +34240,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395095316}
   m_CullTransparentMesh: 1
+--- !u!1 &1395517530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1407903531721710635, guid: e316ed52736f1074db21723771287966, type: 3}
+  m_PrefabInstance: {fileID: 5176363016398281147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1397853867
 GameObject:
   m_ObjectHideFlags: 0
@@ -57980,9 +57990,46 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: dayDialogue
+      value: Sometimes I wish I had  sweat-wiping animation, because it's hot!
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: nightDialogue
+      value: Too late for the tavern, too early to sleep...
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: eveningDialogue
+      value: Finally, some nice, cool air...
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: morningDialogue
+      value: I'd say you're up when the rooster crows, but we don't have those around
+        here.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: interactableIcon
+      value: 
+      objectReference: {fileID: 1373486271}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: largeBeerDialogue
+      value: A large beer goes a large way!
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: smallBeerDialogue
+      value: A little beer goes a long way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: mediumBeerDialogue
+      value: A medium beer goes a medium way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
       propertyPath: normalDialogueSound
       value: 
       objectReference: {fileID: 8300000, guid: 5ae0ce9ddf2d16843995e686a311326c, type: 3}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: returnFromTavernDialogue
+      value: Man, I'm sloshed! Thanks, buddy!
+      objectReference: {fileID: 0}
     - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
       propertyPath: normalDialogueSound.Array.size
       value: 5
@@ -58007,6 +58054,14 @@ PrefabInstance:
       propertyPath: 'normalDialogueSound.Array.data[4]'
       value: 
       objectReference: {fileID: 8300000, guid: 8e105dd00f43fcc41aaec4558e1366dd, type: 3}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: overrides.Array.data[0].responseOverride
+      value: Really? Lil' ol me?
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: overrides.Array.data[1].responseOverride
+      value: Take care.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -71747,6 +71802,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 1040294351}
     m_Modifications:
     - target: {fileID: 2095636388795946848, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e69aed0b6801c3f4683b0efcf8dd4aac, type: 3}
+    - target: {fileID: 2095636388795946848, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: template
+      value: 
+      objectReference: {fileID: 11400000, guid: c8973d78af8c0d343b5e2721cad9eddf, type: 2}
+    - target: {fileID: 2095636388795946848, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: interactableIcon
+      value: 
+      objectReference: {fileID: 1395517530}
+    - target: {fileID: 2095636388795946848, guid: e316ed52736f1074db21723771287966, type: 3}
       propertyPath: normalDialogueSound
       value: 
       objectReference: {fileID: 8300000, guid: 5637a072c90c42e4fb948750e2def532, type: 3}
@@ -71778,9 +71845,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: T2Villager1
       objectReference: {fileID: 0}
+    - target: {fileID: 5366722203881687249, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.044
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366722203881687249, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.343
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366722203881687249, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.951
+      objectReference: {fileID: 0}
     - target: {fileID: 5735554110395065288, guid: e316ed52736f1074db21723771287966, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 149.46118
+      value: 151.2
       objectReference: {fileID: 0}
     - target: {fileID: 5735554110395065288, guid: e316ed52736f1074db21723771287966, type: 3}
       propertyPath: m_LocalPosition.y
@@ -71817,6 +71896,10 @@ PrefabInstance:
     - target: {fileID: 5735554110395065288, guid: e316ed52736f1074db21723771287966, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179000836803764402, guid: e316ed52736f1074db21723771287966, type: 3}
+      propertyPath: isSpecial
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
