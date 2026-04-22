@@ -19,7 +19,8 @@ public class MainMenuUI : MonoBehaviour
     {
         startButton.onClick.AddListener(StartGame);
         settingsButton.onClick.AddListener(ShowSettings);
-        volumeSlider.onValueChanged.AddListener(SetVolume);
+        volumeSlider.value = AudioManager.Instance.Volume;
+        volumeSlider.onValueChanged.AddListener(AudioManager.Instance.SetVolume);
         backButton.onClick.AddListener(ShowMenu);
 
         timePlayedText.text = SecondsToString(TimePlayedSaver.Instance.TimePlayed);
@@ -40,11 +41,6 @@ public class MainMenuUI : MonoBehaviour
     {
         menuParent.SetActive(false);
         settingsParent.SetActive(true);
-    }
-
-    void SetVolume(float value)
-    {
-        Data.Volume = value;
     }
 
     void OnDestroy()

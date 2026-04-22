@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
 
-        Data.Init();
-
         tavernPlayerSpawnPt = new Vector3(-75, 0, -75);
         tavernNpcSpawnPt = new Vector3(-74, 0, -75);
         playerPositionBeforeCutscene = Vector3.zero;

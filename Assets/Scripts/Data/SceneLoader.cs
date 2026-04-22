@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,15 +27,16 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        LoadSceneAsync(mainMenuSceneIdx);
+        _ = LoadSceneAsync(mainMenuSceneIdx);
     }
 
-    public void LoadGameplay()
+    public async void LoadGameplay()
     {
-        LoadSceneAsync(gameplaySceneIdx);
+        await LoadSceneAsync(gameplaySceneIdx);
+        Data.Init();
     }
 
-    async void LoadSceneAsync(int sceneIdx)
+    async Task LoadSceneAsync(int sceneIdx)
     {
         await SceneManager.LoadSceneAsync(sceneIdx);
     }

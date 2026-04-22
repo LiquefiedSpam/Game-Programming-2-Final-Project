@@ -40,6 +40,7 @@ public class TimePlayedSaver : MonoBehaviour
 
     void Start()
     {
+        SceneManager.sceneLoaded += (_, _) => Save();
         SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
