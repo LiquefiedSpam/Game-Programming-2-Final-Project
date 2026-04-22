@@ -1769,7 +1769,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4142873570693899844}
-  - component: {fileID: 6629381483209092790}
   m_Layer: 0
   m_Name: Choice
   m_TagString: InteractionZone
@@ -1792,21 +1791,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2174590721763434929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6629381483209092790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8411418483625146178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2320873016bad941a0befa5dac92470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PathingManager
-  signPrefab: {fileID: 0}
-  topPath: {fileID: 0}
-  bottomPath: {fileID: 0}
 --- !u!1 &8800871914684818064
 GameObject:
   m_ObjectHideFlags: 0

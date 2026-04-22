@@ -8,6 +8,10 @@ public class ChoiceTile : Tile
 
     public override async void TraverseTile(bool lastTile = false)
     {
+        if (choicePoint == null)
+            Debug.Log("point is null");
+
+
         await Data.MockPlayer.MoveTo(choicePoint.position);
 
         ChoiceResult choice = await TravelUIManager.Ins.AwaitChoiceResult(tileInfo.UpInteractionInfo, tileInfo.DownInteractionInfo);
