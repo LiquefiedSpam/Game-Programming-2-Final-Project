@@ -29254,8 +29254,6 @@ MonoBehaviour:
   slots:
   - item: {fileID: 11400000, guid: 5c3afa4f3321c4d50bfe5656dd1acbb1, type: 2}
     amount: 2
-  - item: {fileID: 11400000, guid: b0bccea4c80114c428e42d32e53225fe, type: 2}
-    amount: 3
 --- !u!1 &1040294350
 GameObject:
   m_ObjectHideFlags: 0
@@ -30223,6 +30221,8 @@ MonoBehaviour:
   slots:
   - item: {fileID: 11400000, guid: 909c462f088664d88bffaa44452f0bcb, type: 2}
     amount: 2
+  - item: {fileID: 11400000, guid: b0bccea4c80114c428e42d32e53225fe, type: 2}
+    amount: 3
 --- !u!1 &1096401006
 GameObject:
   m_ObjectHideFlags: 0
