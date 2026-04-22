@@ -66411,6 +66411,10 @@ PrefabInstance:
       propertyPath: travelSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2792232098977062575, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dccf8e44ede71db42b49378af93c5fb7, type: 2}
     - target: {fileID: 4056319078769105579, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
       propertyPath: m_Material
       value: 
