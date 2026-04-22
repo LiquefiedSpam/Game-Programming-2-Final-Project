@@ -1,9 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Diagnostics;
-using Unity.VisualScripting;
-
 
 //this is honestly more like 'Tavern Beer Event Manager' but like whatever that's for future me to fix
 //if I keep working on this
@@ -40,6 +37,9 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        Data.Init();
+
         tavernPlayerSpawnPt = new Vector3(-75, 0, -75);
         tavernNpcSpawnPt = new Vector3(-74, 0, -75);
         playerPositionBeforeCutscene = Vector3.zero;

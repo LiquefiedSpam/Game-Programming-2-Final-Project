@@ -3,6 +3,9 @@ using UnityEngine;
 
 public static class Data
 {
+    // PLAYER PREFS
+    public static float Volume = 1f;
+
     public static Vector2Int MarauderStealRange = new(1, 5); // max exclusive
     public static Dictionary<Town, Transform> TownTeleports;
     public static Dictionary<Town, PlayerStall> TownPlayerStalls;
@@ -24,8 +27,7 @@ public static class Data
         CurrentTown = currentTown;
     }
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    static void Init()
+    public static void Init()
     {
         CustomerReactions = Resources.Load<CustomerReactions>("CustomerReactions");
         TileDisplaySO = Resources.Load<TileDisplaySO>("TileDisplaySO");
