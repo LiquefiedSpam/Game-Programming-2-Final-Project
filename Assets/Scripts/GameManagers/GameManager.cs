@@ -8,10 +8,9 @@ public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private PlayerController player;
-    [SerializeField] Transform TavernPoint; // this should probably be folded into a town scriptable object / data,
-                                            //this is just here rn to continue my work
+    [SerializeField] private Sprite barNpcSprite;
 
-    //private Enum currentTownEnum;
+
     public static GameManager Ins => _instance;
     private static GameManager _instance;
     bool inCutscene = false;
@@ -110,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TavernInteraction()
     {
-        UIManager.Ins.ShowDialogue(false, beerNpc.name, "What'll it be?", null);
+        UIManager.Ins.ShowDialogue(false, "Bartender", "What'll it be?", barNpcSprite);
 
         bool playerConfirmed = false;
         UIManager.Ins.WaitForConfirm(() => playerConfirmed = true);
@@ -119,7 +118,7 @@ public class GameManager : MonoBehaviour
             yield return null;
 
         UIManager.Ins.CloseDialogue();
-        UIManager.Ins.EnableTavernUI(beerNpc.name);
+        UIManager.Ins.EnableTavernUI(beerNpc.NpcName);
     }
 
     //should be phased out to be a town member function or something
@@ -141,15 +140,25 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(UIManager.Ins.WaitForBeerButtonAnim());
         UIManager.Ins.HideBeerUI();
 
+        string beerDialogue = "";
+        if (beer.size == BeerSize.SMALL)
+            beerDialogue = beerNpc.smallBeerDialogue;
+
+        if (beer.size == BeerSize.MEDIUM)
+            beerDialogue = beerNpc.mediumBeerDialogue;
+
+        if (beer.size == BeerSize.LARGE)
+            beerDialogue = beerNpc.largeBeerDialogue;
+
         //show npc-specific beer dialogue
-        UIManager.Ins.ShowDialogue(true, beerNpc.name, beerNpc.largeBeerDialogue, beerNpc.portrait);
+        UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, beerDialogue, beerNpc.portrait);
 
         bool confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
         while (!confirmed) yield return null;
 
         //show generic follow-up dialogue
-        UIManager.Ins.ShowDialogue(true, beerNpc.name, "By the way, since you're a traveling merchant,"
+        UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, "By the way, since you're a traveling merchant,"
         + "I got some info on safe paths from this town!", beerNpc.portrait);
 
         numBars = GenerateBars(beer);
@@ -223,7 +232,7 @@ public class GameManager : MonoBehaviour
 
         // closing dialogue
         beerNpc.TurnAndTalk(player.transform.position);
-        UIManager.Ins.ShowDialogue(false, beerNpc.name, beerNpc.returnFromTavernDialogue, beerNpc.portrait);
+        UIManager.Ins.ShowDialogue(false, beerNpc.NpcName, beerNpc.returnFromTavernDialogue, beerNpc.portrait);
 
         confirmed = false;
         UIManager.Ins.WaitForConfirm(() => confirmed = true);
@@ -239,7 +248,7 @@ public class GameManager : MonoBehaviour
     {
         int bars = 0;
         int roll = UnityEngine.Random.Range(1, 101);
-        int rapportTier = RapportManager.Ins.GetRapportLevel(beerNpc.name);
+        int rapportTier = RapportManager.Ins.GetRapportLevel(beerNpc.NpcName);
         int rapportModifier = 0;
 
         if (rapportTier == 1)

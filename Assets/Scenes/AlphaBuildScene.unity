@@ -2697,6 +2697,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238963258}
   m_CullTransparentMesh: 1
+--- !u!1001 &240119174
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -74.88707
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.039999664
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -72.337746
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.038203906
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.010281351
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9987484
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.030599447
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -3.459
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 4855.579
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1.313
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
+      propertyPath: m_Name
+      value: Villager2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 158f726a51ee7f741aa83cd2d52d18cb, type: 3}
 --- !u!1 &241753821
 GameObject:
   m_ObjectHideFlags: 0
@@ -25538,7 +25595,7 @@ Transform:
   m_GameObject: {fileID: 793270372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -14.27, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26941,6 +26998,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2080083271}
     m_Modifications:
+    - target: {fileID: 1589867783064440438, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139320939125257079, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197481248338665867, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3786628569083960200, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4282887458101321194, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -27001,8 +27074,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tavern Building
       objectReference: {fileID: 0}
+    - target: {fileID: 4355523859894100229, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471917030086535118, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743812951376300821, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399193773898098040, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995450449917586182, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085430667507155646, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879256370793456248, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4696125395263044526, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 895146138109449441, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 6862311869757107439, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 8198266781561612829, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 8325139216822592808, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 4065345230495634364, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 4737929061645782659, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 8654463464235647229, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 1469378051298709267, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 8966779540324335506, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 219708162002518996, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 4751450180457375991, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
+    - {fileID: 5063554797282955132, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 412ff0b4a616c6247a1b63a1b53de912, type: 3}
@@ -28104,7 +28218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 645922491}
-  TavernPoint: {fileID: 1990785565}
+  barNpcSprite: {fileID: 21300000, guid: 6495d487ba8ef450caf11ef7620bff12, type: 3}
 --- !u!1 &1008345612
 GameObject:
   m_ObjectHideFlags: 0
@@ -29138,8 +29252,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStall
   slots:
-  - item: {fileID: 0}
-    amount: 0
+  - item: {fileID: 11400000, guid: 5c3afa4f3321c4d50bfe5656dd1acbb1, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: b0bccea4c80114c428e42d32e53225fe, type: 2}
+    amount: 3
 --- !u!1 &1040294350
 GameObject:
   m_ObjectHideFlags: 0
@@ -30105,10 +30221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MerchantStall
   slots:
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
+  - item: {fileID: 11400000, guid: 909c462f088664d88bffaa44452f0bcb, type: 2}
+    amount: 2
 --- !u!1 &1096401006
 GameObject:
   m_ObjectHideFlags: 0
@@ -31374,10 +31488,12 @@ MonoBehaviour:
     responseOverride: Woah! Am I even allowed to do that?
   - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
     responseOverride: Weeeee!
-  smallBeerDialogue: 
-  mediumBeerDialogue: 
-  largeBeerDialogue: 
-  returnFromTavernDialogue: 
+  smallBeerDialogue: That's some good-looking apple juice!
+  mediumBeerDialogue: Why is this apple juice all sparkly and foamy?
+  largeBeerDialogue: I don't know if I can even drink all this apple juice, but thanks,
+    Mister!
+  returnFromTavernDialogue: Why does that apple juice make me feel funny? I want
+    more now!
   normalDialogueSound:
   - {fileID: 8300000, guid: 5637a072c90c42e4fb948750e2def532, type: 3}
   - {fileID: 8300000, guid: ab8cba257ec5f8a4283f03bf8b723400, type: 3}
@@ -35818,9 +35934,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ad79ef358fc09d429e1ee9f92d36dc2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1505077917}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ad79ef358fc09d429e1ee9f92d36dc2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1505077918}
   m_SourcePrefab: {fileID: 100100000, guid: 8ad79ef358fc09d429e1ee9f92d36dc2, type: 3}
 --- !u!4 &1505077914 stripped
 Transform:
@@ -35848,22 +35961,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.5951962, y: 6.510357, z: 5.828974}
   m_Center: {x: -0.031975426, y: 1.5564169, z: 0.3372214}
---- !u!114 &1505077918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145067837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01daf6b754e4a4739ae47ce748c2e1cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MerchantBehavior
-  _hungerCost: 4
-  interactableIcon: {fileID: 0}
-  listings: {fileID: 0}
-  audioSource: {fileID: 1033369979}
 --- !u!1 &1510558510
 GameObject:
   m_ObjectHideFlags: 0
@@ -69309,6 +69406,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   _canvas: {fileID: 5545869862557040524}
   _menuController: {fileID: 4222079613350055880}
+  dialogueSounds:
+  - {fileID: 8300000, guid: 5637a072c90c42e4fb948750e2def532, type: 3}
+  - {fileID: 8300000, guid: ab8cba257ec5f8a4283f03bf8b723400, type: 3}
+  - {fileID: 8300000, guid: bef83ca4f36703949b75c3743800a8e0, type: 3}
+  - {fileID: 8300000, guid: 5ae0ce9ddf2d16843995e686a311326c, type: 3}
   _hungerSlider: {fileID: 798007436037417271}
   _moneyText: {fileID: 296349262}
   _signParent: {fileID: 3003023903587908063}
@@ -82800,3 +82902,4 @@ SceneRoots:
   - {fileID: 1005867644}
   - {fileID: 349971794}
   - {fileID: 2080083271}
+  - {fileID: 240119174}

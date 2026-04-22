@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem.Utilities;
 
 [RequireComponent(typeof(Animator))]
 
@@ -38,6 +39,8 @@ public class NpcBehavior : InteractableBehavior
     [SerializeField] private AudioClip shopDialogueSound;
     public override InteractableType Type => InteractableType.NPC;
     public static NpcBehavior InteractingWith;
+
+    public string NpcName => name;
 
     public bool CanInteract = true;
     float speed = 2f;
@@ -153,13 +156,13 @@ public class NpcBehavior : InteractableBehavior
             else
             {
                 UIManager.Ins.ShowDialogue(true, name, option.response, portrait);
-                UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
+                //UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
             }
         }
         else
         {
             UIManager.Ins.ShowDialogue(false, name, option.response, portrait);
-            UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
+            //UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
         }
 
         //outdated

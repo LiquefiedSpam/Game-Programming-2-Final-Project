@@ -15,6 +15,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Canvas _canvas;
     [SerializeField] DisplayController _menuController;
 
+    [Header("Dialogue Audio")]
+    [SerializeField] private AudioClip[] dialogueSounds = new AudioClip[4];
+
     [Header("Always Active")]
     [SerializeField] Slider _hungerSlider;
     [SerializeField] TextMeshProUGUI _moneyText;
@@ -178,6 +181,22 @@ public class UIManager : MonoBehaviour
         _dialogNameText.SetText(npcName);
         _dialogPortrait.sprite = portrait;
         continuePrompt.SetActive(cont);
+
+        PlayRandomDialogueSound();
+    }
+
+    void PlayRandomDialogueSound()
+    {
+        if (dialogueSounds == null || dialogueSounds.Length == 0) return;
+
+        AudioClip[] valid = System.Array.FindAll(dialogueSounds, c => c != null);
+        if (valid.Length == 0) return;
+
+        AudioClip clip = valid[UnityEngine.Random.Range(0, valid.Length)];
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.pitch = 3f;
+        audioSource.Play();
     }
 
     public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
