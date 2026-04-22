@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
         _playerInputController = GetComponent<PlayerInputController>();
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
+
+        Data.Player = this;
     }
 
     void Start()
