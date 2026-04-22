@@ -2292,6 +2292,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2.27
       objectReference: {fileID: 0}
+    - target: {fileID: 6881652759235002078, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7007993384510505287, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.72
@@ -4007,7 +4011,7 @@ Transform:
   - {fileID: 495679164}
   - {fileID: 1573601025}
   - {fileID: 1802835956}
-  - {fileID: 468504451}
+  - {fileID: 1692143255}
   - {fileID: 376749581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17735,6 +17739,37 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &630387991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630387992}
+  m_Layer: 0
+  m_Name: HeartSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &630387992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630387991}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -166.46329, y: 1.0895499, z: 1.9207771}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1692143255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &631955443
 GameObject:
   m_ObjectHideFlags: 0
@@ -35235,6 +35270,59 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8898202860750432285, guid: ceefa83373c68744e8a59deb67301dc5, type: 3}
+--- !u!1 &1453563379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5717599813586604853, guid: f7003003859c48947838466711ec439d, type: 3}
+  m_PrefabInstance: {fileID: 6650862775240822132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1453563383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453563379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1204cb198c937da4c9c8ae5554a70914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
+  _hungerCost: 0
+  interactableIcon: {fileID: 2138167269}
+  isMerchant: 0
+  merchantStall: {fileID: 0}
+  audioSource: {fileID: 0}
+  name: Beckindey
+  portrait: {fileID: 0}
+  morningDialogue: Back in my day, in order to get to school, we had to wake up 3
+    time units earlier than even this.
+  dayDialogue: Back in my day, there weren't any women. Still aren't.
+  eveningDialogue: Back in my day, we had to walk downhill both ways to the market
+    and back. We were extremely lazy.
+  nightDialogue: Back in my day, I wouldn't be up at this hour, but I developed old
+    man insomnia.
+  template: {fileID: 11400000, guid: c8973d78af8c0d343b5e2721cad9eddf, type: 2}
+  overrides:
+  - definition: {fileID: 11400000, guid: 12e3962eca40d1a4c8eec9d46806f104, type: 2}
+    responseOverride: Back in my day, I'd hit the tavern every night!
+  - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
+    responseOverride: Back in my day, fellas actually stopped to chat for longern'
+      that.
+  smallBeerDialogue: Back in my day, I got bullied for always choosin' the small
+    beer.
+  mediumBeerDialogue: Back in my day, the beer here was worse. So it's actually good
+    now.
+  largeBeerDialogue: Back in my day, you could buy a large beer for the price of
+    a small one.
+  returnFromTavernDialogue: Back in my day, I would've said thank you. And I still
+    do-- thank you!
+  normalDialogueSound:
+  - {fileID: 8300000, guid: ab8cba257ec5f8a4283f03bf8b723400, type: 3}
+  - {fileID: 8300000, guid: bef83ca4f36703949b75c3743800a8e0, type: 3}
+  - {fileID: 8300000, guid: 5ae0ce9ddf2d16843995e686a311326c, type: 3}
+  - {fileID: 8300000, guid: 8e105dd00f43fcc41aaec4558e1366dd, type: 3}
+  shopDialogueSound: {fileID: 0}
+  CanInteract: 1
 --- !u!1 &1465757015
 GameObject:
   m_ObjectHideFlags: 0
@@ -35712,6 +35800,59 @@ Transform:
   - {fileID: 1555428029}
   m_Father: {fileID: 635993637}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &1522676835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 767065701434586165, guid: 6047c27946dc85c47860e7d05a367418, type: 3}
+  m_PrefabInstance: {fileID: 5725032268172024814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1522676839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522676835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1204cb198c937da4c9c8ae5554a70914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcBehavior
+  _hungerCost: 0
+  interactableIcon: {fileID: 2138167269}
+  isMerchant: 0
+  merchantStall: {fileID: 0}
+  audioSource: {fileID: 0}
+  name: Beckindey
+  portrait: {fileID: 0}
+  morningDialogue: Back in my day, in order to get to school, we had to wake up 3
+    time units earlier than even this.
+  dayDialogue: Back in my day, there weren't any women. Still aren't.
+  eveningDialogue: Back in my day, we had to walk downhill both ways to the market
+    and back. We were extremely lazy.
+  nightDialogue: Back in my day, I wouldn't be up at this hour, but I developed old
+    man insomnia.
+  template: {fileID: 11400000, guid: c8973d78af8c0d343b5e2721cad9eddf, type: 2}
+  overrides:
+  - definition: {fileID: 11400000, guid: 12e3962eca40d1a4c8eec9d46806f104, type: 2}
+    responseOverride: Back in my day, I'd hit the tavern every night!
+  - definition: {fileID: 11400000, guid: c598a0568cfa89f44aa1788ffadc37d4, type: 2}
+    responseOverride: Back in my day, fellas actually stopped to chat for longern'
+      that.
+  smallBeerDialogue: Back in my day, I got bullied for always choosin' the small
+    beer.
+  mediumBeerDialogue: Back in my day, the beer here was worse. So it's actually good
+    now.
+  largeBeerDialogue: Back in my day, you could buy a large beer for the price of
+    a small one.
+  returnFromTavernDialogue: Back in my day, I would've said thank you. And I still
+    do-- thank you!
+  normalDialogueSound:
+  - {fileID: 8300000, guid: ab8cba257ec5f8a4283f03bf8b723400, type: 3}
+  - {fileID: 8300000, guid: bef83ca4f36703949b75c3743800a8e0, type: 3}
+  - {fileID: 8300000, guid: 5ae0ce9ddf2d16843995e686a311326c, type: 3}
+  - {fileID: 8300000, guid: 8e105dd00f43fcc41aaec4558e1366dd, type: 3}
+  shopDialogueSound: {fileID: 0}
+  CanInteract: 1
 --- !u!1001 &1524270016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37582,6 +37723,81 @@ Transform:
   - {fileID: 1924456443}
   m_Father: {fileID: 304255955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1575903274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1575903275}
+  - component: {fileID: 1575903277}
+  - component: {fileID: 1575903276}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1575903275
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575903274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2138167270}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1575903276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575903274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 28f0c6e5accef6c48b632a9aa9fb5163, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1575903277
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575903274}
+  m_CullTransparentMesh: 1
 --- !u!1 &1577964252
 GameObject:
   m_ObjectHideFlags: 0
@@ -43305,6 +43521,40 @@ Transform:
   - {fileID: 916122564}
   - {fileID: 1524270017}
   - {fileID: 580421497}
+  m_Father: {fileID: 304255955}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1692143254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1692143255}
+  m_Layer: 0
+  m_Name: T3Villager1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1692143255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692143254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2138167270}
+  - {fileID: 630387992}
+  - {fileID: 468504451}
   m_Father: {fileID: 304255955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1695205305
@@ -57985,6 +58235,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8666152111047941317, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
       propertyPath: _hungerCost
       value: 2
@@ -59225,6 +59479,125 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!1 &2138167269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138167270}
+  - component: {fileID: 2138167274}
+  - component: {fileID: 2138167273}
+  - component: {fileID: 2138167272}
+  - component: {fileID: 2138167271}
+  m_Layer: 0
+  m_Name: Bubble
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2138167270
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138167269}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.378}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1575903275}
+  m_Father: {fileID: 1692143255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -166.46, y: 1.98}
+  m_SizeDelta: {x: 1196.25, y: 344.75012}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2138167271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138167269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b949d06cf0f4549ad4fc3f6f0848b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleScript
+  bubble: {fileID: 1575903276}
+  heartPrefab: {fileID: 2946165384501945219, guid: 17635b7c4e3ca644bbfbd965854a189c, type: 3}
+  heartSpawnPoint: {fileID: 630387992}
+  isSpecial: 0
+--- !u!114 &2138167272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138167269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2138167273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138167269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!223 &2138167274
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138167269}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1001 &2139089442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67162,6 +67535,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8666152111047941317, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
       propertyPath: _hungerCost
       value: 50
@@ -70573,6 +70950,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6881652759235002078, guid: c522bf9fa3f2d0e4ea24a68341e2790c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -73364,10 +73745,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: T3Villager2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5411534706065438321, guid: 6047c27946dc85c47860e7d05a367418, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 767065701434586165, guid: 6047c27946dc85c47860e7d05a367418, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1522676839}
   m_SourcePrefab: {fileID: 100100000, guid: 6047c27946dc85c47860e7d05a367418, type: 3}
 --- !u!1001 &5727336324175227977
 PrefabInstance:
@@ -75934,7 +76319,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 304255955}
+    m_TransformParent: {fileID: 1692143255}
     m_Modifications:
     - target: {fileID: 4905315066902677903, guid: f7003003859c48947838466711ec439d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -75980,10 +76365,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: T3Villager1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6261505831060009460, guid: f7003003859c48947838466711ec439d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5717599813586604853, guid: f7003003859c48947838466711ec439d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1453563383}
   m_SourcePrefab: {fileID: 100100000, guid: f7003003859c48947838466711ec439d, type: 3}
 --- !u!4 &6657649579432332955
 Transform:
