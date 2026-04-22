@@ -68022,6 +68022,26 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: dayDialogue
+      value: I heard you can press 'tab' to open your inventory, and 'm' to open
+        your map. Handy, huh?
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: nightDialogue
+      value: The first time you talk to people like us each day, the more rapport
+        we build with you. The more rapport, the better the beer tips!
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: eveningDialogue
+      value: When it feels like marauders are everywhere, prepare your inventory
+        to account for it.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
+      propertyPath: morningDialogue
+      value: Each day, there's a compounding chance of marauders moving to new locations.
+        It should be reflected in that map of yours.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175971039499846390, guid: 13335ad6eae73e648b900d21073f196e, type: 3}
       propertyPath: interactableIcon
       value: 
       objectReference: {fileID: 131466760}
