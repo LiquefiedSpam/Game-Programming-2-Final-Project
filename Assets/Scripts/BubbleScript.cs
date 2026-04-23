@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEditor.UI;
 
 public class BubbleScript : MonoBehaviour
 {
