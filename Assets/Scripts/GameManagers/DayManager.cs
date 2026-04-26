@@ -18,6 +18,7 @@ public class DayManager : MonoBehaviour
     public event Action OnTimeChanged; //for things that just need to know time has changed
     public event Action<int> OnUnitsConsumed; //for things that need to know amount of units that elapsed
     public Action OnDayChanged;
+    public Action<bool, int> OnTimeUnitPreview; // bool is if we are entering or exiting preview, and int is number of units to preview
 
     public DayInterval DayInterval => dayInterval;
     public int UnitsPerInterval => unitsPerInterval;
@@ -90,6 +91,11 @@ public class DayManager : MonoBehaviour
             OnTimeChanged?.Invoke();
             OnUnitsConsumed?.Invoke(unitsToConsume);
         }
+    }
+
+    public void PreviewUnit(bool toPreview, int unitsToPreview)
+    {
+        OnTimeUnitPreview?.Invoke(toPreview, unitsToPreview);
     }
 
     //for debugging

@@ -66,4 +66,25 @@ public static class UIAnimations
 
         Object.Destroy(sprite.gameObject);
     }
+
+    public static IEnumerator LerpAlpha(Image img, float fromAlpha = 1, float toAlpha = 0, float duration = 1)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            Color c = img.color;
+            c.a = Mathf.Lerp(fromAlpha, toAlpha, t);
+            img.color = c;
+
+            yield return null;
+        }
+
+        Color final = img.color;
+        final.a = toAlpha;
+        img.color = final;
+    }
 }

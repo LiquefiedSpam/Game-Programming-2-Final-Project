@@ -27,11 +27,12 @@ public class InteractableMonitor : MonoBehaviour
         {
             if (Interactable != interactable)
             {
-                if (Interactable != null && Interactable.interactableIcon != null)
-                {
-                    Interactable.TriggerIconExpand(false);
-                }
+                // if (Interactable != null && Interactable.interactableIcon != null)
+                // {
+                //     Interactable.TriggerIconExpand(false);
+                // }
                 Interactable = interactable;
+                DayManager.Ins.PreviewUnit(true, 1);
 
                 if (Interactable.interactableIcon != null)
                 {
@@ -55,16 +56,11 @@ public class InteractableMonitor : MonoBehaviour
             }
 
             if (!interactable == Interactable) return;
-            if (Interacting)
-            {
-                Interacting = false;
-                if (!interactable.InCutscene)
-                    Interactable.Quit();
-            }
             else
             {
                 if (Interactable.interactableIcon != null)
                     Interactable.TriggerIconExpand(false);
+                DayManager.Ins.PreviewUnit(false, 1);
             }
             Interactable = null;
         }
