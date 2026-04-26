@@ -124,13 +124,13 @@ public class TimeUIManager : MonoBehaviour
 
     IEnumerator PreviewCoroutine()
     {
-
+        yield return UIAnimations.LerpAlpha(middleTimeSliderFill, 1, .8f, .2f);
         while (true)
         {
             // Fade out
-            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, 1, .3f, .8f);
+            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, .8f, .1f, .8f);
             // Fade in
-            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, .3f, 1, .8f);
+            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, .1f, .8f, .8f);
 
             yield return new WaitForSeconds(.3f);
         }
