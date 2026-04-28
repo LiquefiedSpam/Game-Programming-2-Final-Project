@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 public class TimeUIManager : MonoBehaviour
 {
@@ -31,46 +32,46 @@ public class TimeUIManager : MonoBehaviour
 
     //UnitsPerInterval * timeUnitInternalMultiplier = the internal number on the slider's slider fill. Used to make
     //smooth lerp transitions from one unit to another.
-    private int timeUnitInternalMultiplier = 1;
+    private int timeUnitInternalMultiplier = 100;
     //public int TimeUnitInternalMultiplier => timeUnitInternalMultiplier;
 
     private Color backTimeSliderDefaultColor = Color.red;
-    private Color frontTimeSliderDefaultColor;
-    private Vector3 timeSliderRootDefaultScale;
-    float timeSliderRootExpandSize;
+    private Vector3 timeSliderRootDefaultScale = Vector3.one;
+    float timeSliderRootExpandSize = 1.05f;
 
     private Coroutine previewCoroutine;
+    private Action<bool, int> _previewRefreshHandler;
 
 
     private void Start()
     {
         DayManager.Ins.OnTimeChanged += Refresh;
-        DayManager.Ins.OnTimeUnitPreview += Refresh;
-        lastInterval = DayManager.Ins.DayInterval;
-        timeIcon.SetSprite(GetCorrectSprite());
-        timeSliderRootDefaultScale = timeSliderRoot.transform.localScale;
-        timeSliderRootExpandSize = 1.05f;
+        _previewRefreshHandler = (enterPreview, units) => Refresh(enterPreview, units);
+        DayManager.Ins.OnTimeUnitPreview += _previewRefreshHandler;
     }
 
     private void OnDestroy()
     {
         if (DayManager.Ins != null)
+        {
             DayManager.Ins.OnTimeChanged -= Refresh;
+            DayManager.Ins.OnTimeUnitPreview -= _previewRefreshHandler;
+        }
     }
 
 
     //refresh the UI to reflect current static state.
     private void Refresh()
     {
-        frontTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval;
-        frontTimeSlider.value = DayManager.Ins.Units;
+        frontTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
+        frontTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
         unitsText.text = DayManager.Ins.Units.ToString();
 
-        backTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval;
-        backTimeSlider.value = DayManager.Ins.Units;
+        backTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
+        backTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
 
-        middleTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval;
-        middleTimeSlider.value = DayManager.Ins.Units;
+        middleTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
+        middleTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
 
         if (DayManager.Ins.DayInterval != lastInterval)
         {
@@ -85,6 +86,7 @@ public class TimeUIManager : MonoBehaviour
     //--unitsToPreview: optionally put this in if you want to show how many time units the action will consume.
     private void Refresh(bool enterPreview, int unitsToPreview = 0)
     {
+        Debug.Log("refresh being called");
         if (!enterPreview)
         {
             StopPreview();
@@ -93,10 +95,12 @@ public class TimeUIManager : MonoBehaviour
         }
         else
         {
+            Debug.Log(unitsToPreview);
             //return if this call is redundant
             if (previewCoroutine != null)
                 return;
 
+            Refresh();
             frontTimeSlider.value =
             TUTointernalInt(DayManager.Ins.Units - unitsToPreview); //will handle cases for when it's below 0 later
 
@@ -115,7 +119,8 @@ public class TimeUIManager : MonoBehaviour
 
     private void StartPreviewCoroutine()
     {
-        Debug.Log("got here");
+        Debug.Log($"Default scale: {timeSliderRootDefaultScale}, Target: {timeSliderRootDefaultScale * timeSliderRootExpandSize}");
+        Debug.Log($"Current scale before anim: {timeSliderRoot.transform.localScale}");
         StartCoroutine(UIAnimations.ScaleTo(timeSliderRoot.transform,
         timeSliderRootDefaultScale * timeSliderRootExpandSize, .1f));
         if (previewCoroutine != null) StopCoroutine(previewCoroutine);
@@ -138,6 +143,7 @@ public class TimeUIManager : MonoBehaviour
 
     public void StopPreview()
     {
+        Debug.Log($"StopPreview called, scaling back to: {timeSliderRootDefaultScale}");
         if (previewCoroutine != null)
         {
             StopCoroutine(previewCoroutine);

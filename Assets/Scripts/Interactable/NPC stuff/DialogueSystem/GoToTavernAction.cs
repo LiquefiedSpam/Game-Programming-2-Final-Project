@@ -7,6 +7,5 @@ public class GoToTavernAction : DialogueOptionAction
     {
         Debug.Log("Moving NPC + player to tavern");
 
-        // your teleport / scene / cutscene logic here
     }
 }

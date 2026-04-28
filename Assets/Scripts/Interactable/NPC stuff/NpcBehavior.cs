@@ -272,7 +272,6 @@ public class NpcBehavior : InteractableBehavior
         if (overrides == null)
             overrides = new List<DialogueTextOverride>();
 
-        // Add missing entries from template
         foreach (var def in template.options)
         {
             if (!HasOverride(def))

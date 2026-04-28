@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed;
     private Animator animator;
 
-    private PlayerInputController _playerInputController;
+    private PlayerInteractionManager _playerInputController;
 
     [SerializeField] private bool _canMove = true;
 
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        _playerInputController = GetComponent<PlayerInputController>();
+        _playerInputController = GetComponent<PlayerInteractionManager>();
         InteractableBehavior.OnInteract += Interact;
         InteractableBehavior.OnEndInteract += EndInteract;
 

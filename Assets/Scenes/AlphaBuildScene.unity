@@ -19651,10 +19651,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5107db1373f5ee847b50c8c05717dde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!114 &645922493 stripped
+--- !u!114 &645922499
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8998212127606360373, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
-  m_PrefabInstance: {fileID: 2057660965628067608}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645922489}
   m_Enabled: 1
@@ -19662,6 +19663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2193fbb8951381542bd3acda32ac4816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  _interactableMonitor: {fileID: 493162263250450632}
 --- !u!1 &648310297
 GameObject:
   m_ObjectHideFlags: 0
@@ -20778,11 +20780,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733682076}
   m_CullTransparentMesh: 1
---- !u!224 &734154776 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6735684194013422208, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
-  m_PrefabInstance: {fileID: 1567176559}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &740431944
 GameObject:
   m_ObjectHideFlags: 0
@@ -40520,6 +40517,14 @@ PrefabInstance:
     - target: {fileID: 6089038673814205441, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6735684194013422208, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6735684194013422208, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7410853803616229747, guid: 47dbc63f8dcf84ac99e7b8e58277da88, type: 3}
       propertyPath: m_Pivot.x
@@ -68550,7 +68555,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
-  m_FillRect: {fileID: 734154776}
+  m_FillRect: {fileID: 2776240427403424732}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
@@ -68749,10 +68754,14 @@ PrefabInstance:
       propertyPath: _interactableMonitor
       value: 
       objectReference: {fileID: 493162263250450632}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8998212127606360373, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 818205386562254276, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 645922499}
   m_SourcePrefab: {fileID: 100100000, guid: 417ca6785abda5f48a47d7304311d525, type: 3}
 --- !u!1001 &2058601977315976315
 PrefabInstance:
@@ -69893,7 +69902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2533204035281233597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70589,7 +70598,7 @@ RectTransform:
   m_Father: {fileID: 2431543642323711811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -74040,7 +74049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6bb4591a820c3469923a2a0ad94aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuController
-  playerInputController: {fileID: 645922493}
+  playerInputController: {fileID: 0}
   menuAction: {fileID: 2025430264}
   mapAction: {fileID: 2003772141}
   inventoryDisplay: {fileID: 2467217195723317941}
@@ -81578,8 +81587,8 @@ RectTransform:
   - {fileID: 4787170919937506231}
   m_Father: {fileID: 7196884792182258662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 686.6666, y: -75}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}

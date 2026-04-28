@@ -1,25 +1,30 @@
 using UnityEngine;
 using System;
 
+//Monitor collider is a proximity controller used to check if the player is in reach of any 
+//InteractableBehavior, and fires appropriate Actions.
 [RequireComponent(typeof(Collider))]
 public class InteractableMonitor : MonoBehaviour
 {
     public InteractableBehavior Interactable { get; private set; }
-    public bool Interacting { get; private set; }
-    public void SetInteracting(bool interacting)
-    {
-        if (Interactable == null || Interactable.Instant)
-        {
-            Interacting = false;
-            return;
-        }
+    public Action<InteractableBehavior> OnInteractableEntered;
+    public Action<InteractableBehavior> OnInteractableExited;
 
-        if (Interactable.interactableIcon != null && Interactable.interactableIcon.activeInHierarchy && interacting == true)
-            Interactable.TriggerIconPopAndShrink();
+    // public void SetInteracting(bool interacting)
+    // {
+    //     if (Interactable == null || Interactable.Instant)
+    //     {
+    //         interacting = false;
+    //         return;
+    //     }
 
-        Interacting = interacting;
-    }
+    //     if (Interactable.interactableIcon != null && Interactable.interactableIcon.activeInHierarchy && interacting == true)
+    //         Interactable.TriggerIconPopAndShrink();
 
+    //     interacting = interacting;
+    // }
+
+    //Fire OnInteractableEntered if we don't already have an interactable present
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Interactable")) return;
@@ -27,41 +32,36 @@ public class InteractableMonitor : MonoBehaviour
         {
             if (Interactable != interactable)
             {
-                // if (Interactable != null && Interactable.interactableIcon != null)
-                // {
-                //     Interactable.TriggerIconExpand(false);
-                // }
                 Interactable = interactable;
-                DayManager.Ins.PreviewUnit(true, 1);
+                OnInteractableEntered?.Invoke(interactable);
+                //DayManager.Ins.PreviewUnit(true, 1);
 
-                if (Interactable.interactableIcon != null)
-                {
-                    Interactable.TriggerIconExpand(true);
-                }
+                // if (Interactable.interactableIcon != null)
+                // {
+                //     Interactable.TriggerIconExpand(true);
+                // }
             }
         }
     }
 
+    //If exiting InteractableBehavior is the one we are interacting with, fire 
+    //OnInteractableExited
     void OnTriggerExit(Collider other)
     {
-        UIManager.Ins.Confirm();
         if (!other.CompareTag("Interactable")) return;
-        if (other.TryGetComponent<InteractableBehavior>(out var interactable))
+        if (other.TryGetComponent<InteractableBehavior>(out var leavingInteractable))
         {
-            if (Interacting)
-            {
-                Interacting = false;
-                Debug.Log($"OnTriggerExit Quit — inCutscene: {interactable.InCutscene}");
-                Interactable.Quit();
-            }
+            // if (interacting)
+            // {
+            //     interacting = false;
+            //     Interactable.Quit();
+            // }
 
-            if (!interactable == Interactable) return;
-            else
-            {
-                if (Interactable.interactableIcon != null)
-                    Interactable.TriggerIconExpand(false);
-                DayManager.Ins.PreviewUnit(false, 1);
-            }
+            if (leavingInteractable != Interactable) return;
+            OnInteractableExited?.Invoke(leavingInteractable);
+            // if (Interactable.interactableIcon != null)
+            //     Interactable.TriggerIconExpand(false);
+            // DayManager.Ins.PreviewUnit(false, 1);
             Interactable = null;
         }
     }

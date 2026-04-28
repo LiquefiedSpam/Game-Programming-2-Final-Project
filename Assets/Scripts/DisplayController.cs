@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class DisplayController : MonoBehaviour
 {
-    [SerializeField] PlayerInputController playerInputController;
+    [SerializeField] PlayerInteractionManager playerInputController;
     [SerializeField] private InputActionReference menuAction;
     [SerializeField] private InputActionReference mapAction;
     [SerializeField] InventoryDisplayManager inventoryDisplay;

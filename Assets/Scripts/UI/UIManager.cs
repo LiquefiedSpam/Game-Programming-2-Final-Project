@@ -92,6 +92,7 @@ public class UIManager : MonoBehaviour
 
     public Action OnDisplayBlocksOthers;
     Action _onConfirm;
+    public bool HasPendingConfirm => _onConfirm != null;
 
     Coroutine statusFadeOutRoutine;
 
@@ -131,11 +132,6 @@ public class UIManager : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    void Update()
-    {
-        if (_onConfirm != null && Keyboard.current.eKey.wasPressedThisFrame)
-            Confirm();
-    }
 
 
     void OnDestroy()
