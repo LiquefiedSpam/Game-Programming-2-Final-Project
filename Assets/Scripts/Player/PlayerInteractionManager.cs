@@ -1,81 +1,49 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
-    [SerializeField] private InteractableMonitor _interactableMonitor;
+    [SerializeField] private InputActionReference _mapAction;
+    [SerializeField] private InputActionReference _inventoryAction;
 
     public Vector2 MovementInputVector { get; private set; }
     public Action OnPlayerMove;
 
-    private bool _interacting;
+    private PlayerState _currentState;
 
     private void Start()
     {
-        _interactableMonitor.OnInteractableEntered += HandleInteractableEntered;
-        _interactableMonitor.OnInteractableExited += HandleInteractableExited;
+        InteractableMonitor.Ins.OnInteractableEntered += HandleInteractableEntered;
+        InteractableMonitor.Ins.OnInteractableExited += HandleInteractableExited;
+        TransitionTo(new IdleState(this));
     }
 
     private void OnDestroy()
     {
-        _interactableMonitor.OnInteractableEntered -= HandleInteractableEntered;
-        _interactableMonitor.OnInteractableExited -= HandleInteractableExited;
+        InteractableMonitor.Ins.OnInteractableEntered -= HandleInteractableEntered;
+        InteractableMonitor.Ins.OnInteractableExited -= HandleInteractableExited;
     }
 
-    private void HandleInteractableEntered(InteractableBehavior interactable)
+    public void TransitionTo(PlayerState newState)
     {
-        DayManager.Ins.PreviewUnit(true, 1);
+        Debug.Log("transitioning to " + newState);
+        _currentState?.Exit();
+        _currentState = newState;
+        _currentState.Enter();
     }
 
-    private void HandleInteractableExited(InteractableBehavior interactable)
-    {
-        DayManager.Ins.PreviewUnit(false, 0);
-        if (_interacting)
-        {
-            _interacting = false;
-            interactable.Quit();
-        }
-    }
+    private void OnInteract() => _currentState?.OnInteract();
 
-    private void OnMove(InputValue inputValue)
+    private void HandleInteractableEntered(InteractableBehavior i) => _currentState?.OnInteractableEntered(i);
+    private void HandleInteractableExited(InteractableBehavior i) => _currentState?.OnInteractableExited(i);
+
+    private void OnMove(InputValue v)
     {
-        MovementInputVector = inputValue.Get<Vector2>();
+        var input = (_currentState != null && _currentState.CanMove) ? v.Get<Vector2>() : Vector2.zero;
+        _currentState?.OnMove(input);
+        MovementInputVector = input;
         OnPlayerMove?.Invoke();
-    }
-
-    private void OnInteract()
-    {
-        if (UIManager.Ins.HasPendingConfirm)
-        {
-            UIManager.Ins.Confirm();
-            return;
-        }
-
-        InteractableBehavior interactable = _interactableMonitor.Interactable;
-
-        if (_interacting)
-        {
-            _interacting = false;
-            interactable.Quit();
-            if (_interactableMonitor.Interactable != null)
-                DayManager.Ins.PreviewUnit(true, 1);
-            return;
-        }
-
-        if (interactable == null) return;
-
-        if (interactable.Instant)
-        {
-            interactable.Interact();
-            return;
-        }
-
-        _interacting = true;
-        if (interactable.Type == InteractableType.DIALOG || interactable.Type == InteractableType.NPC)
-            interactable.Interact(this.transform.position);
-        else
-            interactable.Interact();
     }
 
     public void ResetMovement()

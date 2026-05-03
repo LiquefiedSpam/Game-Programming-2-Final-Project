@@ -23,16 +23,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject _signParent;
     [SerializeField] TextMeshProUGUI _signText;
 
-    [Header("Dialog")]
-    [SerializeField] GameObject _dialogParent;
-    [SerializeField] TextMeshProUGUI _dialogText;
-    [SerializeField] TextMeshProUGUI _dialogNameText;
-    [SerializeField] Image _dialogPortrait;
-    [SerializeField] Transform optionsContainer;
-    [SerializeField] GameObject optionButtonPrefab;
-    [SerializeField] GameObject continuePrompt;
-    [SerializeField] TextMeshProUGUI continuePromptText;
-
     [Header("Transition")]
     [SerializeField] Image transitionImage;
     [SerializeField] float transitionTime;
@@ -77,25 +67,21 @@ public class UIManager : MonoBehaviour
     [Header("Misc")]
     [SerializeField] private TextMeshProUGUI errorMsgPrefab;
 
-    AudioSource audioSource;
+    private AudioSource audioSource;
+    private Coroutine statusFadeOutRoutine;
 
     public bool Visible => _canvas.gameObject.activeInHierarchy;
     public bool Transitioning { get; private set; } = false;
 
-    public bool DisplayBlocksOthers => // cannot open inventory if true
-        _dialogParent.activeInHierarchy
-        || _signParent.activeInHierarchy
+    public bool DisplayBlocksOthers =>
+        _signParent.activeInHierarchy
+        || DialogueUIManager.Ins.IsVisible
         || Transitioning;
 
     public static UIManager Ins => _instance;
     private static UIManager _instance;
 
     public Action OnDisplayBlocksOthers;
-    Action _onConfirm;
-    public bool HasPendingConfirm => _onConfirm != null;
-
-    Coroutine statusFadeOutRoutine;
-
 
     void Awake()
     {
@@ -105,34 +91,26 @@ public class UIManager : MonoBehaviour
             Destroy(this);
             return;
         }
-        else
-        {
-            _instance = this;
-        }
+        _instance = this;
     }
 
     void Start()
     {
-        _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
-        _hungerSlider.value = PlayerController.MAX_HUNGER;
+        // _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
+        // _hungerSlider.value = PlayerController.MAX_HUNGER;
+
         if (tavernUI.activeSelf)
             tavernUI.SetActive(false);
 
         InventoryDisplayManager.Ins.OnStallUIShown += HandleStallUIShown;
-        //UpdateMapUIWood(Random.Range(1, 5), Random.Range(0, 1f), Random.Range(1, 5), Random.Range(0, 1f));
 
         smallBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.SMALL])));
         mediumBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.MEDIUM])));
         largeBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.LARGE])));
         tavernQuitButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleTavernQuitButton()));
 
-        // townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
-        // townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
-
-        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
-
-
 
     void OnDestroy()
     {
@@ -164,227 +142,11 @@ public class UIManager : MonoBehaviour
         _signParent.SetActive(show);
     }
 
-    public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
-    Sprite portrait = null)
-    {
-        OnDisplayBlocksOthers?.Invoke();
-        ClearOptions();
-        _dialogParent.SetActive(true);
-        _dialogText.SetText(dialog);
-        _dialogNameText.SetText(npcName);
-        _dialogPortrait.sprite = portrait;
-        continuePrompt.SetActive(cont);
-
-        PlayRandomDialogueSound();
-    }
-
-    void PlayRandomDialogueSound()
-    {
-        if (dialogueSounds == null || dialogueSounds.Length == 0) return;
-
-        AudioClip[] valid = System.Array.FindAll(dialogueSounds, c => c != null);
-        if (valid.Length == 0) return;
-
-        AudioClip clip = valid[UnityEngine.Random.Range(0, valid.Length)];
-        audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.pitch = 3f;
-        audioSource.Play();
-    }
-
-    public void ShowDialogue(bool cont, string npcName = "Name", string dialog = "Dialog",
-                             Sprite portrait = null, List<DialogueOptionInstance> options = null)
-    {
-        ShowDialogue(cont, npcName, dialog, portrait);
-        continuePrompt.SetActive(false);
-
-        if (options != null)
-            foreach (var opt in options)
-                SpawnOptionButton(opt);
-    }
-
-    public void CloseDialogue()
-    {
-        ClearOptions();
-        _dialogParent.SetActive(false);
-    }
-
-    public void ShowResponse(string response)
-    {
-        _dialogText.text = response;
-        ClearOptions(); // hide options while response is shown
-    }
-
-    void SpawnOptionButton(DialogueOptionInstance opt)
-    {
-        var go = Instantiate(optionButtonPrefab, optionsContainer);
-        go.GetComponentInChildren<TMP_Text>().text = opt.definition.label.ToString();
-        go.GetComponent<Button>().onClick.AddListener(() =>
-            NpcBehavior.InteractingWith?.HandleOptionSelected(opt));
-    }
-
-    void ClearOptions()
-    {
-        foreach (Transform child in optionsContainer)
-            Destroy(child.gameObject);
-    }
-
-    //public void UpdateMapUIWood(float woodToSandDangerLevel, float woodToSandChance, float woodToStoneDangerLevel, float woodToStoneChance)
-    //{
-    //    mapImage.sprite = woodMap;
-    //    woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
-    //    woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
-    //    woodToSandUI.enabled = true;
-    //    woodToStoneUI.enabled = true;
-    //    sandToStoneUI.enabled = false;
-    //}
-
-    //public void UpdateMapUIStone(float woodToStoneDangerLevel, float woodToStoneChance, float sandToStoneDangerLevel, float sandToStoneChance)
-    //{
-    //    mapImage.sprite = stoneMap;
-    //    woodToStoneUI.text = $"Danger Level: {woodToStoneDangerLevel}\n Chance: {(woodToStoneChance * 100f):F2}%";
-    //    sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
-    //    sandToStoneUI.enabled = true;
-    //    woodToStoneUI.enabled = true;
-    //    woodToSandUI.enabled = false;
-    //}
-
-    //public void UpdateMapUISand(float woodToSandDangerLevel, float woodToSandChance, float sandToStoneDangerLevel, float sandToStoneChance)
-    //{
-    //    mapImage.sprite = sandMap;
-    //    woodToSandUI.text = $"Danger Level: {woodToSandDangerLevel}\n Chance: {(woodToSandChance * 100f):F2}%";
-    //    sandToStoneUI.text = $"Danger Level: {sandToStoneDangerLevel}\n Chance: {(sandToStoneChance * 100f):F2}%";
-    //    woodToSandUI.enabled = true;
-    //    sandToStoneUI.enabled = true;
-    //    woodToStoneUI.enabled = false;
-    //}
-    public void UpdatePathingDisplay()
-    {
-        //check to see if panel is active (if so, disable it; if not, enable it)
-    }
-
     public void ShowTravelStatus(string message)
     {
         travelStatusText.text = message;
-
         travelStatusUI.SetActive(true);
-
         statusFadeOutRoutine = StartCoroutine(StatusFadeOut());
-    }
-
-    public async Task FadeInOut(float inTime = 0.5f, float holdTime = 0.5f, float outTime = 0.5f)
-    {
-        Transitioning = true;
-        OnDisplayBlocksOthers?.Invoke();
-
-        float elapsed = 0f;
-        while (elapsed < inTime)
-        {
-            await Task.Yield();
-            elapsed += Time.deltaTime;
-            transitionImage.SetAlpha(elapsed / inTime);
-        }
-
-        int msWait = Mathf.CeilToInt(holdTime * 1000);
-        await Task.Delay(msWait);
-
-        elapsed = 0f;
-        while (elapsed < outTime)
-        {
-            await Task.Yield();
-            elapsed += Time.deltaTime;
-            transitionImage.SetAlpha(1 - (elapsed / inTime));
-        }
-
-        Transitioning = false;
-    }
-
-    public async Task FadeAlpha(float duration, float targetAlpha)
-    {
-        Transitioning = true;
-        OnDisplayBlocksOthers?.Invoke();
-
-        float startAlpha = transitionImage.color.a;
-        float currentAlpha;
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            await Task.Yield();
-            elapsed += Time.deltaTime;
-            currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
-            transitionImage.SetAlpha(currentAlpha);
-        }
-        transitionImage.SetAlpha(targetAlpha);
-
-        Transitioning = false;
-    }
-
-    public IEnumerator FadeOut()
-    {
-        yield return StartCoroutine(Fade(0f, 1f));
-    }
-    public IEnumerator FadeIn()
-    {
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
-
-    private IEnumerator Fade(float start, float end)
-    {
-        Transitioning = true;
-        OnDisplayBlocksOthers?.Invoke();
-
-        float time = 0f;
-        Color color = transitionImage.color;
-
-        while (time < transitionTime)
-        {
-            float t = time / transitionTime;
-            color.a = Mathf.Lerp(start, end, t);
-            transitionImage.color = color;
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        color.a = end;
-        transitionImage.color = color;
-
-        Transitioning = false;
-    }
-
-    private IEnumerator StatusFadeOut()
-    {
-        float time = 0f;
-
-        Color panelColor = travelStatusUI.GetComponent<Image>().color;
-        panelColor.a = 1f;
-
-        while (time < statusFadeOutTime)
-        {
-            float t = time / statusFadeOutTime;
-
-            panelColor.a = Mathf.Lerp(1f, 0f, t);
-            travelStatusUI.GetComponent<Image>().color = panelColor;
-
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        panelColor.a = 0f;
-        travelStatusUI.GetComponent<Image>().color = panelColor;
-        travelStatusUI.gameObject.SetActive(false);
-    }
-
-    void HandleStallUIShown()
-    {
-        if (statusFadeOutRoutine != null)
-        {
-            StopCoroutine(statusFadeOutRoutine);
-            Color panelColor = travelStatusUI.GetComponent<Image>().color;
-            panelColor.a = 0f;
-            travelStatusUI.GetComponent<Image>().color = panelColor;
-            travelStatusUI.gameObject.SetActive(false);
-        }
     }
 
     public void DisplayError(string errorMsg)
@@ -395,19 +157,13 @@ public class UIManager : MonoBehaviour
         StartCoroutine(UIAnimations.FloatUpAndFade(txt));
     }
 
-    public void WaitForConfirm(Action onConfirm)
+    public void playAudio(AudioClip clip)
     {
-        _onConfirm = onConfirm;
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
-    public void Confirm()
-    {
-        _onConfirm?.Invoke();
-        _onConfirm = null;
-    }
-
-
-    //Tavern UI
+    // Tavern UI
     public void EnableTavernUI(string npcName)
     {
         smallBeerButton.interactable = true;
@@ -450,21 +206,6 @@ public class UIManager : MonoBehaviour
         largeBeerButton.interactable = false;
     }
 
-    public IEnumerator WaitForBeerButtonAnim()
-    {
-        bool done = false;
-        void onDone() => done = true;
-        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
-        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
-        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
-
-        while (!done) yield return null;
-
-        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
-        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
-        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
-    }
-
     public void DisableDestButtons()
     {
         townDestButton1.interactable = false;
@@ -472,9 +213,17 @@ public class UIManager : MonoBehaviour
         DisableTavernUI();
     }
 
-    public void forceMapUI()
+    public IEnumerator WaitForBeerButtonAnim()
     {
-
+        bool done = false;
+        void onDone() => done = true;
+        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
+        while (!done) yield return null;
+        smallBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+        mediumBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
+        largeBeerButton.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
     }
 
     public IEnumerator WaitForDestButtonAnim()
@@ -483,17 +232,114 @@ public class UIManager : MonoBehaviour
         void onDone() => done = true;
         townDestButton1.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
         townDestButton2.GetComponent<ButtonAnimator>().OnClickAnimFinished += onDone;
-
         while (!done) yield return null;
-
         townDestButton1.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
         townDestButton2.GetComponent<ButtonAnimator>().OnClickAnimFinished -= onDone;
     }
 
-    public void playAudio(AudioClip clip)
+    // Transitions
+    public async Task FadeInOut(float inTime = 0.5f, float holdTime = 0.5f, float outTime = 0.5f)
     {
-        audioSource.clip = clip;
-        audioSource.Play();
+        Transitioning = true;
+        OnDisplayBlocksOthers?.Invoke();
+
+        float elapsed = 0f;
+        while (elapsed < inTime)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            transitionImage.SetAlpha(elapsed / inTime);
+        }
+
+        await Task.Delay(Mathf.CeilToInt(holdTime * 1000));
+
+        elapsed = 0f;
+        while (elapsed < outTime)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            transitionImage.SetAlpha(1 - (elapsed / inTime));
+        }
+
+        Transitioning = false;
     }
 
+    public async Task FadeAlpha(float duration, float targetAlpha)
+    {
+        Transitioning = true;
+        OnDisplayBlocksOthers?.Invoke();
+
+        float startAlpha = transitionImage.color.a;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            await Task.Yield();
+            elapsed += Time.deltaTime;
+            transitionImage.SetAlpha(Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration));
+        }
+        transitionImage.SetAlpha(targetAlpha);
+
+        Transitioning = false;
+    }
+
+    public IEnumerator FadeOut() => Fade(0f, 1f);
+    public IEnumerator FadeIn() => Fade(1f, 0f);
+
+    private IEnumerator Fade(float start, float end)
+    {
+        Transitioning = true;
+        OnDisplayBlocksOthers?.Invoke();
+
+        float time = 0f;
+        Color color = transitionImage.color;
+        while (time < transitionTime)
+        {
+            color.a = Mathf.Lerp(start, end, time / transitionTime);
+            transitionImage.color = color;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = end;
+        transitionImage.color = color;
+        Transitioning = false;
+    }
+
+    private IEnumerator StatusFadeOut()
+    {
+        float time = 0f;
+        Image panel = travelStatusUI.GetComponent<Image>();
+        Color color = panel.color;
+        color.a = 1f;
+
+        while (time < statusFadeOutTime)
+        {
+            color.a = Mathf.Lerp(1f, 0f, time / statusFadeOutTime);
+            panel.color = color;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = 0f;
+        panel.color = color;
+        travelStatusUI.SetActive(false);
+    }
+
+    private void HandleStallUIShown()
+    {
+        if (statusFadeOutRoutine != null)
+        {
+            StopCoroutine(statusFadeOutRoutine);
+            Image panel = travelStatusUI.GetComponent<Image>();
+            Color color = panel.color;
+            color.a = 0f;
+            panel.color = color;
+            travelStatusUI.SetActive(false);
+        }
+    }
+
+    public void UpdatePathingDisplay()
+    {
+        //check to see if panel is active (if so, disable it; if not, enable it)
+    }
 }

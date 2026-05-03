@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem.Utilities;
+using System;
 
 [RequireComponent(typeof(Animator))]
 
@@ -47,8 +48,6 @@ public class NpcBehavior : InteractableBehavior
     Vector3 defaultPos;
     Vector3 defaultRot;
     DialogueLabel? _pendingLabel;
-
-    int timeUnitTally = 0;
     bool suppressTimeFlush = false;
     bool alreadyBeered = false;
 
@@ -95,11 +94,15 @@ public class NpcBehavior : InteractableBehavior
         transform.rotation = Quaternion.Euler(defaultRot);
     }
 
+    public void TimeUnitTallyIncrease(int inc)
+    {
+
+    }
+
     public override void Interact(Vector3 playerPos)
     {
-        //setup
-        if (!CanInteract)
-            return;
+        Debug.Log($"NpcBehavior.Interact called, CanInteract={CanInteract}, InteractingWith={InteractingWith}");
+        if (!CanInteract) return;
 
         if (InteractingWith != null)
         {
@@ -107,25 +110,17 @@ public class NpcBehavior : InteractableBehavior
             return;
         }
 
-        //always consume 1 time unit for speaking with NPC
-        timeUnitTally++;
-
+        DayManager.Ins.AddToTimeUnitTally(1);
         base.Interact(playerPos);
         InteractingWith = this;
 
         if (bubbleScript != null)
             bubbleScript.SetExhausted();
+        TriggerIconPopAndShrink();
 
         TurnAndTalk(playerPos);
-
-        //now, dialogue
-        UIManager.Ins.ShowDialogue(false, name, fetchDialogue(), portrait, GetAbleOptions());
+        DialogueDriver.Ins.StartDialogue(this, fetchDialogue(), GetAbleOptions(), portrait);
         RapportManager.Ins.AddRapport(name, 1);
-        // if (!isMerchant)
-        // {
-        //     // consume now if not merchant
-        //     DayManager.Ins.ConsumeUnit(1);
-        // }
     }
 
     public void TurnAndTalk(Vector3 playerPos)
@@ -140,39 +135,18 @@ public class NpcBehavior : InteractableBehavior
 
     public void HandleOptionSelected(DialogueOptionInstance option)
     {
-        if (!EvaluateCondition(option.definition.label))
-            return;
+        if (!EvaluateCondition(option.definition.label)) return;
 
-        if (option.definition.label != DialogueLabel.Leave)
+        if (option.definition.label == DialogueLabel.Purchase)
         {
-            // Hi Morgan I am passing purchase dialogue to InventoryDisplayManager to show in merchant stall UI
-            // in HandleInternalLogic, hence this if-else statement
-            // - Marcella
-            if (option.definition.label == DialogueLabel.Purchase)
-            {
-                InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall, name, option.response, portrait);
-                UIManager.Ins.playAudio(shopDialogueSound); //tree fall audioclip here
-            }
-            else
-            {
-                UIManager.Ins.ShowDialogue(true, name, option.response, portrait);
-                //UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
-            }
+            InventoryDisplayManager.Ins.ShowMerchantStall(merchantStall, name, option.response, portrait);
+            UIManager.Ins.playAudio(shopDialogueSound);
         }
         else
         {
-            UIManager.Ins.ShowDialogue(false, name, option.response, portrait);
-            //UIManager.Ins.playAudio(normalDialogueSound[Random.Range(0, normalDialogueSound.Length)]);
+            bool showContinue = option.definition.label != DialogueLabel.Leave;
+            DialogueDriver.Ins.ShowResponse(option.response, portrait, showContinue);
         }
-
-        //outdated
-        //option.action?.Execute(this);
-
-        // if (isMerchant)
-        // {
-        //     // consume after making choice if merchant
-        //     DayManager.Ins.ConsumeUnit(1);
-        // }
 
         HandleInternalLogic(option.definition.label);
     }
@@ -187,7 +161,7 @@ public class NpcBehavior : InteractableBehavior
 
             case DialogueLabel.Purchase:
                 audioSource.Play();
-                UIManager.Ins.CloseDialogue();
+                DialogueDriver.Ins.EndDialogue();
                 break;
 
             case DialogueLabel.Leave:
@@ -215,12 +189,14 @@ public class NpcBehavior : InteractableBehavior
 
     public override void Quit()
     {
-        UIManager.Ins.CloseDialogue();
+        DialogueDriver.Ins.EndDialogue();
+
         if (merchantStall != null && audioSource != null)
         {
             audioSource.Stop();
             InventoryDisplayManager.Ins.HideMerchantStall();
         }
+
         InteractingWith = null;
 
         if (inCutscene) return;
@@ -238,12 +214,13 @@ public class NpcBehavior : InteractableBehavior
             StartRotate(defaultRotation, "isIdle");
         }
     }
+
     private void ExecutePendingLogic(DialogueLabel label)
     {
         switch (label)
         {
             case DialogueLabel.Drink:
-                timeUnitTally++;
+                DayManager.Ins.AddToTimeUnitTally(1);
                 suppressTimeFlush = true;
                 alreadyBeered = true;
                 GameManager.Ins.GoToTavernAction(this);
@@ -443,16 +420,9 @@ public class NpcBehavior : InteractableBehavior
     {
         alreadyBeered = false;
     }
-
-    public void AddToTally(int amount)
-    {
-        timeUnitTally += amount;
-    }
-
     public void FlushTally()
     {
-        DayManager.Ins.ConsumeUnit(timeUnitTally);
-        timeUnitTally = 0;
+        DayManager.Ins.ConsumeTimeUnitTally();
         suppressTimeFlush = false;
     }
 }

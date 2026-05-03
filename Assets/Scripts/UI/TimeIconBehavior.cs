@@ -10,6 +10,17 @@ public class TimeIconBehavior : MonoBehaviour
 
     private Coroutine transition;
 
+    public static TimeIconBehavior Ins => _instance;
+    private static TimeIconBehavior _instance;
+
+    public bool IsTransitioning => transition != null;
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this) { Destroy(this); return; }
+        _instance = this;
+    }
+
     public void SetSprite(Sprite sprite)
     {
         image.sprite = sprite;

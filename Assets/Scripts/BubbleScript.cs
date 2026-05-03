@@ -8,6 +8,7 @@ public class BubbleScript : MonoBehaviour
     [SerializeField] Image bubble;
     [SerializeField] GameObject heartPrefab;
     [SerializeField] Transform heartSpawnPoint; // position near NPC head
+    [SerializeField] InteractableBehavior _myInteractable;
     public bool isSpecial = false;
 
     Vector3 defaultScale;
@@ -28,11 +29,17 @@ public class BubbleScript : MonoBehaviour
     {
         if (DayManager.Ins != null)
             DayManager.Ins.OnTimeChanged -= SetDefault;
+
+        InteractableMonitor.Ins.OnInteractableEntered -= CheckToExpand;
+        InteractableMonitor.Ins.OnInteractableExited -= CheckToShrink;
     }
 
     void Start()
     {
         DayManager.Ins.OnDayChanged += SetDefault;
+        InteractableMonitor.Ins.OnInteractableEntered += CheckToExpand;
+        InteractableMonitor.Ins.OnInteractableExited += CheckToShrink;
+
         _cam = Camera.main;
 
         if (isSpecial)
@@ -83,7 +90,19 @@ public class BubbleScript : MonoBehaviour
         exhausted = false;
     }
 
-    public void Expand(bool inRange)
+    private void CheckToExpand(InteractableBehavior ib)
+    {
+        if (ib != _myInteractable) return;
+        Expand(true);
+    }
+
+    private void CheckToShrink(InteractableBehavior ib)
+    {
+        if (ib != _myInteractable) return;
+        Expand(false);
+    }
+
+    private void Expand(bool inRange)
     {
         if (!isActiveAndEnabled)
             return;

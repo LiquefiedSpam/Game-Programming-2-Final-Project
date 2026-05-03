@@ -15,7 +15,6 @@ public class TimeUIManager : MonoBehaviour
     [SerializeField] private Slider frontTimeSlider;
     [SerializeField] private TMP_Text frontUnitsText;
     [SerializeField] private Slider middleTimeSlider;
-    [SerializeField] private Image middleTimeSliderFill;
     [SerializeField] private Slider backTimeSlider;
     [SerializeField] GameObject timeSliderRoot;
     [SerializeField] GameObject timeUIRoot;
@@ -28,50 +27,69 @@ public class TimeUIManager : MonoBehaviour
     [SerializeField] private Sprite eveningSprite;
     [SerializeField] private Sprite nightSprite;
 
+    [Header("Animation")]
+    [SerializeField] private AnimationCurve shrinkCurve;
+
     private DayInterval lastInterval;
 
     //UnitsPerInterval * timeUnitInternalMultiplier = the internal number on the slider's slider fill. Used to make
     //smooth lerp transitions from one unit to another.
     private int timeUnitInternalMultiplier = 100;
-    //public int TimeUnitInternalMultiplier => timeUnitInternalMultiplier;
-
-    private Color backTimeSliderDefaultColor = Color.red;
     private Vector3 timeSliderRootDefaultScale = Vector3.one;
     float timeSliderRootExpandSize = 1.05f;
 
     private Coroutine previewCoroutine;
-    private Action<bool, int> _previewRefreshHandler;
+    private Coroutine timeUnitConsumeCoroutine;
+    private Coroutine shadowConsumeCoroutine;
+    public bool IsConsuming => timeUnitConsumeCoroutine != null || shadowConsumeCoroutine != null;
+
+    public static TimeUIManager Ins => _instance;
+    private static TimeUIManager _instance;
 
 
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Debug.LogError($"Multiple instances of DayManager in scene, destroying component on {gameObject.name}");
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     private void Start()
     {
-        DayManager.Ins.OnTimeChanged += Refresh;
-        _previewRefreshHandler = (enterPreview, units) => Refresh(enterPreview, units);
-        DayManager.Ins.OnTimeUnitPreview += _previewRefreshHandler;
+        DayManager.Ins.OnTimeUnitPreview += OnTimeUnitPreviewChanged;
+        DayManager.Ins.OnTimeUnitConfirmed += StartTimeUnitConsume;
+        DayManager.Ins.OnUnitsConsumed += StartShadowTimeUnitConsume;
+        Refresh();
     }
 
     private void OnDestroy()
     {
         if (DayManager.Ins != null)
         {
-            DayManager.Ins.OnTimeChanged -= Refresh;
-            DayManager.Ins.OnTimeUnitPreview -= _previewRefreshHandler;
+            DayManager.Ins.OnTimeUnitPreview -= OnTimeUnitPreviewChanged;
+            DayManager.Ins.OnTimeUnitConfirmed -= StartTimeUnitConsume;
+            DayManager.Ins.OnUnitsConsumed -= StartShadowTimeUnitConsume;
         }
     }
-
 
     //refresh the UI to reflect current static state.
     private void Refresh()
     {
+        //if (previewCoroutine != null || timeUnitConsumeCoroutine != null) return;
+
         frontTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
         frontTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
-        unitsText.text = DayManager.Ins.Units.ToString();
-
-        backTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
-        backTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
-
         middleTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
         middleTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        backTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
+        backTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        unitsText.text = DayManager.Ins.Units.ToString();
 
         if (DayManager.Ins.DayInterval != lastInterval)
         {
@@ -84,28 +102,27 @@ public class TimeUIManager : MonoBehaviour
     //TimeUnits will be consumed, should the player follow through on a previewed action.
     //--If false, *exit* that preview state.
     //--unitsToPreview: optionally put this in if you want to show how many time units the action will consume.
-    private void Refresh(bool enterPreview, int unitsToPreview = 0)
+    private void OnTimeUnitPreviewChanged(bool enterPreview, int unitsToPreview = 0)
     {
-        Debug.Log("refresh being called");
         if (!enterPreview)
         {
             StopPreview();
-            Refresh();
             return;
         }
+
+        if (previewCoroutine != null) return;
+
+        if (timeUnitConsumeCoroutine != null)
+            StartCoroutine(WaitThenPreview(unitsToPreview));
         else
-        {
-            Debug.Log(unitsToPreview);
-            //return if this call is redundant
-            if (previewCoroutine != null)
-                return;
+            StartPreviewCoroutine(unitsToPreview);
+    }
 
-            Refresh();
-            frontTimeSlider.value =
-            TUTointernalInt(DayManager.Ins.Units - unitsToPreview); //will handle cases for when it's below 0 later
-
-            StartPreviewCoroutine();
-        }
+    private IEnumerator WaitThenPreview(int unitsToPreview)
+    {
+        yield return new WaitUntil(() => timeUnitConsumeCoroutine == null && shadowConsumeCoroutine == null);
+        Refresh();
+        StartPreviewCoroutine(unitsToPreview);
     }
 
     private Sprite GetCorrectSprite() => DayManager.Ins.DayInterval switch
@@ -117,41 +134,95 @@ public class TimeUIManager : MonoBehaviour
         _ => morningSprite
     };
 
-    private void StartPreviewCoroutine()
+
+    //pop the size of the time unit wheel, then start the preview
+    private void StartPreviewCoroutine(int unitsToPreview)
     {
-        Debug.Log($"Default scale: {timeSliderRootDefaultScale}, Target: {timeSliderRootDefaultScale * timeSliderRootExpandSize}");
-        Debug.Log($"Current scale before anim: {timeSliderRoot.transform.localScale}");
+        middleTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        middleTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
+
         StartCoroutine(UIAnimations.ScaleTo(timeSliderRoot.transform,
         timeSliderRootDefaultScale * timeSliderRootExpandSize, .1f));
         if (previewCoroutine != null) StopCoroutine(previewCoroutine);
-        previewCoroutine = StartCoroutine(PreviewCoroutine());
+        previewCoroutine = StartCoroutine(PreviewCoroutine(unitsToPreview));
     }
 
-    IEnumerator PreviewCoroutine()
+    IEnumerator PreviewCoroutine(int unitsToPreview)
     {
-        yield return UIAnimations.LerpAlpha(middleTimeSliderFill, 1, .8f, .2f);
+        float reductionDuration = 0.5f;
         while (true)
         {
-            // Fade out
-            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, .8f, .1f, .8f);
-            // Fade in
-            yield return UIAnimations.LerpAlpha(middleTimeSliderFill, .1f, .8f, .8f);
+            float elapsed = 0f;
+            int maxInt = DayManager.Ins.Units * timeUnitInternalMultiplier;
+            int intToElapse = Mathf.Max((DayManager.Ins.Units - unitsToPreview) * timeUnitInternalMultiplier, 0);
+            frontTimeSlider.value = maxInt;
+            //add logic for if this goes past the current interval's units!
+            while (elapsed < reductionDuration)
+            {
+                //Reduce over time smoothly based on frame rate
+                elapsed += Time.deltaTime;
+                float current = Mathf.Lerp(maxInt, intToElapse, elapsed / reductionDuration);
+                frontTimeSlider.value = current;
+                //Wait until next frame
+                yield return null;
+            }
 
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.5f);
         }
     }
 
     public void StopPreview()
     {
-        Debug.Log($"StopPreview called, scaling back to: {timeSliderRootDefaultScale}");
         if (previewCoroutine != null)
         {
             StopCoroutine(previewCoroutine);
+            frontTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
             previewCoroutine = null;
         }
-
         StartCoroutine(UIAnimations.ScaleTo(timeSliderRoot.transform, timeSliderRootDefaultScale, .3f));
-        middleTimeSliderFill.SetAlpha(1);
+        Refresh();
+    }
+
+    private void StartShadowTimeUnitConsume(int units)
+    {
+        float capturedValue = middleTimeSlider.value;
+        shadowConsumeCoroutine = StartCoroutine(WaitThenShadow(units, capturedValue));
+    }
+
+    private IEnumerator WaitThenShadow(int units, float fromValue)
+    {
+        yield return new WaitUntil(() => timeUnitConsumeCoroutine == null);
+        shadowConsumeCoroutine = StartCoroutine(TimeUnitConsume(units, middleTimeSlider, fromValue, isShadow: true));
+    }
+
+    private void StartTimeUnitConsume(int units)
+    {
+        Debug.Log($"StartTimeUnitConsume called, units={units}\n{System.Environment.StackTrace}");
+        if (previewCoroutine != null) { StopCoroutine(previewCoroutine); previewCoroutine = null; }
+        float maxValue = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        frontTimeSlider.value = maxValue;
+        timeUnitConsumeCoroutine = StartCoroutine(TimeUnitConsume(units, frontTimeSlider, maxValue, isShadow: false));
+    }
+
+    private IEnumerator TimeUnitConsume(int units, Slider slider, float maxValue, bool isShadow)
+    {
+        float reductionDuration = 0.7f;
+        float elapsed = 0f;
+        float amtToElapse = Mathf.Max(maxValue - (units * timeUnitInternalMultiplier), 0);
+        slider.value = maxValue;
+
+        while (elapsed < reductionDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = shrinkCurve.Evaluate(elapsed / reductionDuration);
+            slider.value = Mathf.Lerp(maxValue, amtToElapse, t);
+            yield return null;
+        }
+
+        slider.value = amtToElapse;
+
+        if (isShadow) { shadowConsumeCoroutine = null; Refresh(); }
+        else timeUnitConsumeCoroutine = null;
     }
 
 

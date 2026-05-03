@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum DayInterval
 {
@@ -19,6 +20,8 @@ public class DayManager : MonoBehaviour
     public event Action<int> OnUnitsConsumed; //for things that need to know amount of units that elapsed
     public Action OnDayChanged;
     public Action<bool, int> OnTimeUnitPreview; // bool is if we are entering or exiting preview, and int is number of units to preview
+    public Action<int> OnTimeUnitConfirmed; //confirmed that these units will eventually be consumed
+    //public Action<int> OnTimeUnitTallyAdded; //the time unit tally is the amount of units that will be consumed upon exiting the current interaction.
 
     public DayInterval DayInterval => dayInterval;
     public int UnitsPerInterval => unitsPerInterval;
@@ -28,6 +31,7 @@ public class DayManager : MonoBehaviour
 
     private int day = 1;
     private int units = 1;
+    private int timeUnitTally = 0;
 
     private DayInterval dayInterval = DayInterval.Morning;
 
@@ -88,19 +92,38 @@ public class DayManager : MonoBehaviour
 
         if (changed)
         {
-            OnTimeChanged?.Invoke();
             OnUnitsConsumed?.Invoke(unitsToConsume);
+            OnTimeChanged?.Invoke();
         }
     }
 
-    public void PreviewUnit(bool toPreview, int unitsToPreview)
+    public void PreviewUnit(bool toPreview, int unitsToPreview = 0)
     {
         OnTimeUnitPreview?.Invoke(toPreview, unitsToPreview);
+    }
+
+    public void ConfirmUnit(int units)
+    {
+        Debug.Log($"ConfirmUnit called, units={units}", this);
+        OnTimeUnitConfirmed?.Invoke(units);
     }
 
     //for debugging
     public void FireDayChanged()
     {
         OnDayChanged?.Invoke();
+    }
+
+    public void AddToTimeUnitTally(int amt)
+    {
+        ConfirmUnit(amt);
+        timeUnitTally += amt;
+        //OnTimeUnitTallyAdded?.Invoke(amt);
+    }
+
+    public void ConsumeTimeUnitTally()
+    {
+        ConsumeUnit(timeUnitTally);
+        timeUnitTally = 0;
     }
 }

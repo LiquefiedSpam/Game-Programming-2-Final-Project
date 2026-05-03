@@ -35,11 +35,11 @@ public class InteractableBehavior : MonoBehaviour
         OnEndInteract?.Invoke();
     }
 
-    public void TriggerIconExpand(bool inRange)
-    {
-        if (interactableIcon != null)
-            bubbleScript.Expand(inRange);
-    }
+    // public void TriggerIconExpand(bool inRange)
+    // {
+    //     if (interactableIcon != null)
+    //         bubbleScript.Expand(inRange);
+    // }
 
     public virtual void TriggerIconPopAndShrink()
     {

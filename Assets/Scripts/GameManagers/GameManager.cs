@@ -70,32 +70,33 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TavernTravelSequence(Vector3 dest)
     {
-        Vector3 dir = (dest - beerNpc.transform.position).normalized;
-        float followDist = 2f;
-        bool playerFollowing = false;
-        bool npcDeparted = false;
+        yield return null;
+        // Vector3 dir = (dest - beerNpc.transform.position).normalized;
+        // float followDist = 2f;
+        // bool playerFollowing = false;
+        // bool npcDeparted = false;
 
-        beerNpc.StartCoroutine(beerNpc.MoveToLocation(dest));
+        // beerNpc.StartCoroutine(beerNpc.MoveToLocation(dest));
 
-        while (Vector3.Distance(beerNpc.transform.position, dest) > 0.01f)
-        {
-            float distToPlayer = Vector3.Distance(beerNpc.transform.position, player.transform.position);
+        // while (Vector3.Distance(beerNpc.transform.position, dest) > 0.01f)
+        // {
+        //     float distToPlayer = Vector3.Distance(beerNpc.transform.position, player.transform.position);
 
-            // Wait until the NPC has first walked away before watching for the trigger
-            if (!npcDeparted && distToPlayer > followDist + 1f)
-                npcDeparted = true;
+        //     // Wait until the NPC has first walked away before watching for the trigger
+        //     if (!npcDeparted && distToPlayer > followDist + 1f)
+        //         npcDeparted = true;
 
-            if (npcDeparted && !playerFollowing && distToPlayer >= followDist)
-            {
-                UIManager.Ins.CloseDialogue();
-                playerFollowing = true;
-                player.FollowDirection(dir);
-                yield return TeleportRoutine();
-                yield return StartCoroutine(TavernInteraction());
-            }
+        //     if (npcDeparted && !playerFollowing && distToPlayer >= followDist)
+        //     {
+        //         UIManager.Ins.CloseDialogue();
+        //         playerFollowing = true;
+        //         player.FollowDirection(dir);
+        //         yield return TeleportRoutine();
+        //         yield return StartCoroutine(TavernInteraction());
+        //     }
 
-            yield return null;
-        }
+        //     yield return null;
+        // }
     }
 
     private IEnumerator TeleportRoutine()
@@ -109,16 +110,17 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TavernInteraction()
     {
-        UIManager.Ins.ShowDialogue(false, "Bartender", "What'll it be?", barNpcSprite);
+        yield return null;
+        // UIManager.Ins.ShowDialogue(false, "Bartender", "What'll it be?", barNpcSprite);
 
-        bool playerConfirmed = false;
-        UIManager.Ins.WaitForConfirm(() => playerConfirmed = true);
+        // bool playerConfirmed = false;
+        // UIManager.Ins.WaitForConfirm(() => playerConfirmed = true);
 
-        while (!playerConfirmed)
-            yield return null;
+        // while (!playerConfirmed)
+        //     yield return null;
 
-        UIManager.Ins.CloseDialogue();
-        UIManager.Ins.EnableTavernUI(beerNpc.NpcName);
+        // UIManager.Ins.CloseDialogue();
+        // UIManager.Ins.EnableTavernUI(beerNpc.NpcName);
     }
 
     //should be phased out to be a town member function or something
@@ -129,47 +131,48 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator HandleBeerSelected(BeerData beer)
     {
-        if (beer.price > MoneyManager.Ins.Money)
-        {
-            UIManager.Ins.DisplayError("not enough money!");
-            yield break;
-        }
+        // if (beer.price > MoneyManager.Ins.Money)
+        // {
+        //     UIManager.Ins.DisplayError("not enough money!");
+        //     yield break;
+        // }
 
-        MoneyManager.Ins.AddMoney(-beer.price);
+        // MoneyManager.Ins.AddMoney(-beer.price);
 
-        yield return StartCoroutine(UIManager.Ins.WaitForBeerButtonAnim());
-        UIManager.Ins.HideBeerUI();
+        // yield return StartCoroutine(UIManager.Ins.WaitForBeerButtonAnim());
+        // UIManager.Ins.HideBeerUI();
 
-        string beerDialogue = "";
-        if (beer.size == BeerSize.SMALL)
-            beerDialogue = beerNpc.smallBeerDialogue;
+        // string beerDialogue = "";
+        // if (beer.size == BeerSize.SMALL)
+        //     beerDialogue = beerNpc.smallBeerDialogue;
 
-        if (beer.size == BeerSize.MEDIUM)
-            beerDialogue = beerNpc.mediumBeerDialogue;
+        // if (beer.size == BeerSize.MEDIUM)
+        //     beerDialogue = beerNpc.mediumBeerDialogue;
 
-        if (beer.size == BeerSize.LARGE)
-            beerDialogue = beerNpc.largeBeerDialogue;
+        // if (beer.size == BeerSize.LARGE)
+        //     beerDialogue = beerNpc.largeBeerDialogue;
 
-        //show npc-specific beer dialogue
-        UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, beerDialogue, beerNpc.portrait);
+        // //show npc-specific beer dialogue
+        // UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, beerDialogue, beerNpc.portrait);
 
-        bool confirmed = false;
-        UIManager.Ins.WaitForConfirm(() => confirmed = true);
-        while (!confirmed) yield return null;
+        // bool confirmed = false;
+        // UIManager.Ins.WaitForConfirm(() => confirmed = true);
+        // while (!confirmed) yield return null;
 
-        //show generic follow-up dialogue
-        UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, "By the way, since you're a traveling merchant,"
-        + "I got some info on safe paths from this town!", beerNpc.portrait);
+        // //show generic follow-up dialogue
+        // UIManager.Ins.ShowDialogue(true, beerNpc.NpcName, "By the way, since you're a traveling merchant,"
+        // + "I got some info on safe paths from this town!", beerNpc.portrait);
 
-        numBars = GenerateBars(beer);
+        // numBars = GenerateBars(beer);
 
-        confirmed = false;
-        UIManager.Ins.WaitForConfirm(() => confirmed = true);
-        while (!confirmed) yield return null;
+        // confirmed = false;
+        // UIManager.Ins.WaitForConfirm(() => confirmed = true);
+        // while (!confirmed) yield return null;
 
-        UIManager.Ins.CloseDialogue();
-        (Town, Town) towns = Data.CurrentTown.GetOtherTowns();
-        UIManager.Ins.EnableTavernDestUI(towns.Item1, towns.Item2);
+        // UIManager.Ins.CloseDialogue();
+        // (Town, Town) towns = Data.CurrentTown.GetOtherTowns();
+        // UIManager.Ins.EnableTavernDestUI(towns.Item1, towns.Item2);
+        yield return new WaitForSeconds(1);
     }
 
     public IEnumerator HandleDestSelected(Town town)
@@ -222,25 +225,26 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator HeadBack()
     {
-        bool confirmed = false;
+        yield return null;
+        // bool confirmed = false;
 
-        //heading back
-        yield return StartCoroutine(UIManager.Ins.FadeOut());
-        player.SetLocation(playerPositionBeforeCutscene);
-        beerNpc.GoToDefaultLocation();
-        yield return StartCoroutine(UIManager.Ins.FadeIn());
+        // //heading back
+        // yield return StartCoroutine(UIManager.Ins.FadeOut());
+        // player.SetLocation(playerPositionBeforeCutscene);
+        // beerNpc.GoToDefaultLocation();
+        // yield return StartCoroutine(UIManager.Ins.FadeIn());
 
-        // closing dialogue
-        beerNpc.TurnAndTalk(player.transform.position);
-        UIManager.Ins.ShowDialogue(false, beerNpc.NpcName, beerNpc.returnFromTavernDialogue, beerNpc.portrait);
+        // // closing dialogue
+        // beerNpc.TurnAndTalk(player.transform.position);
+        // UIManager.Ins.ShowDialogue(false, beerNpc.NpcName, beerNpc.returnFromTavernDialogue, beerNpc.portrait);
 
-        confirmed = false;
-        UIManager.Ins.WaitForConfirm(() => confirmed = true);
-        while (!confirmed) yield return null;
+        // confirmed = false;
+        // UIManager.Ins.WaitForConfirm(() => confirmed = true);
+        // while (!confirmed) yield return null;
 
-        beerNpc.FlushTally();
-        UIManager.Ins.CloseDialogue();
-        OnEnterExitCutscene?.Invoke(false);
+        // beerNpc.FlushTally();
+        // UIManager.Ins.CloseDialogue();
+        // OnEnterExitCutscene?.Invoke(false);
     }
 
     //generate number of bars the NPC adds to a space
