@@ -28,7 +28,7 @@ public class BubbleScript : MonoBehaviour
     void OnDestroy()
     {
         if (DayManager.Ins != null)
-            DayManager.Ins.OnTimeChanged -= SetDefault;
+            DayManager.Ins.OnTimeSet -= SetDefault;
 
         InteractableMonitor.Ins.OnInteractableEntered -= CheckToExpand;
         InteractableMonitor.Ins.OnInteractableExited -= CheckToShrink;

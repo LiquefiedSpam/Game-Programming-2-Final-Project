@@ -57,7 +57,7 @@ public class DialogueUIManager : MonoBehaviour
     {
         var go = Instantiate(_optionButtonPrefab, _optionsContainer);
         go.GetComponentInChildren<TMP_Text>().text = opt.definition.label.ToString();
-        go.GetComponent<Button>().onClick.AddListener(() => DialogueDriver.Ins.HandleOptionSelected(opt));
+        go.GetComponent<DialogueOptionButton>().Setup(opt);
     }
 
     private void ClearOptions()

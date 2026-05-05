@@ -16,6 +16,7 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         InteractableMonitor.Ins.OnInteractableEntered += HandleInteractableEntered;
         InteractableMonitor.Ins.OnInteractableExited += HandleInteractableExited;
+        TavernManager.Ins.OnEnterExitCutscene += HandleCutsceneStateChange;
         TransitionTo(new IdleState(this));
     }
 
@@ -23,6 +24,25 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         InteractableMonitor.Ins.OnInteractableEntered -= HandleInteractableEntered;
         InteractableMonitor.Ins.OnInteractableExited -= HandleInteractableExited;
+        TavernManager.Ins.OnEnterExitCutscene -= HandleCutsceneStateChange;
+    }
+
+    public void ExitToAppropriateState()
+    {
+        if (_currentState is InCutsceneState) return;
+
+        TransitionTo(InteractableMonitor.Ins.Interactable != null
+            ? new InRangeState(this, InteractableMonitor.Ins.Interactable)
+            : new IdleState(this));
+        InteractableMonitor.Ins.RecheckCurrent();
+    }
+
+    private void HandleCutsceneStateChange(bool entering)
+    {
+        if (entering)
+            TransitionTo(new InCutsceneState(this));
+        else
+            ExitToAppropriateState();
     }
 
     public void TransitionTo(PlayerState newState)

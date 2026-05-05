@@ -38,16 +38,16 @@ public class DisplayController : MonoBehaviour
         mapAction.action.started += OnMapPressed;
         mapAction.action.Enable();
 
-        GameManager.Ins.OnEnterExitCutscene += OnEnterExitCutscene;
+        TavernManager.Ins.OnEnterExitCutscene += OnEnterExitCutscene;
     }
 
     void OnDestroy()
     {
         menuAction.action.performed -= OnInventoryPressed;
         mapAction.action.started -= OnMapPressed;
-        playerInputController.OnPlayerMove -= CloseInventory;
+        //        playerInputController.OnPlayerMove -= CloseInventory;
         playerInputController.OnPlayerMove -= CloseMap;
-        GameManager.Ins.OnEnterExitCutscene -= OnEnterExitCutscene;
+        TavernManager.Ins.OnEnterExitCutscene -= OnEnterExitCutscene;
     }
 
     void OnEnterExitCutscene(bool enter)

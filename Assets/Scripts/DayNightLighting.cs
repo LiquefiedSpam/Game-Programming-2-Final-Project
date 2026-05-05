@@ -27,15 +27,17 @@ public class DayNightLighting : MonoBehaviour
 
     void Start()
     {
-        DayManager.Ins.OnTimeChanged += OnIntervalChanged;
+        DayManager.Ins.OnTimeSet += OnIntervalChanged;
         _lastInterval = DayManager.Ins.DayInterval;
-        OnIntervalChanged();
+        float rot = GetAngle(_lastInterval);
+        transform.rotation = Quaternion.Euler(rot, transform.eulerAngles.y, 0f);
+        _light.color = GetColor(_lastInterval);
 
     }
 
     void OnDestroy()
     {
-        DayManager.Ins.OnTimeChanged -= OnIntervalChanged;
+        DayManager.Ins.OnTimeSet -= OnIntervalChanged;
     }
 
     void OnIntervalChanged()

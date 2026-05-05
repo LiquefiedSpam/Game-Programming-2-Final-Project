@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: DrinkOption
   m_EditorClassIdentifier: Assembly-CSharp::DialogueOptionDefinition
   label: 1
+  activity: {fileID: 11400000, guid: 3f69d002e79a87f4ab660bf877297278, type: 2}
+  timeCost: 1

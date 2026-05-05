@@ -12,6 +12,11 @@ public class DialogueDriver : MonoBehaviour
 
     private NpcBehavior _currentNpc;
 
+    private Queue<string> _sequenceQueue;
+    private string _sequenceSpeaker;
+    private Sprite _sequencePortrait;
+    private Action _onSequenceComplete;
+
     private void Awake()
     {
         if (_instance != null && _instance != this) { Destroy(this); return; }
@@ -51,5 +56,27 @@ public class DialogueDriver : MonoBehaviour
     {
         _onConfirm?.Invoke();
         _onConfirm = null;
+    }
+
+    public void PlaySequence(string speakerName, Sprite portrait, string[] lines, Action onComplete)
+    {
+        _sequenceSpeaker = speakerName;
+        _sequencePortrait = portrait;
+        _sequenceQueue = new Queue<string>(lines);
+        _onSequenceComplete = onComplete;
+        AdvanceSequence();
+    }
+
+    private void AdvanceSequence()
+    {
+        if (_sequenceQueue.Count == 0)
+        {
+            _onSequenceComplete?.Invoke();
+            _onSequenceComplete = null;
+            return;
+        }
+
+        DialogueUIManager.Ins.ShowDialogue(_sequenceSpeaker, _sequenceQueue.Dequeue(), _sequencePortrait, null, showContinue: true);
+        WaitForConfirm(AdvanceSequence);
     }
 }

@@ -13,6 +13,8 @@ public abstract class PlayerState
     public virtual void OnInteractableExited(InteractableBehavior interactable) { }
     public virtual void OnMapPressed() { }
     public virtual void OnInventoryPressed() { }
+
+    protected void ExitToAppropriateState() => ctx.ExitToAppropriateState();
 }
 
 
@@ -108,15 +110,6 @@ public abstract class InteractionState : PlayerState
         _interactable.Quit();
         ctx.TransitionTo(new IdleState(ctx));
     }
-
-    protected void ExitToAppropriateState()
-    {
-        ctx.TransitionTo(InteractableMonitor.Ins.Interactable != null
-            ? new InRangeState(ctx, InteractableMonitor.Ins.Interactable)
-            : new IdleState(ctx));
-
-        InteractableMonitor.Ins.RecheckCurrent();
-    }
 }
 
 public class InDialogueState : InteractionState
@@ -142,4 +135,18 @@ public class InMenuState : InteractionState
     public InMenuState(PlayerInteractionManager ctx, InteractableBehavior interactable) : base(ctx, interactable) { }
 
     public override void OnInteract() { }
+}
+
+//CUTSCENE GROUP//////////////////////////////////////////////////////////////////////////
+public class InCutsceneState : PlayerState
+{
+    public override bool CanMove => false;
+
+    public InCutsceneState(PlayerInteractionManager ctx) : base(ctx) { }
+
+    public override void OnInteract()
+    {
+        if (DialogueDriver.Ins.HasPendingConfirm)
+            DialogueDriver.Ins.Confirm();
+    }
 }

@@ -16,7 +16,7 @@ public class DayManager : MonoBehaviour
     public int Day => day;
     public int Units => units;
 
-    public event Action OnTimeChanged; //for things that just need to know time has changed
+    public event Action OnTimeSet; //for things that just need to know time has changed
     public event Action<int> OnUnitsConsumed; //for things that need to know amount of units that elapsed
     public Action OnDayChanged;
     public Action<bool, int> OnTimeUnitPreview; // bool is if we are entering or exiting preview, and int is number of units to preview
@@ -32,8 +32,9 @@ public class DayManager : MonoBehaviour
     private int day = 1;
     private int units = 1;
     private int timeUnitTally = 0;
+    public int TimeUnitTally => timeUnitTally;
 
-    private DayInterval dayInterval = DayInterval.Morning;
+    private DayInterval dayInterval = DayInterval.Evening;
 
     void Awake()
     {
@@ -51,6 +52,11 @@ public class DayManager : MonoBehaviour
         units = unitsPerInterval;
     }
 
+    void Start()
+    {
+        OnTimeSet?.Invoke();
+    }
+
     //force a next day, starting in the morning
     public void NextDay()
     {
@@ -58,7 +64,7 @@ public class DayManager : MonoBehaviour
         OnUnitsConsumed?.Invoke(units);
         units = unitsPerInterval;
         dayInterval = DayInterval.Morning;
-        OnTimeChanged?.Invoke();
+        OnTimeSet?.Invoke();
         OnDayChanged?.Invoke();
     }
 
@@ -93,7 +99,7 @@ public class DayManager : MonoBehaviour
         if (changed)
         {
             OnUnitsConsumed?.Invoke(unitsToConsume);
-            OnTimeChanged?.Invoke();
+            OnTimeSet?.Invoke();
         }
     }
 

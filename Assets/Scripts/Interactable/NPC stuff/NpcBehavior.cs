@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem.Utilities;
 using System;
+using System.Runtime.InteropServices;
 
 [RequireComponent(typeof(Animator))]
 
@@ -47,7 +48,7 @@ public class NpcBehavior : InteractableBehavior
     float speed = 2f;
     Vector3 defaultPos;
     Vector3 defaultRot;
-    DialogueLabel? _pendingLabel;
+    NpcInteractionActivity _pendingActivity;
     bool suppressTimeFlush = false;
     bool alreadyBeered = false;
 
@@ -73,13 +74,13 @@ public class NpcBehavior : InteractableBehavior
     void Start()
     {
         DayManager.Ins.OnDayChanged += BeerRefresh;
-        GameManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
+        TavernManager.Ins.OnEnterExitCutscene += EnterExitCutscene;
     }
 
     void OnDisable()
     {
         DayManager.Ins.OnDayChanged -= BeerRefresh;
-        GameManager.Ins.OnEnterExitCutscene -= EnterExitCutscene;
+        TavernManager.Ins.OnEnterExitCutscene -= EnterExitCutscene;
     }
 
     public void DefaultLocation()
@@ -148,15 +149,15 @@ public class NpcBehavior : InteractableBehavior
             DialogueDriver.Ins.ShowResponse(option.response, portrait, showContinue);
         }
 
-        HandleInternalLogic(option.definition.label);
+        HandleInternalLogic(option);
     }
 
-    private void HandleInternalLogic(DialogueLabel label)
+    private void HandleInternalLogic(DialogueOptionInstance option)
     {
-        switch (label)
+        switch (option.definition.label)
         {
             case DialogueLabel.Drink:
-                _pendingLabel = label;
+                _pendingActivity = option.definition.activity;
                 break;
 
             case DialogueLabel.Purchase:
@@ -201,12 +202,11 @@ public class NpcBehavior : InteractableBehavior
 
         if (inCutscene) return;
 
-        if (_pendingLabel.HasValue)
+        if (_pendingActivity != null)
         {
-            var label = _pendingLabel.Value;
-            _pendingLabel = null;
             suppressTimeFlush = true;
-            ExecutePendingLogic(label);
+            StartCoroutine(_pendingActivity.Begin(this));
+            //ExecutePendingLogic(label);
         }
         else
         {
@@ -215,18 +215,18 @@ public class NpcBehavior : InteractableBehavior
         }
     }
 
-    private void ExecutePendingLogic(DialogueLabel label)
-    {
-        switch (label)
-        {
-            case DialogueLabel.Drink:
-                DayManager.Ins.AddToTimeUnitTally(1);
-                suppressTimeFlush = true;
-                alreadyBeered = true;
-                GameManager.Ins.GoToTavernAction(this);
-                break;
-        }
-    }
+    // private void ExecutePendingLogic(DialogueLabel label)
+    // {
+    //     switch (label)
+    //     {
+    //         case DialogueLabel.Drink:
+    //             DayManager.Ins.AddToTimeUnitTally(1);
+    //             suppressTimeFlush = true;
+    //             alreadyBeered = true;
+    //             TavernManager.Ins.GoToTavernAction(this);
+    //             break;
+    //     }
+    // }
 
     public override void TriggerIconPopAndShrink()
     {

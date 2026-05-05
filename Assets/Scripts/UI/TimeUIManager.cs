@@ -38,8 +38,14 @@ public class TimeUIManager : MonoBehaviour
     private Vector3 timeSliderRootDefaultScale = Vector3.one;
     float timeSliderRootExpandSize = 1.05f;
 
+
+    //A coroutine animation that shows how many units will be consumed if you confirm the action.
     private Coroutine previewCoroutine;
+
+    //A coroutine animation that shows the top green slider's consumption.
     private Coroutine timeUnitConsumeCoroutine;
+
+    //A coroutine animation that shows the 'shadow' units being consumed, truly signifying that those units have been consumed.
     private Coroutine shadowConsumeCoroutine;
     public bool IsConsuming => timeUnitConsumeCoroutine != null || shadowConsumeCoroutine != null;
 
@@ -62,6 +68,7 @@ public class TimeUIManager : MonoBehaviour
     }
     private void Start()
     {
+        DayManager.Ins.OnTimeSet += Refresh;
         DayManager.Ins.OnTimeUnitPreview += OnTimeUnitPreviewChanged;
         DayManager.Ins.OnTimeUnitConfirmed += StartTimeUnitConsume;
         DayManager.Ins.OnUnitsConsumed += StartShadowTimeUnitConsume;
@@ -72,6 +79,7 @@ public class TimeUIManager : MonoBehaviour
     {
         if (DayManager.Ins != null)
         {
+            DayManager.Ins.OnTimeSet -= Refresh;
             DayManager.Ins.OnTimeUnitPreview -= OnTimeUnitPreviewChanged;
             DayManager.Ins.OnTimeUnitConfirmed -= StartTimeUnitConsume;
             DayManager.Ins.OnUnitsConsumed -= StartShadowTimeUnitConsume;
@@ -82,9 +90,15 @@ public class TimeUIManager : MonoBehaviour
     private void Refresh()
     {
         //if (previewCoroutine != null || timeUnitConsumeCoroutine != null) return;
-
         frontTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
-        frontTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        if (DayManager.Ins.TimeUnitTally > 0)
+        {
+            frontTimeSlider.value = (DayManager.Ins.Units - DayManager.Ins.TimeUnitTally) * timeUnitInternalMultiplier;
+        }
+        else
+        {
+            frontTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        }
         middleTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
         middleTimeSlider.value = DayManager.Ins.Units * timeUnitInternalMultiplier;
         backTimeSlider.maxValue = DayManager.Ins.UnitsPerInterval * timeUnitInternalMultiplier;
@@ -112,7 +126,7 @@ public class TimeUIManager : MonoBehaviour
 
         if (previewCoroutine != null) return;
 
-        if (timeUnitConsumeCoroutine != null)
+        if (shadowConsumeCoroutine != null)
             StartCoroutine(WaitThenPreview(unitsToPreview));
         else
             StartPreviewCoroutine(unitsToPreview);
@@ -153,8 +167,9 @@ public class TimeUIManager : MonoBehaviour
         while (true)
         {
             float elapsed = 0f;
-            int maxInt = DayManager.Ins.Units * timeUnitInternalMultiplier;
-            int intToElapse = Mathf.Max((DayManager.Ins.Units - unitsToPreview) * timeUnitInternalMultiplier, 0);
+            int maxInt = (DayManager.Ins.Units - DayManager.Ins.TimeUnitTally) * timeUnitInternalMultiplier;
+            int intToElapse = Mathf.Max((DayManager.Ins.Units - DayManager.Ins.TimeUnitTally - unitsToPreview)
+            * timeUnitInternalMultiplier, 0);
             frontTimeSlider.value = maxInt;
             //add logic for if this goes past the current interval's units!
             while (elapsed < reductionDuration)
@@ -199,7 +214,7 @@ public class TimeUIManager : MonoBehaviour
     {
         Debug.Log($"StartTimeUnitConsume called, units={units}\n{System.Environment.StackTrace}");
         if (previewCoroutine != null) { StopCoroutine(previewCoroutine); previewCoroutine = null; }
-        float maxValue = DayManager.Ins.Units * timeUnitInternalMultiplier;
+        float maxValue = (DayManager.Ins.Units - DayManager.Ins.TimeUnitTally) * timeUnitInternalMultiplier;
         frontTimeSlider.value = maxValue;
         timeUnitConsumeCoroutine = StartCoroutine(TimeUnitConsume(units, frontTimeSlider, maxValue, isShadow: false));
     }

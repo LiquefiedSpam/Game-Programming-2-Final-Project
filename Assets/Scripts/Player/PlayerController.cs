@@ -29,14 +29,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         HungerManager.Ins.OnHungerKnockedOut += Knockout;
-        GameManager.Ins.OnEnterExitCutscene += SetMovementDisable;
+        TavernManager.Ins.OnEnterExitCutscene += SetMovementDisable;
     }
 
     void OnDisable()
     {
         InteractableBehavior.OnInteract -= Interact;
         InteractableBehavior.OnEndInteract -= EndInteract;
-        GameManager.Ins.OnEnterExitCutscene -= SetMovementDisable;
+        TavernManager.Ins.OnEnterExitCutscene -= SetMovementDisable;
         if (HungerManager.Ins != null)
             HungerManager.Ins.OnHungerKnockedOut -= Knockout;
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2511482417915017355}
   - component: {fileID: 5387254537818398249}
   - component: {fileID: 7455008767119314044}
+  - component: {fileID: -161142973042462326}
   m_Layer: 5
   m_Name: OptionButton
   m_TagString: Untagged
@@ -121,6 +122,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-161142973042462326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924656346298735345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577acf63559c4614ebbccf66b90a719e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueOptionButton
 --- !u!1 &7023669063107295324
 GameObject:
   m_ObjectHideFlags: 0

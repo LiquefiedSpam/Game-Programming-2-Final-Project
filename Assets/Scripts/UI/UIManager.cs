@@ -104,10 +104,10 @@ public class UIManager : MonoBehaviour
 
         InventoryDisplayManager.Ins.OnStallUIShown += HandleStallUIShown;
 
-        smallBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.SMALL])));
-        mediumBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.MEDIUM])));
-        largeBeerButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.LARGE])));
-        tavernQuitButton.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleTavernQuitButton()));
+        smallBeerButton.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.SMALL])));
+        mediumBeerButton.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.MEDIUM])));
+        largeBeerButton.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleBeerSelected(Data.BeersBySize[BeerSize.LARGE])));
+        tavernQuitButton.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleTavernQuitButton()));
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -190,8 +190,8 @@ public class UIManager : MonoBehaviour
 
         townDestButton1.onClick.RemoveAllListeners();
         townDestButton2.onClick.RemoveAllListeners();
-        townDestButton1.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest1)));
-        townDestButton2.onClick.AddListener(() => StartCoroutine(GameManager.Ins.HandleDestSelected(dest2)));
+        townDestButton1.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleDestSelected(dest1)));
+        townDestButton2.onClick.AddListener(() => StartCoroutine(TavernManager.Ins.HandleDestSelected(dest2)));
     }
 
     public void HideBeerUI()
